@@ -11,8 +11,8 @@
 :root {
   --bg: #02010a;
   --bg-lift: #07061a;
-  --bg-deep: rgba(0,0,0,0.85);
-  --bg-side: rgba(5,4,16,0.88);
+  --bg-deep: transparent;
+  --bg-side: rgba(5,4,16,0.25);
   --ink: #e8d9c0;
   --ink-soft: #b6a489;
   --ink-mute: #6b5d49;
@@ -29,6 +29,8 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body); font-weight:300; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; }
+.side-title, .lesson-num-big, .lesson-title-big { text-shadow:0 0 30px rgba(232,200,154,0.4), 0 2px 20px rgba(0,0,0,0.8); }
+.explain, .explain p, .tips-text, .welcome-text, .lesson-desc-big, .toc-name, .side-subtitle { text-shadow:0 1px 12px rgba(0,0,0,0.7); }
 ::selection { background:rgba(212,184,150,.25); }
 ::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:transparent; }
@@ -95,7 +97,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 .kit-card-lesson { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; color:var(--ink-faint); text-transform:uppercase; margin-top:6px; }
 
 /* ===== MAIN ===== */
-.main { padding:48px 56px 80px; max-width:1100px; background:rgba(2,1,10,0.88); }
+.main { padding:48px 56px 80px; max-width:1100px; background:transparent; }
 @media (max-width:900px) { .main { padding:32px 24px 80px; } }
 @media (max-width:560px) { .main { padding:24px 16px 64px; } }
 
