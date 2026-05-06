@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>WoGL Aprende · Start Here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,200;9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<!-- WoGL Header -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+:root {
+  --bg: #02010a;
+  --bg-lift: #07061a;
+  --bg-deep: #000;
+  --bg-side: #050410;
+  --ink: #e8d9c0;
+  --ink-soft: #b6a489;
+  --ink-mute: #6b5d49;
+  --ink-faint: #3a3326;
+  --gold: #d4b896;
+  --copper: #a8704c;
+  --green: rgb(180, 220, 150);
+  --line: rgba(232, 217, 192, 0.08);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --side-w: 320px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body); font-weight:300; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; }
+::selection { background:rgba(212,184,150,.25); }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(232,217,192,.10); border-radius:3px; }
+
+/* ===== LAYOUT ===== */
+.app { display:grid; grid-template-columns:var(--side-w) 1fr; min-height:100vh; min-height:100dvh; }
+@media (max-width:900px) { .app { grid-template-columns:1fr; } }
+
+/* ===== SIDEBAR ===== */
+.side {
+  background:var(--bg-side); border-right:1px solid var(--line);
+  position:sticky; top:60px; height:calc(100vh - 60px); height:calc(100dvh - 60px);
+  overflow-y:auto; display:flex; flex-direction:column;
+}
+@media (max-width:900px) { .side { position:relative; height:auto; border-right:0; border-bottom:1px solid var(--line); } }
+.side-head { padding:32px 28px 24px; border-bottom:1px solid var(--line); }
+.side-tag { font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--ink-mute); text-transform:uppercase; margin-bottom:14px; }
+.side-title { font-family:var(--font-display); font-weight:300; font-variation-settings:'opsz' 72,'SOFT' 100; font-size:34px; line-height:1; color:var(--ink); letter-spacing:-.02em; }
+.side-subtitle { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:13px; color:var(--ink-soft); margin-top:8px; line-height:1.4; }
+.side-progress { margin-top:18px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:10px; color:var(--ink-mute); letter-spacing:1.5px; }
+.side-progress .bar { flex:1; height:2px; background:var(--line); position:relative; overflow:hidden; }
+.side-progress .bar-fill { position:absolute; left:0; top:0; bottom:0; background:var(--gold); transition:width .6s var(--ease); }
+
+.side-section-label {
+  font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--ink-mute);
+  text-transform:uppercase; padding:24px 28px 12px;
+}
+
+/* TOC */
+.toc { display:flex; flex-direction:column; }
+.toc-item {
+  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px;
+  padding:14px 28px; cursor:pointer; border-left:2px solid transparent;
+  transition:all .3s var(--ease);
+}
+.toc-item:hover { background:rgba(232,217,192,.025); border-left-color:var(--copper); }
+.toc-item.active { background:rgba(212,184,150,.06); border-left-color:var(--gold); }
+.toc-item.done .toc-num { color:var(--green); }
+.toc-num { font-family:var(--font-mono); font-size:10px; letter-spacing:1px; color:var(--ink-faint); width:24px; }
+.toc-item.active .toc-num { color:var(--gold); }
+.toc-name { font-family:var(--font-body); font-size:14px; font-weight:300; color:var(--ink-soft); letter-spacing:.005em; line-height:1.3; }
+.toc-item.active .toc-name { color:var(--ink); font-weight:400; }
+.toc-mark { font-family:var(--font-mono); font-size:10px; color:var(--green); }
+
+/* Lo que ya sabes (kit progresivo) */
+.kit-list { padding:0 28px 28px; display:flex; flex-direction:column; gap:12px; }
+.kit-card {
+  background:var(--bg-deep); border:1px solid var(--line); padding:14px; position:relative;
+  opacity:.4; transition:opacity .5s var(--ease);
+}
+.kit-card.unlocked { opacity:1; }
+.kit-card-title {
+  font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100;
+  font-size:13px; color:var(--gold); margin-bottom:8px; font-weight:400;
+}
+.kit-card-code {
+  font-family:var(--font-mono); font-size:10.5px; line-height:1.55; color:var(--ink);
+  border-left:2px solid var(--copper); padding:6px 10px; margin-bottom:8px;
+  white-space:pre-wrap; word-break:break-word; -webkit-user-select:text; user-select:text;
+}
+.kit-card.locked .kit-card-code { color:var(--ink-mute); border-left-color:var(--ink-faint); }
+.kit-card-explain { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:12px; line-height:1.5; color:var(--ink-mute); }
+.kit-card-lesson { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; color:var(--ink-faint); text-transform:uppercase; margin-top:6px; }
+
+/* ===== MAIN ===== */
+.main { padding:48px 56px 80px; max-width:1100px; }
+@media (max-width:900px) { .main { padding:32px 24px 80px; } }
+@media (max-width:560px) { .main { padding:24px 16px 64px; } }
+
+.crumb {
+  font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--ink-mute);
+  text-transform:uppercase; margin-bottom:24px; display:flex; align-items:center; gap:10px;
+}
+.crumb span { color:var(--ink-soft); }
+.crumb .sep { color:var(--ink-faint); }
+
+/* Welcome banner (solo lección 01) */
+.welcome-banner {
+  background:linear-gradient(180deg, rgba(212,184,150,.08), rgba(168,112,76,.04));
+  border:1px solid rgba(212,184,150,.2); padding:28px 32px; margin-bottom:48px;
+  display:flex; flex-direction:column; gap:14px;
+}
+.welcome-eyebrow {
+  font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--gold);
+  text-transform:uppercase; font-weight:400;
+}
+.welcome-title {
+  font-family:var(--font-display); font-weight:300; font-variation-settings:'opsz' 72,'SOFT' 100;
+  font-size:28px; line-height:1.15; color:var(--ink); letter-spacing:-.02em;
+}
+.welcome-text {
+  font-family:var(--font-body); font-size:15px; line-height:1.65; color:var(--ink-soft); font-weight:300;
+}
+.welcome-text em { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; color:var(--gold); font-weight:400; }
+
+.lesson-num-big { font-family:var(--font-display); font-weight:200; font-variation-settings:'opsz' 144,'SOFT' 100; font-size:96px; line-height:1; color:var(--gold); letter-spacing:-.04em; margin-bottom:8px; }
+.lesson-title-big { font-family:var(--font-display); font-weight:300; font-variation-settings:'opsz' 144,'SOFT' 100; font-size:clamp(40px,6vw,64px); line-height:1; color:var(--ink); letter-spacing:-.03em; margin-bottom:14px; }
+.lesson-desc-big { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:18px; color:var(--ink-soft); margin-bottom:48px; line-height:1.5; max-width:600px; }
+
+/* Tips banner */
+.tips-banner {
+  background:linear-gradient(180deg,rgba(168,112,76,.06),rgba(168,112,76,.02));
+  border:1px solid rgba(168,112,76,.2); border-left:3px solid var(--copper);
+  padding:20px 24px; margin-bottom:48px; display:flex; gap:18px; align-items:flex-start;
+}
+.tips-icon { font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--copper); text-transform:uppercase; padding:4px 10px; border:1px solid var(--copper); flex-shrink:0; margin-top:2px; }
+.tips-text { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:15px; color:var(--ink-soft); line-height:1.6; }
+.tips-text em { color:var(--gold); font-style:italic; font-weight:400; }
+.tips-text code { font-family:var(--font-mono); font-style:normal; font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); }
+
+/* Explain */
+.explain { font-family:var(--font-body); font-size:16px; line-height:1.7; color:var(--ink-soft); font-weight:300; max-width:720px; margin-bottom:48px; }
+.explain p { margin-bottom:1em; }
+.explain p:last-child { margin-bottom:0; }
+.explain strong { color:var(--ink); font-weight:400; }
+.explain em { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; color:var(--gold); font-weight:400; }
+.explain code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 7px; border:1px solid var(--line); }
+
+/* Glosario inline (definición de palabras técnicas) */
+.glossary {
+  background:var(--bg-lift); border:1px solid var(--line); border-left:2px solid var(--gold);
+  padding:14px 18px; margin:18px 0;
+  font-family:var(--font-body); font-size:14px; line-height:1.55; color:var(--ink-soft);
+}
+.glossary-label {
+  font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:6px; display:block;
+}
+.glossary code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); margin:0 2px; }
+
+/* Try it: invitación a romper */
+.try-it {
+  background:rgba(180,220,150,.04); border:1px solid rgba(180,220,150,.15);
+  padding:16px 20px; margin-top:18px; margin-bottom:18px;
+  font-family:var(--font-body); font-size:14px; line-height:1.55; color:var(--ink-soft);
+  display:flex; gap:14px; align-items:flex-start;
+}
+.try-it-icon {
+  font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--green);
+  text-transform:uppercase; padding:3px 8px; border:1px solid rgba(180,220,150,.3);
+  flex-shrink:0; margin-top:1px;
+}
+.try-it code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--green); padding:2px 6px; border:1px solid rgba(180,220,150,.2); }
+.try-it em { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; color:var(--gold); font-weight:400; }
+
+/* Sandbox */
+.sandbox-label { font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--ink-mute); text-transform:uppercase; margin-bottom:14px; }
+.sandbox { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:32px; }
+@media (max-width:900px) { .sandbox { grid-template-columns:1fr; } }
+.canvas-wrap { background:#000; border:1px solid var(--line); aspect-ratio:1/1; position:relative; overflow:hidden; }
+.canvas-wrap canvas { width:100%; height:100%; display:block; }
+.canvas-wrap .badge { position:absolute; bottom:12px; right:14px; font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:rgba(232,217,192,.3); pointer-events:none; }
+.canvas-wrap .err { position:absolute; top:14px; left:14px; right:14px; font-family:var(--font-mono); font-size:11px; color:#ff6b6b; background:rgba(0,0,0,.85); padding:8px 12px; border-left:2px solid #ff6b6b; display:none; max-height:60%; overflow-y:auto; white-space:pre-wrap; }
+.canvas-wrap .err.show { display:block; }
+.editor { display:flex; flex-direction:column; background:var(--bg-deep); border:1px solid var(--line); }
+.editor-head { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--line); }
+.editor-label { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--ink-mute); text-transform:uppercase; }
+.editor-status { font-family:var(--font-mono); font-size:9px; letter-spacing:1px; color:var(--green); display:flex; align-items:center; gap:6px; }
+.editor-status::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); }
+.editor-status.error { color:#ff6b6b; }
+.editor-status.error::before { background:#ff6b6b; box-shadow:0 0 6px #ff6b6b; }
+.editor textarea { width:100%; flex:1; min-height:240px; background:transparent; border:0; outline:0; resize:vertical; padding:14px 16px; color:var(--ink); font-family:var(--font-mono); font-size:13px; line-height:1.7; white-space:pre; tab-size:2; -moz-tab-size:2; -webkit-user-select:text; user-select:text; }
+
+/* Botones */
+.actions { display:flex; gap:10px; flex-wrap:wrap; padding-top:24px; border-top:1px solid var(--line); }
+.btn { background:transparent; border:1px solid var(--line); color:var(--ink-soft); font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:12px 18px; cursor:pointer; transition:all .3s var(--ease); display:flex; align-items:center; gap:8px; font-weight:400; }
+.btn:hover { color:var(--gold); border-color:rgba(212,184,150,.3); background:rgba(212,184,150,.03); }
+.btn .icon { font-size:13px; opacity:.7; }
+.btn.copied { color:var(--green); border-color:rgba(180,220,150,.4); }
+.btn.primary { border-color:var(--copper); color:var(--gold); margin-left:auto; }
+.btn.primary:hover { background:rgba(168,112,76,.10); border-color:var(--gold); }
+@media (max-width:560px) { .btn.primary { margin-left:0; width:100%; justify-content:center; } }
+
+/* Bottom nav */
+.nav-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:32px; margin-top:48px; border-top:1px solid var(--line); }
+.nav-arrow { display:flex; flex-direction:column; gap:4px; cursor:pointer; padding:12px 0; font-family:var(--font-body); transition:opacity .3s; }
+.nav-arrow:hover { opacity:.7; }
+.nav-arrow.disabled { opacity:.2; cursor:not-allowed; pointer-events:none; }
+.nav-arrow-label { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--ink-mute); text-transform:uppercase; }
+.nav-arrow-name { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:18px; color:var(--ink); }
+.nav-arrow.next { text-align:right; }
+
+/* Celebración final */
+.celebrate {
+  background:linear-gradient(180deg, rgba(212,184,150,.06), rgba(180,220,150,.03));
+  border:1px solid rgba(212,184,150,.2);
+  padding:32px; margin-top:32px; text-align:center;
+}
+.celebrate-eyebrow { font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--green); text-transform:uppercase; margin-bottom:14px; }
+.celebrate-title { font-family:var(--font-display); font-weight:300; font-variation-settings:'opsz' 72,'SOFT' 100; font-size:28px; color:var(--ink); margin-bottom:14px; letter-spacing:-.02em; }
+.celebrate-text { font-family:var(--font-body); font-size:14px; line-height:1.65; color:var(--ink-soft); max-width:520px; margin:0 auto; }
+.celebrate-text em { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; color:var(--gold); }
+/* ===== WOGL FOOTER ===== */
+.wogl-footer {
+  border-top:1px solid var(--line); padding:40px 28px 28px;
+  text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px;
+}
+.wogl-footer-logo {
+  font-family:'Outfit',sans-serif; font-weight:300; font-size:28px;
+  color:#e8c89a; letter-spacing:.18em;
+  text-shadow:0 0 40px rgba(232,200,154,0.3),0 0 80px rgba(212,165,116,0.15);
+}
+.wogl-footer-links {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;
+}
+.wogl-footer-links a {
+  font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em;
+  color:var(--ink-mute); text-decoration:none; transition:color .2s;
+}
+.wogl-footer-links a:hover { color:var(--gold); }
+.wogl-footer-dot { color:var(--ink-faint); font-size:10px; }
+.wogl-footer-copy {
+  font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.12em;
+  color:var(--ink-faint); text-transform:uppercase; margin-top:8px;
+}
+
+/* ===== WOGL ACADEMY HEADER ===== */
+.wogl-academy-header {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; align-items:center; gap:18px;
+  padding:14px 28px;
+  background:rgba(2,1,10,0.92);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.wogl-academy-logo {
+  font-family:'Outfit',sans-serif; font-weight:300; font-size:36px;
+  color:#e8c89a; letter-spacing:.18em; line-height:1; text-decoration:none;
+  text-shadow:0 0 60px rgba(232,200,154,0.45),0 0 120px rgba(212,165,116,0.25),0 2px 40px rgba(0,0,0,0.55);
+}
+.wogl-academy-divider { width:1px; height:22px; background:rgba(232,200,154,0.20); }
+.wogl-academy-label {
+  font-family:'JetBrains Mono',monospace; font-weight:300; font-size:11px;
+  letter-spacing:.12em; color:rgba(232,200,154,0.45); text-transform:uppercase;
+}
+.wogl-academy-tagline {
+  font-family:'Outfit',sans-serif; font-weight:300; font-size:12px;
+  letter-spacing:.04em; color:rgba(232,200,154,0.30);
+  margin-left:auto;
+}
+@media (max-width:900px) {
+  .wogl-academy-header { padding:12px 20px; gap:12px; }
+  .wogl-academy-logo { font-size:28px; }
+  .wogl-academy-tagline { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- WoGL Academy Header -->
+<header class="wogl-academy-header">
+  <a href="https://wogl.io" class="wogl-academy-logo">WoGL</a>
+  <div class="wogl-academy-divider"></div>
+  <span class="wogl-academy-label">academy</span>
+  <span class="wogl-academy-tagline">learn GLSL from zero</span>
+</header>
+
+<div class="app" style="padding-top:60px;">
+
+  <aside class="side">
+    <div class="side-head">
+      <div class="side-tag">aprende · start here</div>
+      <h1 class="side-title">Bienvenida</h1>
+      <p class="side-subtitle">Tus primeros 10 pasos en el mundo de los shaders.</p>
+      <div class="side-progress">
+        <span id="progressText">0 / 10</span>
+        <div class="bar"><div class="bar-fill" id="progressBar"></div></div>
+      </div>
+    </div>
+
+    <div class="side-section-label">Lecciones</div>
+    <nav class="toc" id="toc"></nav>
+
+    <div class="side-section-label">Lo que ya sabes</div>
+    <div class="kit-list" id="kitList"></div>
+  </aside>
+
+  <main class="main" id="main"></main>
+
+</div>
+
+<!-- Footer -->
+<footer class="wogl-footer">
+  <div class="wogl-footer-logo">WoGL</div>
+  <div class="wogl-footer-links">
+    <a href="https://wogl.io">wogl.io</a>
+    <span class="wogl-footer-dot">·</span>
+    <a href="https://studio.wogl.io">studio.wogl.io</a>
+    <span class="wogl-footer-dot">·</span>
+    <a href="https://worldofgl.com">worldofgl.com</a>
+    <span class="wogl-footer-dot">·</span>
+    <a href="https://mundogl.com">mundogl.com</a>
+  </div>
+  <div class="wogl-footer-copy">Proprietary. All rights reserved.</div>
+</footer>
+
+<script>
+'use strict';
+
+// ============================================================
+// DATOS
+// ============================================================
+
+var SECTION_DATA = {
+  tag:'aprende · start here',
+  title:'Bienvenida',
+  sub:'Tus primeros 10 pasos en el mundo de los shaders.',
+  welcome: {
+    eyebrow: 'Hola, qué bueno que llegaste',
+    title: '¿Nunca has programado? Estás en el lugar correcto.',
+    text: 'No vamos a explicarte qué es un shader todavía — primero vamos a hacer uno. Cambia un número, mira la pantalla. Cambia otro, mira otra vez. Eso es <em>todo</em> lo que vamos a hacer en estas 10 lecciones. Cuando termines, sabrás más de lo que crees.'
+  },
+  tips: 'Acá no hay manera de "hacer algo mal". Si rompes el código, aparece un mensaje rojo y le pones <em>Reset</em>. Listo, vuelves a empezar. <em>Atrévete a romper.</em> Ahí es donde se aprende.',
+};
+
+// LO QUE YA SABEN — crece conforme avanzan
+// Cada item se desbloquea en la lección que indica
+var KIT = [
+  { unlock: 1, title: 'Pintar la pantalla', code: 'gl_FragColor = vec4(R, G, B, 1.);', explain: 'La línea mágica. R, G, B son tres números entre 0 y 1.' },
+  { unlock: 4, title: 'Saber dónde estás', code: 'vec2 p = gl_FragCoord.xy / R;', explain: 'p te dice la posición del pixel: 0 a la izquierda, 1 a la derecha.' },
+  { unlock: 6, title: 'El centro', code: 'vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);', explain: 'Ahora 0 está en el centro de la pantalla, no en la esquina.' },
+  { unlock: 7, title: 'El tiempo', code: 'col = col * (.5 + .5 * sin(T));', explain: 'T es el tiempo. Va creciendo. Lo usamos para animar.' },
+  { unlock: 8, title: 'Ondas con sin()', code: 'float v = sin(p.x * 10.) * .5 + .5;', explain: 'sin() es una onda. La fórmula la "traduce" para usarla como color.' },
+  { unlock: 9, title: 'Distancia', code: 'float d = length(p);', explain: 'length() te dice qué tan lejos estás del centro.' },
+];
+
+// LAS 10 LECCIONES
+var LESSONS = [
+
+  // ===== 01 — HOLA, COLOR =====
+  { num:'01', title:'Hola, color',
+    desc:'Tu primera línea. Pinta la pantalla.',
+    welcome: true, // mostrar banner welcome
+    explain: '<p>Bienvenido. Lo primero que vamos a aprender es <strong>cómo pintar la pantalla de un color</strong>. Eso se hace con una sola línea de código.</p><p>El código que ves a la derecha le dice a la computadora: "pinta cada pixel de este color". El color se define con <strong>tres números</strong>: cuánto rojo, cuánto verde, cuánto azul. Cada número va de <em>0</em> (apagado) a <em>1</em> (al máximo).</p><div class="glossary"><span class="glossary-label">¿Qué es un pixel?</span>Un pixel es uno de los puntitos diminutos que forman tu pantalla. Tu pantalla tiene millones. Un <em>shader</em> es un programa que decide de qué color va cada uno.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el primer número de <code>1.</code> a <code>0.</code> y mira qué pasa. Después cambia el segundo. Después el tercero. <em>Juega.</em></span></div>',
+    code: 'void main(){\n  // Tres números: rojo, verde, azul\n  gl_FragColor = vec4(1., 0.5, 0.2, 1.);\n}'
+  },
+
+  // ===== 02 — LOS TRES NÚMEROS =====
+  { num:'02', title:'Los tres números',
+    desc:'Rojo, verde, azul. Así se hace cualquier color.',
+    explain: '<p>Cualquier color que veas en una pantalla está hecho de <strong>tres números</strong>: cuánto rojo, cuánto verde, cuánto azul. <em>R, G, B.</em></p><p>Si los tres están al máximo (1, 1, 1), tienes blanco. Si los tres están apagados (0, 0, 0), tienes negro. Si solo el rojo está prendido (1, 0, 0), tienes rojo puro.</p><div class="glossary"><span class="glossary-label">¿Por qué tres?</span>Porque tu pantalla está hecha de tres tipos de luces: rojas, verdes y azules. Mezclando esos tres puedes hacer <em>cualquier</em> color del mundo. Es la misma idea que la imprenta CMYK pero al revés.</div><p>Nota una cosa rara: escribimos <code>1.</code> con punto, no <code>1</code>. Eso es porque la computadora distingue entre números enteros y decimales. Acá siempre usamos decimales — el punto es obligatorio.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Intenta hacer <em>amarillo</em>. Pista: amarillo es rojo + verde, sin azul. Después intenta <em>morado</em>. Pista: rojo + azul, sin verde.</span></div>',
+    code: 'void main(){\n  float r = 1.;\n  float g = 0.7;\n  float b = 0.2;\n  gl_FragColor = vec4(r, g, b, 1.);\n}'
+  },
+
+  // ===== 03 — MEZCLAR =====
+  { num:'03', title:'Mezclar',
+    desc:'Sumar y restar números. Ya sabes hacerlo.',
+    explain: '<p>Los números de los colores se pueden <strong>sumar, restar, multiplicar y dividir</strong>. Igual que los números normales que aprendiste en la primaria.</p><p>Si multiplicas un color por <em>0.5</em>, queda más oscuro (la mitad de luz). Si lo multiplicas por <em>2.</em>, queda más brillante. Si le restas <em>0.3</em>, le quitas un poco de cada canal.</p><div class="glossary"><span class="glossary-label">vec3</span>Un <code>vec3</code> es como una <em>bolsita con tres números adentro</em>. La usamos para guardar un color (R, G, B). Cuando le sumas otra bolsita, suma los tres números a la vez. Mucho más cómodo que sumar uno por uno.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.5</code> por <code>0.2</code> para ver el color más oscuro. O por <code>1.5</code> para verlo brillando.</span></div>',
+    code: 'void main(){\n  vec3 base = vec3(1., 0.5, 0.2);\n  // Lo multiplicamos para hacerlo más oscuro\n  vec3 col = base * 0.5;\n  gl_FragColor = vec4(col, 1.);\n}'
+  },
+
+  // ===== 04 — LAS COORDENADAS =====
+  { num:'04', title:'Las coordenadas',
+    desc:'Cada pixel sabe dónde está.',
+    explain: '<p>Cada pixel de la pantalla tiene una <strong>posición</strong>: dos números, X y Y. X es horizontal (izquierda-derecha), Y es vertical (abajo-arriba). Como en el plano cartesiano de la escuela.</p><p>Lo importante: <em>cada pixel ejecuta el código por separado</em>, pero conoce su propia posición. El pixel de la esquina inferior izquierda sabe que es (0, 0). El de la esquina superior derecha sabe que es el último.</p><div class="glossary"><span class="glossary-label">vec2</span>Si <code>vec3</code> es una bolsita de 3 números, <code>vec2</code> es una bolsita de 2. La usamos para posiciones (X, Y). Acá <code>p</code> es la posición del pixel, dividida entre el tamaño de la pantalla — para que vaya de 0 a 1 en lugar de 0 a 1920.</div><p>Si pones <code>p.x</code> como rojo, el rojo aumenta hacia la derecha. Si pones <code>p.y</code> como verde, el verde aumenta hacia arriba. <em>El color es la posición.</em></p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> en la primera línea. ¿Qué pasa? Ahora pon <code>p.x</code> en los tres lugares. ¿Y ahora?</span></div>',
+    code: 'void main(){\n  vec2 p = gl_FragCoord.xy / R;\n  // El color es la posición\n  gl_FragColor = vec4(p.x, p.y, 0.5, 1.);\n}'
+  },
+
+  // ===== 05 — EL DEGRADÉ =====
+  { num:'05', title:'El degradé',
+    desc:'Una posición controla un color. Ya está, eres artista.',
+    explain: '<p>Esto es la <strong>idea más poderosa</strong> que vas a aprender hoy: <em>la posición puede convertirse en color</em>. Y al revés: <em>las matemáticas que apliques a la posición se ven como dibujo</em>.</p><p>Un degradé es solo eso: tomas <code>p.x</code> (la posición horizontal) y la usas como un canal de color. El pixel de la izquierda tiene <code>p.x = 0</code>, el de la derecha tiene <code>p.x = 1</code>. Si lo conectas al rojo, queda un degradé de negro a rojo.</p><div class="glossary"><span class="glossary-label">mix()</span>La función <code>mix(A, B, t)</code> "mezcla" dos cosas. Cuando <code>t</code> es 0, te da A puro. Cuando es 1, te da B puro. Cuando es 0.5, te da la mitad de cada uno. Es como un slider.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> para que el degradé sea vertical. Cambia los colores <code>vec3(1.,0.3,0.2)</code> y <code>vec3(0.2,0.5,1.)</code> a otros que tú elijas.</span></div>',
+    code: 'void main(){\n  vec2 p = gl_FragCoord.xy / R;\n  vec3 a = vec3(1., 0.3, 0.2);  // izquierda\n  vec3 b = vec3(0.2, 0.5, 1.);  // derecha\n  vec3 col = mix(a, b, p.x);\n  gl_FragColor = vec4(col, 1.);\n}'
+  },
+
+  // ===== 06 — EL CENTRO =====
+  { num:'06', title:'El centro',
+    desc:'Mover el origen a la mitad de la pantalla.',
+    explain: '<p>Hasta ahora <code>p</code> iba de <em>0 (esquina)</em> a <em>1 (esquina opuesta)</em>. Eso es útil para degradés, pero no para cosas centradas, como un círculo en el medio.</p><p>Hay una fórmula que todos los shaders usan al inicio. <em>Apréndela como mantra</em>:</p><div class="glossary"><span class="glossary-label">La fórmula del centro</span><code>vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);</code><br><br>Lo que hace: el centro de la pantalla ahora es <em>(0,0)</em>. La esquina superior derecha es <em>(1,1)</em>. La inferior izquierda es <em>(-1,-1)</em>. Y funciona aunque la pantalla sea cuadrada o alargada — no se distorsiona.</div><p>No tienes que entender la fórmula completa todavía. Solo cópiala. Es la primera línea de casi cualquier shader.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Quita el <code>2.*</code> y la <code>- R</code> y el <code>/ min(...)</code>. Es decir, deja solo <code>vec2 p = gl_FragCoord.xy / R;</code> ¿Ves cómo la "X" se va a la esquina? Ahora vuelve a la versión centrada.</span></div>',
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // p ahora va de -1 a 1, con (0,0) en el centro\n  vec3 col = vec3(p.x, p.y, 0.5);\n  gl_FragColor = vec4(col, 1.);\n}'
+  },
+
+  // ===== 07 — EL RELOJ =====
+  { num:'07', title:'El reloj',
+    desc:'T es el tiempo. Lo usamos para animar.',
+    explain: '<p>Hasta ahora todo era <em>estático</em>. Ahora le agregamos <strong>movimiento</strong>.</p><p>Existe una variable que ya está hecha por nosotros: <code>T</code>. Es el tiempo en segundos desde que cargó la página. Va creciendo: <em>0.1, 0.2, 0.3...</em> y nunca para.</p><p>Como cualquier número, lo puedes usar en tus colores. Si haces que el rojo dependa de <code>T</code>, el rojo va a cambiar con el tiempo.</p><div class="glossary"><span class="glossary-label">¿Por qué sin(T)?</span>Si pusieras solo <code>T</code>, el color crecería para siempre y se quedaría en blanco. Por eso lo "envolvemos" con <code>sin()</code>, que oscila entre -1 y 1 eternamente. La fórmula <code>.5 + .5 * sin(T)</code> hace que oscile entre 0 y 1 — perfecto para colores.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>sin(T)</code> por <code>sin(T*5.)</code> para que sea más rápido. O por <code>sin(T*.2)</code> para más lento.</span></div>',
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // El brillo sube y baja con el tiempo\n  float brillo = .5 + .5 * sin(T);\n  vec3 col = vec3(1., 0.5, 0.2) * brillo;\n  gl_FragColor = vec4(col, 1.);\n}'
+  },
+
+  // ===== 08 — LA ONDA =====
+  { num:'08', title:'La onda',
+    desc:'sin() de la posición. Tu primera función mágica.',
+    explain: '<p>Hace dos lecciones le aplicaste <code>sin()</code> al tiempo y el brillo subía y bajaba. Ahora le aplicas <code>sin()</code> a la <strong>posición</strong> — y aparecen <em>rayas</em>.</p><p>¿Por qué? Porque <code>sin(p.x * 10)</code> oscila entre -1 y 1 a medida que <code>p.x</code> cambia. Así que de izquierda a derecha, el valor sube, baja, sube, baja... y eso son rayas.</p><div class="glossary"><span class="glossary-label">El número 10</span>Es la <em>frecuencia</em>. Más alto, más rayas. Más bajo, menos rayas. Pruébalo: cambia <code>10.</code> por <code>50.</code> (muchísimas rayas finas) o por <code>3.</code> (poquitas rayas gordas).</div><p>Le sumamos <code>T</code> al final (<code>+ T</code>) para que las rayas <em>se muevan</em>. Sin eso son rayas estáticas. Con eso son rayas que fluyen.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> — las rayas se vuelven horizontales. Cambia <code>+ T</code> por <code>- T</code> — las rayas van en la otra dirección.</span></div>',
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // sin de la posición = rayas\n  float v = sin(p.x * 10. + T) * .5 + .5;\n  vec3 col = vec3(1., 0.5, 0.2) * v;\n  gl_FragColor = vec4(col, 1.);\n}'
+  },
+
+  // ===== 09 — EL CÍRCULO =====
+  { num:'09', title:'El círculo',
+    desc:'length() te dice qué tan lejos estás del centro.',
+    explain: '<p>Para hacer un <strong>círculo</strong> necesitas saber: <em>¿qué tan lejos está cada pixel del centro?</em></p><p>La función <code>length(p)</code> te lo dice. Si el pixel está en el centro, devuelve <em>0</em>. Si está en una esquina, devuelve algo como <em>1.4</em>.</p><p>Si tomas esa distancia y dices "los pixeles que estén a menos de <em>0.5</em> son blancos, los demás negros" — tienes un círculo perfecto.</p><div class="glossary"><span class="glossary-label">smoothstep()</span>Hace una transición suave entre dos valores. <code>smoothstep(0.5, 0.45, d)</code> dice: cuando <em>d</em> es 0.5, da 0. Cuando es 0.45, da 1. Y entre medio, una transición suave. Sin esto, el borde del círculo se ve pixelado. Con esto, mantequilloso.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.5</code> a <code>0.8</code> (círculo más grande) o a <code>0.2</code> (círculo más chico). Cambia el <code>sin(T)</code> que multiplica al radio a <code>sin(T*5.)</code> para que pulse rápido.</span></div>',
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  float d = length(p);\n  // El círculo respira\n  float r = 0.5 + 0.1 * sin(T);\n  float circ = smoothstep(r, r - 0.02, d);\n  vec3 col = vec3(1., 0.7, 0.3) * circ;\n  gl_FragColor = vec4(col, 1.);\n}'
+  },
+
+  // ===== 10 — TU PRIMERA OBRA =====
+  { num:'10', title:'Tu primera obra',
+    desc:'Junta todo lo que aprendiste.',
+    finale: true,
+    explain: '<p>Esta lección no enseña nada nuevo. <strong>Junta todo lo anterior</strong>: coordenadas centradas, el tiempo, ondas, círculos, colores que cambian.</p><p>Mira el código. Cada línea ya la conoces:</p><ul style="list-style:none; padding-left:0; margin:18px 0;"><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">vec2 p = ...</code> &nbsp; coordenadas centradas (lección 06)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">length(p)</code> &nbsp; distancia al centro (lección 09)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">sin(d * 8. - T)</code> &nbsp; ondas que se mueven (lección 08)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">mix(c1, c2, ...)</code> &nbsp; mezclar dos colores (lección 05)</li></ul><p><em>Esta es tu primera obra.</em> Anillos concéntricos que pulsan, hechos con todo lo que aprendiste en una hora.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>8.</code> a <code>20.</code> para anillos finos. Cambia los dos colores. Cambia el <code>T</code> por <code>T*3.</code> para que pulse rápido. <em>Esta es tu obra ahora.</em> Hazla tuya.</span></div>',
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  float d = length(p);\n  float v = sin(d * 8. - T * 2.) * .5 + .5;\n  vec3 c1 = vec3(1., 0.4, 0.2);\n  vec3 c2 = vec3(0.3, 0.6, 1.);\n  vec3 col = mix(c1, c2, v);\n  col *= 1. - d * 0.6;  // oscurece bordes\n  gl_FragColor = vec4(col, 1.);\n}'
+  },
+
+];
+
+// ============================================================
+// HEAD del shader (mismo engine, simplificado al máximo)
+// ============================================================
+var VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+var HEAD = [
+  'precision mediump float;',
+  'uniform float T;', 'uniform vec2 R;', 'uniform vec2 M;',
+].join('\n');
+
+// ============================================================
+// Estado
+// ============================================================
+var currentIdx = 0;
+var visited = new Set();
+var currentRenderer = null;
+
+function el(tag, attrs, kids) {
+  var e = document.createElement(tag);
+  if (attrs) for (var k in attrs) {
+    if (k === 'class') e.className = attrs[k];
+    else if (k === 'html') e.innerHTML = attrs[k];
+    else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), attrs[k]);
+    else e.setAttribute(k, attrs[k]);
+  }
+  if (kids) {
+    if (typeof kids === 'string') e.textContent = kids;
+    else kids.forEach(function(c){ if (c) e.appendChild(c); });
+  }
+  return e;
+}
+
+// ============================================================
+// Sidebar
+// ============================================================
+function buildSidebar() {
+  var toc = document.getElementById('toc');
+  LESSONS.forEach(function(lesson, i) {
+    var item = el('div', { class:'toc-item', 'data-idx':i }, [
+      el('span', { class:'toc-num' }, lesson.num),
+      el('span', { class:'toc-name' }, lesson.title),
+      el('span', { class:'toc-mark' }, '')
+    ]);
+    item.addEventListener('click', function(){ goTo(i); });
+    toc.appendChild(item);
+  });
+
+  var kitList = document.getElementById('kitList');
+  KIT.forEach(function(item, i) {
+    var card = el('div', { class:'kit-card locked', 'data-unlock': item.unlock }, [
+      el('div', { class:'kit-card-title' }, item.title),
+      el('pre', { class:'kit-card-code' }, item.code),
+      el('p', { class:'kit-card-explain' }, item.explain),
+      el('div', { class:'kit-card-lesson' }, 'Desbloquea en lección ' + String(item.unlock).padStart(2,'0'))
+    ]);
+    kitList.appendChild(card);
+  });
+}
+
+function updateProgress() {
+  var done = visited.size;
+  document.getElementById('progressText').textContent = done + ' / ' + LESSONS.length;
+  document.getElementById('progressBar').style.width = (done / LESSONS.length * 100) + '%';
+
+  document.querySelectorAll('.toc-item').forEach(function(item){
+    var idx = parseInt(item.getAttribute('data-idx'));
+    item.classList.toggle('active', idx === currentIdx);
+    item.classList.toggle('done', visited.has(idx));
+    var mark = item.querySelector('.toc-mark');
+    mark.textContent = visited.has(idx) ? '✓' : '';
+  });
+
+  // Desbloquear kit cards conforme avanza
+  document.querySelectorAll('.kit-card').forEach(function(card){
+    var unlock = parseInt(card.getAttribute('data-unlock'));
+    if (currentIdx + 1 >= unlock) {
+      card.classList.add('unlocked');
+      card.classList.remove('locked');
+      var lessonLabel = card.querySelector('.kit-card-lesson');
+      if (lessonLabel) lessonLabel.textContent = 'Aprendiste en lección ' + String(unlock).padStart(2,'0');
+    }
+  });
+}
+
+// ============================================================
+// Main
+// ============================================================
+function goTo(idx) {
+  if (idx < 0 || idx >= LESSONS.length) return;
+  if (currentRenderer) currentRenderer.destroy();
+  currentIdx = idx;
+  visited.add(idx);
+  renderLesson();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderLesson() {
+  var lesson = LESSONS[currentIdx];
+  var main = document.getElementById('main');
+  main.innerHTML = '';
+
+  // Crumb
+  main.appendChild(el('div', { class:'crumb' }, [
+    el('span', null, 'Aprende'),
+    el('span', { class:'sep' }, '›'),
+    el('span', null, 'Start Here'),
+    el('span', { class:'sep' }, '›'),
+    el('span', null, 'Lección ' + lesson.num)
+  ]));
+
+  // Welcome banner (solo lección 01)
+  if (lesson.welcome) {
+    main.appendChild(el('div', { class:'welcome-banner' }, [
+      el('div', { class:'welcome-eyebrow' }, SECTION_DATA.welcome.eyebrow),
+      el('h2', { class:'welcome-title' }, SECTION_DATA.welcome.title),
+      el('p', { class:'welcome-text', html: SECTION_DATA.welcome.text })
+    ]));
+  }
+
+  // Title block
+  main.appendChild(el('div', { class:'lesson-num-big' }, lesson.num));
+  main.appendChild(el('h1', { class:'lesson-title-big' }, lesson.title));
+  main.appendChild(el('p', { class:'lesson-desc-big' }, lesson.desc));
+
+  // Tips banner (solo en lección 01)
+  if (lesson.welcome) {
+    main.appendChild(el('div', { class:'tips-banner' }, [
+      el('span', { class:'tips-icon' }, 'Antes'),
+      el('p', { class:'tips-text', html: SECTION_DATA.tips })
+    ]));
+  }
+
+  // Explain
+  main.appendChild(el('div', { class:'explain', html: lesson.explain }));
+
+  // Sandbox label
+  main.appendChild(el('div', { class:'sandbox-label' }, '↓ Edita el código y mira'));
+
+  // Sandbox
+  var canvas = el('canvas');
+  var errEl = el('div', { class:'err' });
+  var canvasWrap = el('div', { class:'canvas-wrap' }, [canvas, errEl, el('div', { class:'badge' }, 'live · webgl')]);
+  var statusEl = el('span', { class:'editor-status' }, 'compilado');
+  var textarea = el('textarea', { spellcheck:'false' });
+  textarea.value = lesson.code;
+  var editor = el('div', { class:'editor' }, [
+    el('div', { class:'editor-head' }, [
+      el('span', { class:'editor-label' }, 'tu código'),
+      statusEl
+    ]),
+    textarea
+  ]);
+  main.appendChild(el('div', { class:'sandbox' }, [canvasWrap, editor]));
+
+  // Setup renderer
+  setTimeout(function(){
+    currentRenderer = createRenderer(canvas, lesson.code, statusEl, errEl);
+    var debounce;
+    textarea.addEventListener('input', function(){
+      clearTimeout(debounce);
+      debounce = setTimeout(function(){
+        if (currentRenderer) currentRenderer.recompile(textarea.value);
+      }, 250);
+    });
+  }, 50);
+
+  // Actions
+  var btnCopy = el('button', { class:'btn' }, [el('span', { class:'icon' }, '⧉'), el('span', null, 'Copiar')]);
+  var btnReset = el('button', { class:'btn' }, [el('span', { class:'icon' }, '↺'), el('span', null, 'Reset')]);
+
+  var btnNextLabel, btnNextIcon;
+  if (lesson.finale) {
+    btnNextLabel = '¡Completaste!';
+    btnNextIcon = '✓';
+  } else if (currentIdx < LESSONS.length - 1) {
+    btnNextLabel = 'Siguiente paso';
+    btnNextIcon = '→';
+  } else {
+    btnNextLabel = 'Completaste';
+    btnNextIcon = '✓';
+  }
+  var btnNext = el('button', { class:'btn primary' }, [
+    el('span', null, btnNextLabel),
+    el('span', { class:'icon' }, btnNextIcon)
+  ]);
+
+  btnCopy.addEventListener('click', function(){
+    navigator.clipboard.writeText(textarea.value).then(function(){
+      var l = btnCopy.querySelector('span:last-child');
+      var o = l.textContent; l.textContent = 'Copiado ✓';
+      btnCopy.classList.add('copied');
+      setTimeout(function(){ l.textContent = o; btnCopy.classList.remove('copied'); }, 1400);
+    });
+  });
+  btnReset.addEventListener('click', function(){
+    textarea.value = lesson.code;
+    if (currentRenderer) currentRenderer.recompile(lesson.code);
+  });
+  btnNext.addEventListener('click', function(){
+    if (currentIdx < LESSONS.length - 1) goTo(currentIdx + 1);
+  });
+
+  main.appendChild(el('div', { class:'actions' }, [btnCopy, btnReset, btnNext]));
+
+  // Celebración (solo en lección 10)
+  if (lesson.finale) {
+    main.appendChild(el('div', { class:'celebrate' }, [
+      el('div', { class:'celebrate-eyebrow' }, '✓ Sección completada'),
+      el('h3', { class:'celebrate-title' }, 'Hace una hora no sabías programar.'),
+      el('p', { class:'celebrate-text', html: 'Ahora hiciste anillos que pulsan con código que tú escribiste. <em>Eso es ser shader artist.</em> Lo siguiente es la sección de <strong>Patrones</strong> — vas a aprender a hacer rayas, espirales, mandalas. Cuando estés listo.' })
+    ]));
+  }
+
+  // Bottom nav
+  var prevArrow = el('div', { class:'nav-arrow' + (currentIdx === 0 ? ' disabled' : '') }, [
+    el('span', { class:'nav-arrow-label' }, '← Anterior'),
+    el('span', { class:'nav-arrow-name' }, currentIdx > 0 ? LESSONS[currentIdx-1].title : '—')
+  ]);
+  var nextArrow = el('div', { class:'nav-arrow next' + (currentIdx === LESSONS.length - 1 ? ' disabled' : '') }, [
+    el('span', { class:'nav-arrow-label' }, 'Siguiente →'),
+    el('span', { class:'nav-arrow-name' }, currentIdx < LESSONS.length - 1 ? LESSONS[currentIdx+1].title : '—')
+  ]);
+  prevArrow.addEventListener('click', function(){ if (currentIdx > 0) goTo(currentIdx - 1); });
+  nextArrow.addEventListener('click', function(){ if (currentIdx < LESSONS.length - 1) goTo(currentIdx + 1); });
+
+  main.appendChild(el('div', { class:'nav-bottom' }, [prevArrow, nextArrow]));
+}
+
+// ============================================================
+// WebGL renderer
+// ============================================================
+function createRenderer(canvas, code, statusEl, errEl) {
+  var gl = canvas.getContext('webgl', { antialias:true, alpha:false });
+  if (!gl) return null;
+  var prog = null, uT, uR, uM;
+  var dpr = 1.0, mouseX = 0.5, mouseY = 0.5;
+  var paused = false, isVisible = true, isInViewport = true;
+  var FPS = 30, FRAME = 1000/FPS, lastDraw = 0;
+  var startTime = performance.now();
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+  function recompile(src) {
+    var fs = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(fs, HEAD + '\n' + src);
+    gl.compileShader(fs);
+    if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
+      var err = gl.getShaderInfoLog(fs); gl.deleteShader(fs);
+      if (statusEl) { statusEl.textContent = 'error'; statusEl.classList.add('error'); }
+      if (errEl) { errEl.textContent = err; errEl.classList.add('show'); }
+      return false;
+    }
+    var vs = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vs, VERT); gl.compileShader(vs);
+    var newProg = gl.createProgram();
+    gl.attachShader(newProg, vs); gl.attachShader(newProg, fs);
+    gl.bindAttribLocation(newProg, 0, 'a');
+    gl.linkProgram(newProg);
+    if (prog) gl.deleteProgram(prog);
+    prog = newProg;
+    gl.useProgram(prog);
+    uT = gl.getUniformLocation(prog, 'T');
+    uR = gl.getUniformLocation(prog, 'R');
+    uM = gl.getUniformLocation(prog, 'M');
+    if (statusEl) { statusEl.textContent = 'compilado'; statusEl.classList.remove('error'); }
+    if (errEl) errEl.classList.remove('show');
+    return true;
+  }
+  recompile(code);
+
+  function resize() {
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = Math.floor(rect.width * dpr);
+    canvas.height = Math.floor(rect.height * dpr);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  canvas.addEventListener('mousemove', function(e){
+    var rect = canvas.getBoundingClientRect();
+    mouseX = (e.clientX - rect.left) / rect.width;
+    mouseY = 1 - (e.clientY - rect.top) / rect.height;
+  });
+  document.addEventListener('visibilitychange', function(){ isVisible = !document.hidden; });
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(es){ isInViewport = es[0].isIntersecting; }, { threshold:0.01 });
+    obs.observe(canvas);
+  }
+
+  var rafId;
+  function frame(now) {
+    rafId = requestAnimationFrame(frame);
+    if (paused || !isVisible || !isInViewport || !prog) return;
+    if (now - lastDraw < FRAME) return;
+    lastDraw = now;
+    gl.uniform1f(uT, (now - startTime) * 0.001);
+    gl.uniform2f(uR, canvas.width, canvas.height);
+    gl.uniform2f(uM, mouseX, mouseY);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+  rafId = requestAnimationFrame(frame);
+
+  return {
+    recompile: recompile,
+    destroy: function(){ paused = true; cancelAnimationFrame(rafId); }
+  };
+}
+
+// ============================================================
+// Init
+// ============================================================
+document.addEventListener('DOMContentLoaded', function(){
+  buildSidebar();
+  goTo(0);
+  // Keyboard nav
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight') goTo(currentIdx + 1);
+    if (e.key === 'ArrowLeft') goTo(currentIdx - 1);
+  });
+});
+</script>
+
+</body>
+</html>
