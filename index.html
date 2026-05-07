@@ -394,7 +394,7 @@ var LESSONS = [
   { num:'03', title:'Mezclar',
     desc:'Sumar y restar números. Ya sabes hacerlo.',
     explain: '<p>Los números de los colores se pueden <strong>sumar, restar, multiplicar y dividir</strong>. Igual que los números normales que aprendiste en la primaria.</p><p>Si multiplicas un color por <em>0.5</em>, queda más oscuro (la mitad de luz). Si lo multiplicas por <em>2.</em>, queda más brillante. Si le restas <em>0.3</em>, le quitas un poco de cada canal.</p><div class="glossary"><span class="glossary-label">vec3</span>Un <code>vec3</code> es como una <em>bolsita con tres números adentro</em>. La usamos para guardar un color (R, G, B). Cuando le sumas otra bolsita, suma los tres números a la vez. Mucho más cómodo que sumar uno por uno.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.5</code> por <code>0.2</code> para ver el color más oscuro. O por <code>1.5</code> para verlo brillando.</span></div><div class="try-it"><span class="try-it-icon">Tip</span><span>¿Ves cómo el brillo pulsa? Es <code>sin(T)</code> multiplicando al color. En la lección 05 vas a aprender a mezclar dos colores con un degradé.</span></div>',
-    code: 'void main(){\n  vec3 warm = vec3(1., 0.5, 0.2);\n  vec3 cool = vec3(0.2, 0.5, 1.);\n  // Mezcla entre dos colores con el tiempo\n  float t = .5 + .5 * sin(T);\n  vec3 col = warm * t + cool * (1. - t);\n  gl_FragColor = vec4(col, 1.);\n}'
+    code: 'void main(){\n  vec3 magenta = vec3(0.9, 0.1, 0.5);\n  vec3 cyan = vec3(0.1, 0.8, 0.9);\n  // Mezcla entre dos colores con el tiempo\n  float t = .5 + .5 * sin(T);\n  vec3 col = magenta * t + cyan * (1. - t);\n  gl_FragColor = vec4(col, 1.);\n}'
   },
 
   // ===== 04 — LAS COORDENADAS =====
