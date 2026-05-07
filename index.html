@@ -38,7 +38,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 
 /* ===== LAYOUT ===== */
 .app { display:grid; grid-template-columns:var(--side-w) 1fr; min-height:100vh; min-height:100dvh; }
-@media (max-width:900px) { .app { grid-template-columns:1fr; } }
+@media (max-width:900px) { .app { grid-template-columns:1fr; } .app .main { order:-1; } }
 
 /* ===== SIDEBAR ===== */
 .side {
@@ -386,8 +386,8 @@ var LESSONS = [
   // ===== 02 — LOS TRES NÚMEROS =====
   { num:'02', title:'Los tres números',
     desc:'Rojo, verde, azul. Así se hace cualquier color.',
-    explain: '<p>Cualquier color que veas en una pantalla está hecho de <strong>tres números</strong>: cuánto rojo, cuánto verde, cuánto azul. <em>R, G, B.</em></p><p>Si los tres están al máximo (1, 1, 1), tienes blanco. Si los tres están apagados (0, 0, 0), tienes negro. Si solo el rojo está prendido (1, 0, 0), tienes rojo puro.</p><div class="glossary"><span class="glossary-label">¿Por qué tres?</span>Porque tu pantalla está hecha de tres tipos de luces: rojas, verdes y azules. Mezclando esos tres puedes hacer <em>cualquier</em> color del mundo. Es la misma idea que la imprenta CMYK pero al revés.</div><p>Nota una cosa rara: escribimos <code>1.</code> con punto, no <code>1</code>. Eso es porque la computadora distingue entre números enteros y decimales. Acá siempre usamos decimales — el punto es obligatorio.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Intenta hacer <em>amarillo</em>. Pista: amarillo es rojo + verde, sin azul. Después intenta <em>morado</em>. Pista: rojo + azul, sin verde.</span></div>',
-    code: 'void main(){\n  float r = 1.;\n  float g = 0.7;\n  float b = 0.2;\n  gl_FragColor = vec4(r, g, b, 1.);\n}'
+    explain: '<p>Cualquier color que veas en una pantalla está hecho de <strong>tres números</strong>: cuánto rojo, cuánto verde, cuánto azul. <em>R, G, B.</em></p><p>Si los tres están al máximo (1, 1, 1), tienes blanco. Si los tres están apagados (0, 0, 0), tienes negro. Si solo el rojo está prendido (1, 0, 0), tienes rojo puro.</p><div class="glossary"><span class="glossary-label">¿Por qué tres?</span>Porque tu pantalla está hecha de tres tipos de luces: rojas, verdes y azules. Mezclando esos tres puedes hacer <em>cualquier</em> color del mundo. Es la misma idea que la imprenta CMYK pero al revés.</div><p>Nota una cosa rara: escribimos <code>1.</code> con punto, no <code>1</code>. Eso es porque la computadora distingue entre números enteros y decimales. Acá siempre usamos decimales — el punto es obligatorio.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Intenta hacer <em>amarillo</em>. Pista: amarillo es rojo + verde, sin azul. Después intenta <em>morado</em>. Pista: rojo + azul, sin verde.</span></div><div class="try-it"><span class="try-it-icon">Tip</span><span>¿Ves cómo cada color pulsa? Eso es <code>sin(T)</code> — el tiempo. Vas a aprender cómo funciona en la lección 07.</span></div>',
+    code: 'void main(){\n  // Cada color pulsa con el tiempo\n  float r = .5 + .5 * sin(T);\n  float g = .5 + .5 * sin(T + 2.1);\n  float b = .5 + .5 * sin(T + 4.2);\n  gl_FragColor = vec4(r, g, b, 1.);\n}'
   },
 
   // ===== 03 — MEZCLAR =====
