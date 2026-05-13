@@ -21,13 +21,13 @@
   --bg-deep: #000;
   --bg-side: #050410;
   --ink: #e8d9c0;
-  --ink-soft: #b6a489;
-  --ink-mute: #6b5d49;
-  --ink-faint: #3a3326;
+  --ink-soft: #c9b89e;
+  --ink-mute: #8a7a65;
+  --ink-faint: #5a4d3e;
   --gold: #d4b896;
   --copper: #a8704c;
   --green: rgb(180, 220, 150);
-  --line: rgba(232, 217, 192, 0.08);
+  --line: rgba(232, 217, 192, 0.14);
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -103,7 +103,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 .kit-list { padding:0 28px 28px; display:flex; flex-direction:column; gap:12px; }
 .kit-card {
   background:var(--bg-deep); border:1px solid var(--line); padding:14px; position:relative;
-  opacity:.4; transition:opacity .5s var(--ease);
+  opacity:.80; transition:opacity .5s var(--ease);
 }
 .kit-card.unlocked { opacity:1; }
 .kit-card-title {
@@ -133,8 +133,8 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 
 /* Welcome banner */
 .welcome-banner {
-  background:linear-gradient(180deg, rgba(212,184,150,.08), rgba(168,112,76,.04));
-  border:1px solid rgba(212,184,150,.2); padding:28px 32px; margin-bottom:48px;
+  background:linear-gradient(180deg, rgba(212,184,150,.12), rgba(168,112,76,.06));
+  border:1px solid rgba(212,184,150,.25); padding:28px 32px; margin-bottom:48px;
   display:flex; flex-direction:column; gap:14px;
 }
 .welcome-eyebrow {
