@@ -621,6 +621,8 @@ function switchLanguage(newLang) {
   document.documentElement.lang = lang === 'en' ? 'en' : 'es';
   // Update page title
   document.title = lang === 'en' ? 'WoGL Learn · Start Here' : 'WoGL Aprende · Start Here';
+  // Destroy current renderer before rebuilding
+  if (currentRenderer) currentRenderer.destroy();
   // Rebuild everything
   updateLangToggle();
   updateSidebarText();
