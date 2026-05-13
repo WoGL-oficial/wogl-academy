@@ -1,3 +1,10 @@
+<!-- ═══════════════════════════════════════
+   WoGL — World of GL
+   wogl.io | worldofgl.com | mundogl.com
+   hello@wogl.io | hola@mundogl.com
+
+   Proprietary. All rights reserved.
+   ═══════════════════════════════════════ -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,13 +13,13 @@
 <title>WoGL Aprende · Start Here</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,200;9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #02010a;
   --bg-lift: #07061a;
-  --bg-deep: transparent;
-  --bg-side: rgba(5,4,16,0.25);
+  --bg-deep: #000;
+  --bg-side: #050410;
   --ink: #e8d9c0;
   --ink-soft: #b6a489;
   --ink-mute: #6b5d49;
@@ -21,24 +28,40 @@
   --copper: #a8704c;
   --green: rgb(180, 220, 150);
   --line: rgba(232, 217, 192, 0.08);
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --side-w: 320px;
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body); font-weight:300; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; }
-.side-title, .lesson-num-big, .lesson-title-big { text-shadow:0 0 30px rgba(232,200,154,0.4), 0 2px 20px rgba(0,0,0,0.8); }
-.explain, .explain p, .tips-text, .welcome-text, .lesson-desc-big, .toc-name, .side-subtitle { text-shadow:0 1px 12px rgba(0,0,0,0.7); }
 ::selection { background:rgba(212,184,150,.25); }
 ::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:rgba(232,217,192,.10); border-radius:3px; }
 
+/* ===== LANGUAGE TOGGLE (header) ===== */
+.lang-toggle {
+  display:flex; align-items:center; gap:2px;
+  margin-left:16px; flex-shrink:0;
+}
+.lang-toggle-btn {
+  background:transparent; border:0; outline:0;
+  font-family:var(--font-mono); font-size:10px; letter-spacing:1.5px;
+  color:var(--ink-faint); padding:6px 10px; cursor:pointer;
+  transition:all 0.3s var(--ease); text-transform:uppercase;
+}
+.lang-toggle-btn.active {
+  color:#e8c89a;
+}
+.lang-toggle-btn:hover:not(.active) {
+  color:var(--ink-soft);
+}
+
 /* ===== LAYOUT ===== */
 .app { display:grid; grid-template-columns:var(--side-w) 1fr; min-height:100vh; min-height:100dvh; }
-@media (max-width:900px) { .app { grid-template-columns:1fr; } .app .main { order:-1; } }
+@media (max-width:900px) { .app { grid-template-columns:1fr; } }
 
 /* ===== SIDEBAR ===== */
 .side {
@@ -49,8 +72,8 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 @media (max-width:900px) { .side { position:relative; height:auto; border-right:0; border-bottom:1px solid var(--line); } }
 .side-head { padding:32px 28px 24px; border-bottom:1px solid var(--line); }
 .side-tag { font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--ink-mute); text-transform:uppercase; margin-bottom:14px; }
-.side-title { font-family:var(--font-display); font-weight:300; font-variation-settings:'opsz' 72,'SOFT' 100; font-size:34px; line-height:1; color:var(--ink); letter-spacing:-.02em; }
-.side-subtitle { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:13px; color:var(--ink-soft); margin-top:8px; line-height:1.4; }
+.side-title { font-family:var(--font-display); font-weight:300; font-size:34px; line-height:1; color:var(--ink); letter-spacing:-.02em; }
+.side-subtitle { font-family:var(--font-body); font-weight:300; font-size:13px; color:var(--ink-soft); margin-top:8px; line-height:1.4; letter-spacing:.01em; }
 .side-progress { margin-top:18px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:10px; color:var(--ink-mute); letter-spacing:1.5px; }
 .side-progress .bar { flex:1; height:2px; background:var(--line); position:relative; overflow:hidden; }
 .side-progress .bar-fill { position:absolute; left:0; top:0; bottom:0; background:var(--gold); transition:width .6s var(--ease); }
@@ -76,7 +99,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 .toc-item.active .toc-name { color:var(--ink); font-weight:400; }
 .toc-mark { font-family:var(--font-mono); font-size:10px; color:var(--green); }
 
-/* Lo que ya sabes (kit progresivo) */
+/* Progressive kit */
 .kit-list { padding:0 28px 28px; display:flex; flex-direction:column; gap:12px; }
 .kit-card {
   background:var(--bg-deep); border:1px solid var(--line); padding:14px; position:relative;
@@ -84,8 +107,8 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 }
 .kit-card.unlocked { opacity:1; }
 .kit-card-title {
-  font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100;
-  font-size:13px; color:var(--gold); margin-bottom:8px; font-weight:400;
+  font-family:var(--font-display); font-weight:400;
+  font-size:13px; color:var(--gold); margin-bottom:8px; letter-spacing:.02em;
 }
 .kit-card-code {
   font-family:var(--font-mono); font-size:10.5px; line-height:1.55; color:var(--ink);
@@ -93,11 +116,11 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
   white-space:pre-wrap; word-break:break-word; -webkit-user-select:text; user-select:text;
 }
 .kit-card.locked .kit-card-code { color:var(--ink-mute); border-left-color:var(--ink-faint); }
-.kit-card-explain { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:12px; line-height:1.5; color:var(--ink-mute); }
+.kit-card-explain { font-family:var(--font-body); font-weight:300; font-size:12px; line-height:1.5; color:var(--ink-mute); }
 .kit-card-lesson { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; color:var(--ink-faint); text-transform:uppercase; margin-top:6px; }
 
 /* ===== MAIN ===== */
-.main { padding:48px 56px 80px; max-width:1100px; background:transparent; }
+.main { padding:48px 56px 80px; max-width:1100px; }
 @media (max-width:900px) { .main { padding:32px 24px 80px; } }
 @media (max-width:560px) { .main { padding:24px 16px 64px; } }
 
@@ -108,7 +131,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 .crumb span { color:var(--ink-soft); }
 .crumb .sep { color:var(--ink-faint); }
 
-/* Welcome banner (solo lección 01) */
+/* Welcome banner */
 .welcome-banner {
   background:linear-gradient(180deg, rgba(212,184,150,.08), rgba(168,112,76,.04));
   border:1px solid rgba(212,184,150,.2); padding:28px 32px; margin-bottom:48px;
@@ -119,27 +142,27 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
   text-transform:uppercase; font-weight:400;
 }
 .welcome-title {
-  font-family:var(--font-display); font-weight:300; font-variation-settings:'opsz' 72,'SOFT' 100;
-  font-size:28px; line-height:1.15; color:var(--ink); letter-spacing:-.02em;
+  font-family:var(--font-display); font-weight:300;
+  font-size:28px; line-height:1.15; color:var(--ink); letter-spacing:-.01em;
 }
 .welcome-text {
   font-family:var(--font-body); font-size:15px; line-height:1.65; color:var(--ink-soft); font-weight:300;
 }
-.welcome-text em { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; color:var(--gold); font-weight:400; }
+.welcome-text em { font-family:var(--font-display); font-weight:500; color:var(--gold); }
 
-.lesson-num-big { font-family:var(--font-display); font-weight:200; font-variation-settings:'opsz' 144,'SOFT' 100; font-size:96px; line-height:1; color:var(--gold); letter-spacing:-.04em; margin-bottom:8px; }
-.lesson-title-big { font-family:var(--font-display); font-weight:300; font-variation-settings:'opsz' 144,'SOFT' 100; font-size:clamp(40px,6vw,64px); line-height:1; color:var(--ink); letter-spacing:-.03em; margin-bottom:14px; }
-.lesson-desc-big { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:18px; color:var(--ink-soft); margin-bottom:48px; line-height:1.5; max-width:600px; }
+.lesson-num-big { font-family:var(--font-display); font-weight:300; font-size:96px; line-height:1; color:var(--gold); letter-spacing:-.04em; margin-bottom:8px; }
+.lesson-title-big { font-family:var(--font-display); font-weight:300; font-size:clamp(40px,6vw,64px); line-height:1; color:var(--ink); letter-spacing:-.02em; margin-bottom:14px; }
+.lesson-desc-big { font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--ink-soft); margin-bottom:48px; line-height:1.5; max-width:600px; }
 
-/* Tips banner */
+/* Tips */
 .tips-banner {
   background:linear-gradient(180deg,rgba(168,112,76,.06),rgba(168,112,76,.02));
   border:1px solid rgba(168,112,76,.2); border-left:3px solid var(--copper);
   padding:20px 24px; margin-bottom:48px; display:flex; gap:18px; align-items:flex-start;
 }
 .tips-icon { font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--copper); text-transform:uppercase; padding:4px 10px; border:1px solid var(--copper); flex-shrink:0; margin-top:2px; }
-.tips-text { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:15px; color:var(--ink-soft); line-height:1.6; }
-.tips-text em { color:var(--gold); font-style:italic; font-weight:400; }
+.tips-text { font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--ink-soft); line-height:1.6; }
+.tips-text em { color:var(--gold); font-style:normal; font-weight:500; }
 .tips-text code { font-family:var(--font-mono); font-style:normal; font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); }
 
 /* Explain */
@@ -147,10 +170,10 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 .explain p { margin-bottom:1em; }
 .explain p:last-child { margin-bottom:0; }
 .explain strong { color:var(--ink); font-weight:400; }
-.explain em { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; color:var(--gold); font-weight:400; }
+.explain em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
 .explain code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 7px; border:1px solid var(--line); }
 
-/* Glosario inline (definición de palabras técnicas) */
+/* Inline glossary */
 .glossary {
   background:var(--bg-lift); border:1px solid var(--line); border-left:2px solid var(--gold);
   padding:14px 18px; margin:18px 0;
@@ -162,7 +185,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 }
 .glossary code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); margin:0 2px; }
 
-/* Try it: invitación a romper */
+/* Try it prompt */
 .try-it {
   background:rgba(180,220,150,.04); border:1px solid rgba(180,220,150,.15);
   padding:16px 20px; margin-top:18px; margin-bottom:18px;
@@ -175,7 +198,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
   flex-shrink:0; margin-top:1px;
 }
 .try-it code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--green); padding:2px 6px; border:1px solid rgba(180,220,150,.2); }
-.try-it em { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; color:var(--gold); font-weight:400; }
+.try-it em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
 
 /* Sandbox */
 .sandbox-label { font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--ink-mute); text-transform:uppercase; margin-bottom:14px; }
@@ -195,7 +218,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 .editor-status.error::before { background:#ff6b6b; box-shadow:0 0 6px #ff6b6b; }
 .editor textarea { width:100%; flex:1; min-height:240px; background:transparent; border:0; outline:0; resize:vertical; padding:14px 16px; color:var(--ink); font-family:var(--font-mono); font-size:13px; line-height:1.7; white-space:pre; tab-size:2; -moz-tab-size:2; -webkit-user-select:text; user-select:text; }
 
-/* Botones */
+/* Buttons */
 .actions { display:flex; gap:10px; flex-wrap:wrap; padding-top:24px; border-top:1px solid var(--line); }
 .btn { background:transparent; border:1px solid var(--line); color:var(--ink-soft); font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:12px 18px; cursor:pointer; transition:all .3s var(--ease); display:flex; align-items:center; gap:8px; font-weight:400; }
 .btn:hover { color:var(--gold); border-color:rgba(212,184,150,.3); background:rgba(212,184,150,.03); }
@@ -205,25 +228,25 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 .btn.primary:hover { background:rgba(168,112,76,.10); border-color:var(--gold); }
 @media (max-width:560px) { .btn.primary { margin-left:0; width:100%; justify-content:center; } }
 
-/* Bottom nav */
+/* Lesson navigation */
 .nav-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:32px; margin-top:48px; border-top:1px solid var(--line); }
 .nav-arrow { display:flex; flex-direction:column; gap:4px; cursor:pointer; padding:12px 0; font-family:var(--font-body); transition:opacity .3s; }
 .nav-arrow:hover { opacity:.7; }
 .nav-arrow.disabled { opacity:.2; cursor:not-allowed; pointer-events:none; }
 .nav-arrow-label { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--ink-mute); text-transform:uppercase; }
-.nav-arrow-name { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; font-size:18px; color:var(--ink); }
+.nav-arrow-name { font-family:var(--font-display); font-weight:400; font-size:18px; color:var(--ink); letter-spacing:-.01em; }
 .nav-arrow.next { text-align:right; }
 
-/* Celebración final */
+/* Completion */
 .celebrate {
   background:linear-gradient(180deg, rgba(212,184,150,.06), rgba(180,220,150,.03));
   border:1px solid rgba(212,184,150,.2);
   padding:32px; margin-top:32px; text-align:center;
 }
 .celebrate-eyebrow { font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--green); text-transform:uppercase; margin-bottom:14px; }
-.celebrate-title { font-family:var(--font-display); font-weight:300; font-variation-settings:'opsz' 72,'SOFT' 100; font-size:28px; color:var(--ink); margin-bottom:14px; letter-spacing:-.02em; }
+.celebrate-title { font-family:var(--font-display); font-weight:300; font-size:28px; color:var(--ink); margin-bottom:14px; letter-spacing:-.01em; }
 .celebrate-text { font-family:var(--font-body); font-size:14px; line-height:1.65; color:var(--ink-soft); max-width:520px; margin:0 auto; }
-.celebrate-text em { font-family:var(--font-display); font-style:italic; font-variation-settings:'opsz' 14,'SOFT' 100; color:var(--gold); }
+.celebrate-text em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
 /* ===== WOGL FOOTER ===== */
 .wogl-footer {
   border-top:1px solid var(--line); padding:40px 28px 28px;
@@ -261,13 +284,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
   font-family:'Outfit',sans-serif; font-weight:300; font-size:36px;
   color:#e8c89a; letter-spacing:.18em; line-height:1; text-decoration:none;
   text-shadow:0 0 60px rgba(232,200,154,0.45),0 0 120px rgba(212,165,116,0.25),0 2px 40px rgba(0,0,0,0.55);
-  display:inline-flex;
 }
-.wogl-academy-logo span { display:inline-block; }
-.wogl-academy-logo span:nth-child(odd) { animation:vaiven-left 5s ease-in-out infinite; }
-.wogl-academy-logo span:nth-child(even) { animation:vaiven-right 5s ease-in-out infinite; }
-@keyframes vaiven-left { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-1.23px)} }
-@keyframes vaiven-right { 0%,100%{transform:translateX(0)} 50%{transform:translateX(1.23px)} }
 .wogl-academy-divider { width:1px; height:22px; background:rgba(232,200,154,0.20); }
 .wogl-academy-label {
   font-family:'JetBrains Mono',monospace; font-weight:300; font-size:11px;
@@ -283,43 +300,39 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
   .wogl-academy-logo { font-size:28px; }
   .wogl-academy-tagline { display:none; }
 }
-/* Silk canvas */
-#silkBg {
-  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:1;
-}
-.app { position:relative; z-index:1; }
-.wogl-footer { position:relative; z-index:1; }
 </style>
 </head>
 <body>
 
-<canvas id="silkBg"></canvas>
-
 <!-- WoGL Academy Header -->
 <header class="wogl-academy-header">
-  <a href="https://wogl.io" class="wogl-academy-logo" translate="no"><span>W</span><span>o</span><span>G</span><span>L</span></a>
+  <a href="https://wogl.io" class="wogl-academy-logo">WoGL</a>
   <div class="wogl-academy-divider"></div>
   <span class="wogl-academy-label">academy</span>
-  <span class="wogl-academy-tagline">learn GLSL from zero</span>
+  <span class="wogl-academy-tagline" id="headerTagline">learn GLSL from zero</span>
+  <div class="lang-toggle" id="langToggle">
+    <button class="lang-toggle-btn" data-lang="en">EN</button>
+    <button class="lang-toggle-btn" data-lang="es">ES</button>
+  </div>
 </header>
 
 <div class="app" style="padding-top:60px;">
 
   <aside class="side">
     <div class="side-head">
-      <div class="side-tag">aprende · start here</div>
-      <h1 class="side-title">Bienvenida</h1>
-      <p class="side-subtitle">Tus primeros 10 pasos en el mundo de los shaders.</p>
+      <div class="side-tag" id="sideTag">aprende · start here</div>
+      <h1 class="side-title" id="sideTitle">Bienvenida</h1>
+      <p class="side-subtitle" id="sideSub">Tus primeros 10 pasos en el mundo de los shaders.</p>
       <div class="side-progress">
         <span id="progressText">0 / 10</span>
         <div class="bar"><div class="bar-fill" id="progressBar"></div></div>
       </div>
     </div>
 
-    <div class="side-section-label">Lecciones</div>
+    <div class="side-section-label" id="sideLessonsLabel">Lecciones</div>
     <nav class="toc" id="toc"></nav>
 
-    <div class="side-section-label">Lo que ya sabes</div>
+    <div class="side-section-label" id="sideKitLabel">Lo que ya sabes</div>
     <div class="kit-list" id="kitList"></div>
   </aside>
 
@@ -329,7 +342,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 
 <!-- Footer -->
 <footer class="wogl-footer">
-  <div class="wogl-footer-logo" translate="no">WoGL</div>
+  <div class="wogl-footer-logo">WoGL</div>
   <div class="wogl-footer-links">
     <a href="https://wogl.io">wogl.io</a>
     <span class="wogl-footer-dot">·</span>
@@ -346,111 +359,217 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 'use strict';
 
 // ============================================================
-// DATOS
+// Language system
+// ============================================================
+
+var lang = localStorage.getItem('wogl-lang') || '';
+
+// Bilingual text helper — returns the string for the current language
+function t(obj) {
+  if (typeof obj === 'string') return obj;
+  return obj[lang] || obj.es || '';
+}
+
+// ============================================================
+// UI strings (bilingual)
+// ============================================================
+var UI = {
+  sideTag:          { es: 'aprende · start here', en: 'learn · start here' },
+  sideTitle:        { es: 'Bienvenida', en: 'Welcome' },
+  sideSub:          { es: 'Tus primeros 10 pasos en el mundo de los shaders.', en: 'Your first 10 steps into the world of shaders.' },
+  lessonsLabel:     { es: 'Lecciones', en: 'Lessons' },
+  kitLabel:         { es: 'Lo que ya sabes', en: 'What you know' },
+  crumbLearn:       { es: 'Aprende', en: 'Learn' },
+  crumbLesson:      { es: 'Lección', en: 'Lesson' },
+  tipsIcon:         { es: 'Antes', en: 'Before' },
+  tryItIcon:        { es: 'Prueba', en: 'Try' },
+  sandboxLabel:     { es: '↓ Edita el código y mira', en: '↓ Edit the code and see' },
+  editorLabel:      { es: 'tu código', en: 'your code' },
+  editorCompiled:   { es: 'compilado', en: 'compiled' },
+  btnCopy:          { es: 'Copiar', en: 'Copy' },
+  btnCopied:        { es: 'Copiado ✓', en: 'Copied ✓' },
+  btnNext:          { es: 'Siguiente paso', en: 'Next step' },
+  btnCompleted:     { es: '¡Completaste!', en: 'Completed!' },
+  btnCompletedAlt:  { es: 'Completaste', en: 'Completed' },
+  navPrev:          { es: '← Anterior', en: '← Previous' },
+  navNext:          { es: 'Siguiente →', en: 'Next →' },
+  celebrateEyebrow: { es: '✓ Sección completada', en: '✓ Section complete' },
+  unlockAt:         { es: 'Desbloquea en lección', en: 'Unlocks in lesson' },
+  learnedAt:        { es: 'Aprendiste en lección', en: 'Learned in lesson' },
+  headerTagline:    { es: 'aprende GLSL desde cero', en: 'learn GLSL from zero' },
+};
+
+// ============================================================
+// Section data (bilingual)
 // ============================================================
 
 var SECTION_DATA = {
-  tag:'aprende · start here',
-  title:'Bienvenida',
-  sub:'Tus primeros 10 pasos en el mundo de los shaders.',
+  tag: UI.sideTag,
+  title: UI.sideTitle,
+  sub: UI.sideSub,
   welcome: {
-    eyebrow: 'Hola, qué bueno que llegaste',
-    title: '¿Nunca has programado? Estás en el lugar correcto.',
-    text: 'No vamos a explicarte qué es un shader todavía — primero vamos a hacer uno. Cambia un número, mira la pantalla. Cambia otro, mira otra vez. Eso es <em>todo</em> lo que vamos a hacer en estas 10 lecciones. Cuando termines, sabrás más de lo que crees.'
+    eyebrow: { es: 'Hola, qué bueno que llegaste', en: 'Welcome, glad you made it' },
+    title: { es: '¿Nunca has programado? Estás en el lugar correcto.', en: 'Never coded before? You are in the right place.' },
+    text: { es: 'No vamos a explicarte qué es un shader todavía — primero vamos a hacer uno. Cambia un número, mira la pantalla. Cambia otro, mira otra vez. Eso es <em>todo</em> lo que vamos a hacer en estas 10 lecciones. Cuando termines, sabrás más de lo que crees.', en: 'We are not going to explain what a shader is just yet — first we are going to make one. Change a number, look at the screen. Change another, look again. That is <em>all</em> we are going to do in these 10 lessons. When you finish, you will know more than you think.' }
   },
-  tips: 'Acá no hay manera de "hacer algo mal". Si rompes el código, aparece un mensaje rojo y le pones <em>Reset</em>. Listo, vuelves a empezar. <em>Atrévete a romper.</em> Ahí es donde se aprende.',
+  tips: { es: 'Acá no hay manera de "hacer algo mal". Si rompes el código, aparece un mensaje rojo y le pones <em>Reset</em>. Listo, vuelves a empezar. <em>Atrévete a romper.</em> Ahí es donde se aprende.', en: 'There is no way to "do something wrong" here. If you break the code, a red message shows up and you hit <em>Reset</em>. Done, you start over. <em>Dare to break things.</em> That is where the learning happens.' },
 };
 
-// LO QUE YA SABEN — crece conforme avanzan
-// Cada item se desbloquea en la lección que indica
+// Progressive kit — unlocks per lesson (bilingual)
 var KIT = [
-  { unlock: 1, title: 'Pintar la pantalla', code: 'gl_FragColor = vec4(R, G, B, 1.);', explain: 'La línea mágica. R, G, B son tres números entre 0 y 1.' },
-  { unlock: 4, title: 'Saber dónde estás', code: 'vec2 p = gl_FragCoord.xy / R;', explain: 'p te dice la posición del pixel: 0 a la izquierda, 1 a la derecha.' },
-  { unlock: 6, title: 'El centro', code: 'vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);', explain: 'Ahora 0 está en el centro de la pantalla, no en la esquina.' },
-  { unlock: 7, title: 'El tiempo', code: 'col = col * (.5 + .5 * sin(T));', explain: 'T es el tiempo. Va creciendo. Lo usamos para animar.' },
-  { unlock: 8, title: 'Ondas con sin()', code: 'float v = sin(p.x * 10.) * .5 + .5;', explain: 'sin() es una onda. La fórmula la "traduce" para usarla como color.' },
-  { unlock: 9, title: 'Distancia', code: 'float d = length(p);', explain: 'length() te dice qué tan lejos estás del centro.' },
+  { unlock: 1,
+    title: { es: 'Pintar la pantalla', en: 'Paint the screen' },
+    code: 'gl_FragColor = vec4(R, G, B, 1.);',
+    explain: { es: 'La línea mágica. R, G, B son tres números entre 0 y 1.', en: 'The magic line. R, G, B are three numbers between 0 and 1.' }
+  },
+  { unlock: 4,
+    title: { es: 'Saber dónde estás', en: 'Know where you are' },
+    code: 'vec2 p = gl_FragCoord.xy / R;',
+    explain: { es: 'p te dice la posición del pixel: 0 a la izquierda, 1 a la derecha.', en: 'p tells you the pixel position: 0 on the left, 1 on the right.' }
+  },
+  { unlock: 6,
+    title: { es: 'El centro', en: 'The center' },
+    code: 'vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);',
+    explain: { es: 'Ahora 0 está en el centro de la pantalla, no en la esquina.', en: 'Now 0 is at the center of the screen, not in the corner.' }
+  },
+  { unlock: 7,
+    title: { es: 'El tiempo', en: 'Time' },
+    code: 'col = col * (.5 + .5 * sin(T));',
+    explain: { es: 'T es el tiempo. Va creciendo. Lo usamos para animar.', en: 'T is time. It keeps growing. We use it to animate.' }
+  },
+  { unlock: 8,
+    title: { es: 'Ondas con sin()', en: 'Waves with sin()' },
+    code: 'float v = sin(p.x * 10.) * .5 + .5;',
+    explain: { es: 'sin() es una onda. La fórmula la "traduce" para usarla como color.', en: 'sin() is a wave. The formula "translates" it so you can use it as color.' }
+  },
+  { unlock: 9,
+    title: { es: 'Distancia', en: 'Distance' },
+    code: 'float d = length(p);',
+    explain: { es: 'length() te dice qué tan lejos estás del centro.', en: 'length() tells you how far you are from the center.' }
+  },
 ];
 
-// LAS 10 LECCIONES
+// Lesson catalogue (bilingual)
 var LESSONS = [
 
-  // ===== 01 — HOLA, COLOR =====
-  { num:'01', title:'Hola, color',
-    desc:'Tu primera línea. Pinta la pantalla.',
-    welcome: true, // mostrar banner welcome
-    explain: '<p>Bienvenido. Lo primero que vamos a aprender es <strong>cómo pintar la pantalla de un color</strong>. El color se define con <strong>tres números</strong>: cuánto rojo, cuánto verde, cuánto azul. Cada número va de <em>0</em> (apagado) a <em>1</em> (al máximo).</p><p>Lo que ves es un <strong>sunset</strong> hecho con 4 colores que ya conoces: naranja, rosa, violeta, azul oscuro. El shader mezcla esos colores de arriba a abajo según la posición del pixel.</p><div class="glossary"><span class="glossary-label">¿Qué es un pixel?</span>Un pixel es uno de los puntitos diminutos que forman tu pantalla. Tu pantalla tiene millones. Un <em>shader</em> es un programa que decide de qué color va cada uno.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia los números de los 4 colores. Cada línea es un color del sunset: <code>sky</code> es el cielo, <code>mid</code> el horizonte, <code>warm</code> el sol, <code>deep</code> la noche. <em>Inventa tu propio atardecer.</em></span></div><div class="try-it"><span class="try-it-icon">Tip</span><span>¿Ves cómo se mueve suavemente? Eso es el tiempo animando la mezcla. Vas a aprender cómo funciona más adelante.</span></div><div class="try-it"><span class="try-it-icon">Mapa</span><span><code style="color:#ff9070;">deep</code> = la noche de abajo · <code style="color:#b890d4;">mid</code> = el violeta del horizonte · <code style="color:#ffd870;">warm</code> = el sol naranja · <code style="color:#78beff;">sky</code> = el cielo dorado de arriba. Cambia los 3 números de cualquiera para inventar tu atardecer.</span></div>',
-    code: 'void main(){\n  vec2 p = gl_FragCoord.xy / R;\n  // deep = noche, mid = horizonte\n  // warm = sol, sky = cielo\n  vec3 deep = vec3(0.05, 0.02, 0.15);\n  vec3 mid  = vec3(0.4, 0.1, 0.5);\n  vec3 warm = vec3(1., 0.4, 0.15);\n  vec3 sky  = vec3(1., 0.75, 0.3);\n  // Mezcla vertical con movimiento\n  float y = p.y + sin(T * 0.3) * 0.08;\n  vec3 col = mix(deep, mid, smoothstep(0., 0.33, y));\n  col = mix(col, warm, smoothstep(0.33, 0.66, y));\n  col = mix(col, sky, smoothstep(0.66, 1., y));\n  gl_FragColor = vec4(col, 1.);\n}'
+  // ===== 01 =====
+  { num:'01',
+    title: { es: 'Hola, color', en: 'Hello, color' },
+    desc: { es: 'Tu primera línea. Pinta la pantalla.', en: 'Your first line. Paint the screen.' },
+    welcome: true,
+    explain: {
+      es: '<p>Bienvenido. Lo primero que vamos a aprender es <strong>cómo pintar la pantalla de un color</strong>. Eso se hace con una sola línea de código.</p><p>El código que ves a la derecha le dice a la computadora: "pinta cada pixel de este color". El color se define con <strong>tres números</strong>: cuánto rojo, cuánto verde, cuánto azul. Cada número va de <em>0</em> (apagado) a <em>1</em> (al máximo).</p><div class="glossary"><span class="glossary-label">¿Qué es un pixel?</span>Un pixel es uno de los puntitos diminutos que forman tu pantalla. Tu pantalla tiene millones. Un <em>shader</em> es un programa que decide de qué color va cada uno.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el primer número de <code>1.</code> a <code>0.</code> y mira qué pasa. Después cambia el segundo. Después el tercero. <em>Juega.</em></span></div>',
+      en: '<p>Welcome. The first thing we are going to learn is <strong>how to paint the screen a single color</strong>. You do it with just one line of code.</p><p>The code you see on the right tells the computer: "paint every pixel this color". The color is defined with <strong>three numbers</strong>: how much red, how much green, how much blue. Each number goes from <em>0</em> (off) to <em>1</em> (full blast).</p><div class="glossary"><span class="glossary-label">What is a pixel?</span>A pixel is one of the tiny dots that make up your screen. Your screen has millions of them. A <em>shader</em> is a program that decides what color each one gets.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change the first number from <code>1.</code> to <code>0.</code> and see what happens. Then change the second. Then the third. <em>Play.</em></span></div>'
+    },
+    code: 'void main(){\n  // RGB color output\n  gl_FragColor = vec4(1., 0.5, 0.2, 1.);\n}'
   },
 
-  // ===== 02 — LOS TRES NÚMEROS =====
-  { num:'02', title:'Los tres números',
-    desc:'Rojo, verde, azul. Así se hace cualquier color.',
-    explain: '<p>Cualquier color que veas en una pantalla está hecho de <strong>tres números</strong>: cuánto rojo, cuánto verde, cuánto azul. <em>R, G, B.</em></p><p>Si los tres están al máximo (1, 1, 1), tienes blanco. Si los tres están apagados (0, 0, 0), tienes negro. Si solo el rojo está prendido (1, 0, 0), tienes rojo puro.</p><div class="glossary"><span class="glossary-label">¿Por qué tres?</span>Porque tu pantalla está hecha de tres tipos de luces: rojas, verdes y azules. Mezclando esos tres puedes hacer <em>cualquier</em> color del mundo. Es la misma idea que la imprenta CMYK pero al revés.</div><p>Nota una cosa rara: escribimos <code>1.</code> con punto, no <code>1</code>. Eso es porque la computadora distingue entre números enteros y decimales. Acá siempre usamos decimales — el punto es obligatorio.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Intenta hacer <em>amarillo</em>. Pista: amarillo es rojo + verde, sin azul. Después intenta <em>morado</em>. Pista: rojo + azul, sin verde.</span></div><div class="try-it"><span class="try-it-icon">Tip</span><span>¿Ves cómo cada color pulsa? Eso es <code>sin(T)</code> — el tiempo. Vas a aprender cómo funciona en la lección 07.</span></div>',
-    code: 'void main(){\n  // Cada color pulsa con el tiempo\n  float r = .5 + .5 * sin(T);\n  float g = .5 + .5 * sin(T + 2.1);\n  float b = .5 + .5 * sin(T + 4.2);\n  gl_FragColor = vec4(r, g, b, 1.);\n}'
+  // ===== 02 =====
+  { num:'02',
+    title: { es: 'Los tres números', en: 'The three numbers' },
+    desc: { es: 'Rojo, verde, azul. Así se hace cualquier color.', en: 'Red, green, blue. That is how you make any color.' },
+    explain: {
+      es: '<p>Cualquier color que veas en una pantalla está hecho de <strong>tres números</strong>: cuánto rojo, cuánto verde, cuánto azul. <em>R, G, B.</em></p><p>Si los tres están al máximo (1, 1, 1), tienes blanco. Si los tres están apagados (0, 0, 0), tienes negro. Si solo el rojo está prendido (1, 0, 0), tienes rojo puro.</p><div class="glossary"><span class="glossary-label">¿Por qué tres?</span>Porque tu pantalla está hecha de tres tipos de luces: rojas, verdes y azules. Mezclando esos tres puedes hacer <em>cualquier</em> color del mundo. Es la misma idea que la imprenta CMYK pero al revés.</div><p>Nota una cosa rara: escribimos <code>1.</code> con punto, no <code>1</code>. Eso es porque la computadora distingue entre números enteros y decimales. Acá siempre usamos decimales — el punto es obligatorio.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Intenta hacer <em>amarillo</em>. Pista: amarillo es rojo + verde, sin azul. Después intenta <em>morado</em>. Pista: rojo + azul, sin verde.</span></div>',
+      en: '<p>Any color you see on a screen is made of <strong>three numbers</strong>: how much red, how much green, how much blue. <em>R, G, B.</em></p><p>If all three are at maximum (1, 1, 1), you get white. If all three are off (0, 0, 0), you get black. If only red is on (1, 0, 0), you get pure red.</p><div class="glossary"><span class="glossary-label">Why three?</span>Because your screen is made of three types of lights: red, green, and blue. By mixing those three you can make <em>any</em> color in the world. Same idea as CMYK printing but in reverse.</div><p>Notice something odd: we write <code>1.</code> with a dot, not <code>1</code>. That is because the computer tells apart whole numbers and decimals. Here we always use decimals — the dot is mandatory.</p><div class="try-it"><span class="try-it-icon">Try</span><span>Try making <em>yellow</em>. Hint: yellow is red + green, no blue. Then try <em>purple</em>. Hint: red + blue, no green.</span></div>'
+    },
+    code: 'void main(){\n  float r = 1.;\n  float g = 0.7;\n  float b = 0.2;\n  gl_FragColor = vec4(r, g, b, 1.);\n}'
   },
 
-  // ===== 03 — MEZCLAR =====
-  { num:'03', title:'Mezclar',
-    desc:'Sumar y restar números. Ya sabes hacerlo.',
-    explain: '<p>Los números de los colores se pueden <strong>sumar, restar, multiplicar y dividir</strong>. Igual que los números normales que aprendiste en la primaria.</p><p>Si multiplicas un color por <em>0.5</em>, queda más oscuro (la mitad de luz). Si lo multiplicas por <em>2.</em>, queda más brillante. Si le restas <em>0.3</em>, le quitas un poco de cada canal.</p><div class="glossary"><span class="glossary-label">vec3</span>Un <code>vec3</code> es como una <em>bolsita con tres números adentro</em>. La usamos para guardar un color (R, G, B). Cuando le sumas otra bolsita, suma los tres números a la vez. Mucho más cómodo que sumar uno por uno.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.5</code> por <code>0.2</code> para ver el color más oscuro. O por <code>1.5</code> para verlo brillando.</span></div><div class="try-it"><span class="try-it-icon">Tip</span><span>¿Ves cómo el brillo pulsa? Es <code>sin(T)</code> multiplicando al color. En la lección 05 vas a aprender a mezclar dos colores con un degradé.</span></div>',
-    code: 'void main(){\n  vec3 magenta = vec3(0.9, 0.1, 0.5);\n  vec3 cyan = vec3(0.1, 0.8, 0.9);\n  // Mezcla entre dos colores con el tiempo\n  float t = .5 + .5 * sin(T);\n  vec3 col = magenta * t + cyan * (1. - t);\n  gl_FragColor = vec4(col, 1.);\n}'
+  // ===== 03 =====
+  { num:'03',
+    title: { es: 'Mezclar', en: 'Mixing' },
+    desc: { es: 'Sumar y restar números. Ya sabes hacerlo.', en: 'Add and subtract numbers. You already know how.' },
+    explain: {
+      es: '<p>Los números de los colores se pueden <strong>sumar, restar, multiplicar y dividir</strong>. Igual que los números normales que aprendiste en la primaria.</p><p>Si multiplicas un color por <em>0.5</em>, queda más oscuro (la mitad de luz). Si lo multiplicas por <em>2.</em>, queda más brillante. Si le restas <em>0.3</em>, le quitas un poco de cada canal.</p><div class="glossary"><span class="glossary-label">vec3</span>Un <code>vec3</code> es como una <em>bolsita con tres números adentro</em>. La usamos para guardar un color (R, G, B). Cuando le sumas otra bolsita, suma los tres números a la vez. Mucho más cómodo que sumar uno por uno.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.5</code> por <code>0.2</code> para ver el color más oscuro. O por <code>1.5</code> para verlo brillando.</span></div>',
+      en: '<p>Color numbers can be <strong>added, subtracted, multiplied, and divided</strong>. Just like the regular numbers you learned in school.</p><p>If you multiply a color by <em>0.5</em>, it gets darker (half the light). Multiply by <em>2.</em> and it gets brighter. Subtract <em>0.3</em> and you take a little away from each channel.</p><div class="glossary"><span class="glossary-label">vec3</span>A <code>vec3</code> is like a <em>little bag with three numbers inside</em>. We use it to hold a color (R, G, B). When you add another bag to it, it adds all three numbers at once. Way easier than adding one by one.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>0.5</code> to <code>0.2</code> to see the color darker. Or to <code>1.5</code> to see it glow.</span></div>'
+    },
+    code: 'void main(){\n  vec3 base = vec3(1., 0.5, 0.2);\n  // Scale brightness\n  vec3 col = base * 0.5;\n  gl_FragColor = vec4(col, 1.);\n}'
   },
 
-  // ===== 04 — LAS COORDENADAS =====
-  { num:'04', title:'Las coordenadas',
-    desc:'Cada pixel sabe dónde está.',
-    explain: '<p>Cada pixel de la pantalla tiene una <strong>posición</strong>: dos números, X y Y. X es horizontal (izquierda-derecha), Y es vertical (abajo-arriba). Como en el plano cartesiano de la escuela.</p><p>Lo importante: <em>cada pixel ejecuta el código por separado</em>, pero conoce su propia posición. El pixel de la esquina inferior izquierda sabe que es (0, 0). El de la esquina superior derecha sabe que es el último.</p><div class="glossary"><span class="glossary-label">vec2</span>Si <code>vec3</code> es una bolsita de 3 números, <code>vec2</code> es una bolsita de 2. La usamos para posiciones (X, Y). Acá <code>p</code> es la posición del pixel, dividida entre el tamaño de la pantalla — para que vaya de 0 a 1 en lugar de 0 a 1920.</div><p>Si pones <code>p.x</code> como rojo, el rojo aumenta hacia la derecha. Si pones <code>p.y</code> como verde, el verde aumenta hacia arriba. <em>El color es la posición.</em></p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> en la primera línea. ¿Qué pasa? Ahora pon <code>p.x</code> en los tres lugares. ¿Y ahora?</span></div>',
-    code: 'void main(){\n  vec2 p = gl_FragCoord.xy / R;\n  // El color es la posición\n  gl_FragColor = vec4(p.x, p.y, 0.5, 1.);\n}'
+  // ===== 04 =====
+  { num:'04',
+    title: { es: 'Las coordenadas', en: 'Coordinates' },
+    desc: { es: 'Cada pixel sabe dónde está.', en: 'Every pixel knows where it is.' },
+    explain: {
+      es: '<p>Cada pixel de la pantalla tiene una <strong>posición</strong>: dos números, X y Y. X es horizontal (izquierda-derecha), Y es vertical (abajo-arriba). Como en el plano cartesiano de la escuela.</p><p>Lo importante: <em>cada pixel ejecuta el código por separado</em>, pero conoce su propia posición. El pixel de la esquina inferior izquierda sabe que es (0, 0). El de la esquina superior derecha sabe que es el último.</p><div class="glossary"><span class="glossary-label">vec2</span>Si <code>vec3</code> es una bolsita de 3 números, <code>vec2</code> es una bolsita de 2. La usamos para posiciones (X, Y). Acá <code>p</code> es la posición del pixel, dividida entre el tamaño de la pantalla — para que vaya de 0 a 1 en lugar de 0 a 1920.</div><p>Si pones <code>p.x</code> como rojo, el rojo aumenta hacia la derecha. Si pones <code>p.y</code> como verde, el verde aumenta hacia arriba. <em>El color es la posición.</em></p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> en la primera línea. ¿Qué pasa? Ahora pon <code>p.x</code> en los tres lugares. ¿Y ahora?</span></div>',
+      en: '<p>Every pixel on the screen has a <strong>position</strong>: two numbers, X and Y. X is horizontal (left-right), Y is vertical (bottom-top). Just like the coordinate plane from school.</p><p>Here is the key idea: <em>every pixel runs the code on its own</em>, but it knows its own position. The pixel at the bottom-left corner knows it is (0, 0). The one at the top-right knows it is the last one.</p><div class="glossary"><span class="glossary-label">vec2</span>If <code>vec3</code> is a little bag of 3 numbers, <code>vec2</code> is a bag of 2. We use it for positions (X, Y). Here <code>p</code> is the pixel position divided by the screen size — so it goes from 0 to 1 instead of 0 to 1920.</div><p>If you put <code>p.x</code> as red, the red increases to the right. Put <code>p.y</code> as green and the green increases upward. <em>The color is the position.</em></p><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>p.x</code> to <code>p.y</code> on the first line. What happens? Now put <code>p.x</code> in all three spots. And now?</span></div>'
+    },
+    code: 'void main(){\n  vec2 p = gl_FragCoord.xy / R;\n  // Position as color\n  gl_FragColor = vec4(p.x, p.y, 0.5, 1.);\n}'
   },
 
-  // ===== 05 — EL DEGRADÉ =====
-  { num:'05', title:'El degradé',
-    desc:'Una posición controla un color. Ya está, eres artista.',
-    explain: '<p>Esto es la <strong>idea más poderosa</strong> que vas a aprender hoy: <em>la posición puede convertirse en color</em>. Y al revés: <em>las matemáticas que apliques a la posición se ven como dibujo</em>.</p><p>Un degradé es solo eso: tomas <code>p.x</code> (la posición horizontal) y la usas como un canal de color. El pixel de la izquierda tiene <code>p.x = 0</code>, el de la derecha tiene <code>p.x = 1</code>. Si lo conectas al rojo, queda un degradé de negro a rojo.</p><div class="glossary"><span class="glossary-label">mix()</span>La función <code>mix(A, B, t)</code> "mezcla" dos cosas. Cuando <code>t</code> es 0, te da A puro. Cuando es 1, te da B puro. Cuando es 0.5, te da la mitad de cada uno. Es como un slider.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> para que el degradé sea vertical. Cambia los colores <code>vec3(1.,0.3,0.2)</code> y <code>vec3(0.2,0.5,1.)</code> a otros que tú elijas.</span></div>',
-    code: 'void main(){\n  vec2 p = gl_FragCoord.xy / R;\n  vec3 a = vec3(1., 0.3, 0.2);  // izquierda\n  vec3 b = vec3(0.2, 0.5, 1.);  // derecha\n  vec3 col = mix(a, b, p.x);\n  gl_FragColor = vec4(col, 1.);\n}'
+  // ===== 05 =====
+  { num:'05',
+    title: { es: 'El degradé', en: 'The gradient' },
+    desc: { es: 'Una posición controla un color. Ya está, eres artista.', en: 'A position controls a color. There you go, you are an artist.' },
+    explain: {
+      es: '<p>Esto es la <strong>idea más poderosa</strong> que vas a aprender hoy: <em>la posición puede convertirse en color</em>. Y al revés: <em>las matemáticas que apliques a la posición se ven como dibujo</em>.</p><p>Un degradé es solo eso: tomas <code>p.x</code> (la posición horizontal) y la usas como un canal de color. El pixel de la izquierda tiene <code>p.x = 0</code>, el de la derecha tiene <code>p.x = 1</code>. Si lo conectas al rojo, queda un degradé de negro a rojo.</p><div class="glossary"><span class="glossary-label">mix()</span>La función <code>mix(A, B, t)</code> "mezcla" dos cosas. Cuando <code>t</code> es 0, te da A puro. Cuando es 1, te da B puro. Cuando es 0.5, te da la mitad de cada uno. Es como un slider.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> para que el degradé sea vertical. Cambia los colores <code>vec3(1.,0.3,0.2)</code> y <code>vec3(0.2,0.5,1.)</code> a otros que tú elijas.</span></div>',
+      en: '<p>This is the <strong>most powerful idea</strong> you will learn today: <em>position can become color</em>. And the other way around: <em>the math you apply to the position shows up as a drawing</em>.</p><p>A gradient is just that: you take <code>p.x</code> (the horizontal position) and use it as a color channel. The pixel on the left has <code>p.x = 0</code>, the one on the right has <code>p.x = 1</code>. Connect it to red, and you get a gradient from black to red.</p><div class="glossary"><span class="glossary-label">mix()</span>The function <code>mix(A, B, t)</code> "blends" two things. When <code>t</code> is 0, you get pure A. When it is 1, you get pure B. When it is 0.5, you get half and half. It is like a slider.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>p.x</code> to <code>p.y</code> to make the gradient vertical. Change the colors <code>vec3(1.,0.3,0.2)</code> and <code>vec3(0.2,0.5,1.)</code> to anything you like.</span></div>'
+    },
+    code: 'void main(){\n  vec2 p = gl_FragCoord.xy / R;\n  vec3 a = vec3(1., 0.3, 0.2);  // left\n  vec3 b = vec3(0.2, 0.5, 1.);  // right\n  vec3 col = mix(a, b, p.x);\n  gl_FragColor = vec4(col, 1.);\n}'
   },
 
-  // ===== 06 — EL CENTRO =====
-  { num:'06', title:'El centro',
-    desc:'Mover el origen a la mitad de la pantalla.',
-    explain: '<p>Hasta ahora <code>p</code> iba de <em>0 (esquina)</em> a <em>1 (esquina opuesta)</em>. Eso es útil para degradés, pero no para cosas centradas, como un círculo en el medio.</p><p>Hay una fórmula que todos los shaders usan al inicio. <em>Apréndela como mantra</em>:</p><div class="glossary"><span class="glossary-label">La fórmula del centro</span><code>vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);</code><br><br>Lo que hace: el centro de la pantalla ahora es <em>(0,0)</em>. La esquina superior derecha es <em>(1,1)</em>. La inferior izquierda es <em>(-1,-1)</em>. Y funciona aunque la pantalla sea cuadrada o alargada — no se distorsiona.</div><p>No tienes que entender la fórmula completa todavía. Solo cópiala. Es la primera línea de casi cualquier shader.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Quita el <code>2.*</code> y la <code>- R</code> y el <code>/ min(...)</code>. Es decir, deja solo <code>vec2 p = gl_FragCoord.xy / R;</code> ¿Ves cómo la "X" se va a la esquina? Ahora vuelve a la versión centrada.</span></div>',
-    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // p ahora va de -1 a 1, con (0,0) en el centro\n  vec3 col = vec3(p.x, p.y, 0.5);\n  gl_FragColor = vec4(col, 1.);\n}'
+  // ===== 06 =====
+  { num:'06',
+    title: { es: 'El centro', en: 'The center' },
+    desc: { es: 'Mover el origen a la mitad de la pantalla.', en: 'Move the origin to the middle of the screen.' },
+    explain: {
+      es: '<p>Hasta ahora <code>p</code> iba de <em>0 (esquina)</em> a <em>1 (esquina opuesta)</em>. Eso es útil para degradés, pero no para cosas centradas, como un círculo en el medio.</p><p>Hay una fórmula que todos los shaders usan al inicio. <em>Apréndela como mantra</em>:</p><div class="glossary"><span class="glossary-label">La fórmula del centro</span><code>vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);</code><br><br>Lo que hace: el centro de la pantalla ahora es <em>(0,0)</em>. La esquina superior derecha es <em>(1,1)</em>. La inferior izquierda es <em>(-1,-1)</em>. Y funciona aunque la pantalla sea cuadrada o alargada — no se distorsiona.</div><p>No tienes que entender la fórmula completa todavía. Solo cópiala. Es la primera línea de casi cualquier shader.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Quita el <code>2.*</code> y la <code>- R</code> y el <code>/ min(...)</code>. Es decir, deja solo <code>vec2 p = gl_FragCoord.xy / R;</code> ¿Ves cómo la "X" se va a la esquina? Ahora vuelve a la versión centrada.</span></div>',
+      en: '<p>So far <code>p</code> went from <em>0 (corner)</em> to <em>1 (opposite corner)</em>. That is useful for gradients, but not for centered things like a circle in the middle.</p><p>There is a formula that almost every shader uses at the start. <em>Learn it like a mantra</em>:</p><div class="glossary"><span class="glossary-label">The center formula</span><code>vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);</code><br><br>What it does: the center of the screen is now <em>(0,0)</em>. The top-right corner is <em>(1,1)</em>. The bottom-left is <em>(-1,-1)</em>. And it works whether the screen is square or wide — no distortion.</div><p>You do not need to understand the full formula yet. Just copy it. It is the first line of almost every shader.</p><div class="try-it"><span class="try-it-icon">Try</span><span>Remove the <code>2.*</code> and the <code>- R</code> and the <code>/ min(...)</code>. That is, leave only <code>vec2 p = gl_FragCoord.xy / R;</code> See how the "X" moves to the corner? Now go back to the centered version.</span></div>'
+    },
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // Centered coordinates [-1, 1]\n  vec3 col = vec3(p.x, p.y, 0.5);\n  gl_FragColor = vec4(col, 1.);\n}'
   },
 
-  // ===== 07 — EL RELOJ =====
-  { num:'07', title:'El reloj',
-    desc:'T es el tiempo. Lo usamos para animar.',
-    explain: '<p>Hasta ahora todo era <em>estático</em>. Ahora le agregamos <strong>movimiento</strong>.</p><p>Existe una variable que ya está hecha por nosotros: <code>T</code>. Es el tiempo en segundos desde que cargó la página. Va creciendo: <em>0.1, 0.2, 0.3...</em> y nunca para.</p><p>Como cualquier número, lo puedes usar en tus colores. Si haces que el rojo dependa de <code>T</code>, el rojo va a cambiar con el tiempo.</p><div class="glossary"><span class="glossary-label">¿Por qué sin(T)?</span>Si pusieras solo <code>T</code>, el color crecería para siempre y se quedaría en blanco. Por eso lo "envolvemos" con <code>sin()</code>, que oscila entre -1 y 1 eternamente. La fórmula <code>.5 + .5 * sin(T)</code> hace que oscile entre 0 y 1 — perfecto para colores.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>sin(T)</code> por <code>sin(T*5.)</code> para que sea más rápido. O por <code>sin(T*.2)</code> para más lento.</span></div>',
-    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // Dos colores que respiran con el tiempo\n  vec3 a = vec3(1., 0.3, 0.1);\n  vec3 b = vec3(0.1, 0.4, 0.9);\n  float t = .5 + .5 * sin(T);\n  vec3 col = mix(a, b, t);\n  // Degradé radial para darle profundidad\n  col *= 1.2 - length(p) * 0.5;\n  gl_FragColor = vec4(col, 1.);\n}'
+  // ===== 07 =====
+  { num:'07',
+    title: { es: 'El reloj', en: 'The clock' },
+    desc: { es: 'T es el tiempo. Lo usamos para animar.', en: 'T is time. We use it to animate.' },
+    explain: {
+      es: '<p>Hasta ahora todo era <em>estático</em>. Ahora le agregamos <strong>movimiento</strong>.</p><p>Existe una variable que ya está hecha por nosotros: <code>T</code>. Es el tiempo en segundos desde que cargó la página. Va creciendo: <em>0.1, 0.2, 0.3...</em> y nunca para.</p><p>Como cualquier número, lo puedes usar en tus colores. Si haces que el rojo dependa de <code>T</code>, el rojo va a cambiar con el tiempo.</p><div class="glossary"><span class="glossary-label">¿Por qué sin(T)?</span>Si pusieras solo <code>T</code>, el color crecería para siempre y se quedaría en blanco. Por eso lo "envolvemos" con <code>sin()</code>, que oscila entre -1 y 1 eternamente. La fórmula <code>.5 + .5 * sin(T)</code> hace que oscile entre 0 y 1 — perfecto para colores.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>sin(T)</code> por <code>sin(T*5.)</code> para que sea más rápido. O por <code>sin(T*.2)</code> para más lento.</span></div>',
+      en: '<p>Until now everything was <em>static</em>. Now we add <strong>motion</strong>.</p><p>There is a variable already set up for you: <code>T</code>. It is the time in seconds since the page loaded. It keeps growing: <em>0.1, 0.2, 0.3...</em> and it never stops.</p><p>Like any number, you can use it in your colors. If you make the red depend on <code>T</code>, the red will change over time.</p><div class="glossary"><span class="glossary-label">Why sin(T)?</span>If you just used <code>T</code> by itself, the color would grow forever and stay white. So we "wrap" it with <code>sin()</code>, which oscillates between -1 and 1 forever. The formula <code>.5 + .5 * sin(T)</code> makes it oscillate between 0 and 1 — perfect for colors.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>sin(T)</code> to <code>sin(T*5.)</code> to make it faster. Or <code>sin(T*.2)</code> to make it slower.</span></div>'
+    },
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // Time-driven oscillation\n  float brightness = .5 + .5 * sin(T);\n  vec3 col = vec3(1., 0.5, 0.2) * brightness;\n  gl_FragColor = vec4(col, 1.);\n}'
   },
 
-  // ===== 08 — LA ONDA =====
-  { num:'08', title:'La onda',
-    desc:'sin() de la posición. Tu primera función mágica.',
-    explain: '<p>Hace dos lecciones le aplicaste <code>sin()</code> al tiempo y el brillo subía y bajaba. Ahora le aplicas <code>sin()</code> a la <strong>posición</strong> — y aparecen <em>rayas</em>.</p><p>¿Por qué? Porque <code>sin(p.x * 10)</code> oscila entre -1 y 1 a medida que <code>p.x</code> cambia. Así que de izquierda a derecha, el valor sube, baja, sube, baja... y eso son rayas.</p><div class="glossary"><span class="glossary-label">El número 10</span>Es la <em>frecuencia</em>. Más alto, más rayas. Más bajo, menos rayas. Pruébalo: cambia <code>10.</code> por <code>50.</code> (muchísimas rayas finas) o por <code>3.</code> (poquitas rayas gordas).</div><p>Le sumamos <code>T</code> al final (<code>+ T</code>) para que las rayas <em>se muevan</em>. Sin eso son rayas estáticas. Con eso son rayas que fluyen.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> — las rayas se vuelven horizontales. Cambia <code>+ T</code> por <code>- T</code> — las rayas van en la otra dirección.</span></div>',
-    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // Ondas de dos colores fluyendo\n  float v = sin(p.x * 8. + T) * .5 + .5;\n  float v2 = sin(p.y * 6. - T * 0.7) * .5 + .5;\n  vec3 a = vec3(1., 0.3, 0.15);\n  vec3 b = vec3(0.15, 0.5, 0.9);\n  vec3 col = mix(a, b, v * v2);\n  gl_FragColor = vec4(col, 1.);\n}'
+  // ===== 08 =====
+  { num:'08',
+    title: { es: 'La onda', en: 'The wave' },
+    desc: { es: 'sin() de la posición. Tu primera función mágica.', en: 'sin() of the position. Your first magic function.' },
+    explain: {
+      es: '<p>Hace dos lecciones le aplicaste <code>sin()</code> al tiempo y el brillo subía y bajaba. Ahora le aplicas <code>sin()</code> a la <strong>posición</strong> — y aparecen <em>rayas</em>.</p><p>¿Por qué? Porque <code>sin(p.x * 10)</code> oscila entre -1 y 1 a medida que <code>p.x</code> cambia. Así que de izquierda a derecha, el valor sube, baja, sube, baja... y eso son rayas.</p><div class="glossary"><span class="glossary-label">El número 10</span>Es la <em>frecuencia</em>. Más alto, más rayas. Más bajo, menos rayas. Pruébalo: cambia <code>10.</code> por <code>50.</code> (muchísimas rayas finas) o por <code>3.</code> (poquitas rayas gordas).</div><p>Le sumamos <code>T</code> al final (<code>+ T</code>) para que las rayas <em>se muevan</em>. Sin eso son rayas estáticas. Con eso son rayas que fluyen.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> — las rayas se vuelven horizontales. Cambia <code>+ T</code> por <code>- T</code> — las rayas van en la otra dirección.</span></div>',
+      en: '<p>Two lessons ago you applied <code>sin()</code> to time and the brightness went up and down. Now you apply <code>sin()</code> to the <strong>position</strong> — and <em>stripes</em> appear.</p><p>Why? Because <code>sin(p.x * 10)</code> oscillates between -1 and 1 as <code>p.x</code> changes. So from left to right, the value goes up, down, up, down... and those are stripes.</p><div class="glossary"><span class="glossary-label">The number 10</span>It is the <em>frequency</em>. Higher means more stripes. Lower means fewer stripes. Try it: change <code>10.</code> to <code>50.</code> (tons of thin stripes) or to <code>3.</code> (a few thick ones).</div><p>We add <code>T</code> at the end (<code>+ T</code>) so the stripes <em>move</em>. Without it they are static stripes. With it they flow.</p><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>p.x</code> to <code>p.y</code> — the stripes become horizontal. Change <code>+ T</code> to <code>- T</code> — the stripes go the other way.</span></div>'
+    },
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // Spatial wave pattern\n  float v = sin(p.x * 10. + T) * .5 + .5;\n  vec3 col = vec3(1., 0.5, 0.2) * v;\n  gl_FragColor = vec4(col, 1.);\n}'
   },
 
-  // ===== 09 — EL CÍRCULO =====
-  { num:'09', title:'El círculo',
-    desc:'length() te dice qué tan lejos estás del centro.',
-    explain: '<p>Para hacer un <strong>círculo</strong> necesitas saber: <em>¿qué tan lejos está cada pixel del centro?</em></p><p>La función <code>length(p)</code> te lo dice. Si el pixel está en el centro, devuelve <em>0</em>. Si está en una esquina, devuelve algo como <em>1.4</em>.</p><p>Si tomas esa distancia y dices "los pixeles que estén a menos de <em>0.5</em> son blancos, los demás negros" — tienes un círculo perfecto.</p><div class="glossary"><span class="glossary-label">smoothstep()</span>Hace una transición suave entre dos valores. <code>smoothstep(0.5, 0.45, d)</code> dice: cuando <em>d</em> es 0.5, da 0. Cuando es 0.45, da 1. Y entre medio, una transición suave. Sin esto, el borde del círculo se ve pixelado. Con esto, mantequilloso.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.5</code> a <code>0.8</code> (círculo más grande) o a <code>0.2</code> (círculo más chico). Cambia el <code>sin(T)</code> que multiplica al radio a <code>sin(T*5.)</code> para que pulse rápido.</span></div>',
-    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  float d = length(p);\n  // El circulo respira\n  float r = 0.5 + 0.12 * sin(T);\n  float circ = smoothstep(r, r - 0.03, d);\n  vec3 core = vec3(0.9, 0.15, 0.6);\n  vec3 edge = vec3(0.2, 0.4, 0.9);\n  vec3 bg = vec3(0.02, 0.03, 0.10);\n  // Color cambia del centro al borde\n  vec3 ball = mix(core, edge, d / r);\n  // Glow suave alrededor\n  float glow = smoothstep(r + 0.35, r, d) * 0.35;\n  vec3 col = mix(bg, ball, circ);\n  col += edge * glow;\n  gl_FragColor = vec4(col, 1.);\n}'
+  // ===== 09 =====
+  { num:'09',
+    title: { es: 'El círculo', en: 'The circle' },
+    desc: { es: 'length() te dice qué tan lejos estás del centro.', en: 'length() tells you how far you are from the center.' },
+    explain: {
+      es: '<p>Para hacer un <strong>círculo</strong> necesitas saber: <em>¿qué tan lejos está cada pixel del centro?</em></p><p>La función <code>length(p)</code> te lo dice. Si el pixel está en el centro, devuelve <em>0</em>. Si está en una esquina, devuelve algo como <em>1.4</em>.</p><p>Si tomas esa distancia y dices "los pixeles que estén a menos de <em>0.5</em> son blancos, los demás negros" — tienes un círculo perfecto.</p><div class="glossary"><span class="glossary-label">smoothstep()</span>Hace una transición suave entre dos valores. <code>smoothstep(0.5, 0.45, d)</code> dice: cuando <em>d</em> es 0.5, da 0. Cuando es 0.45, da 1. Y entre medio, una transición suave. Sin esto, el borde del círculo se ve pixelado. Con esto, mantequilloso.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.5</code> a <code>0.8</code> (círculo más grande) o a <code>0.2</code> (círculo más chico). Cambia el <code>sin(T)</code> que multiplica al radio a <code>sin(T*5.)</code> para que pulse rápido.</span></div>',
+      en: '<p>To make a <strong>circle</strong> you need to know: <em>how far is each pixel from the center?</em></p><p>The function <code>length(p)</code> tells you. If the pixel is at the center, it returns <em>0</em>. If it is in a corner, it returns something like <em>1.4</em>.</p><p>If you take that distance and say "pixels closer than <em>0.5</em> are white, the rest are black" — you have a perfect circle.</p><div class="glossary"><span class="glossary-label">smoothstep()</span>Makes a smooth transition between two values. <code>smoothstep(0.5, 0.45, d)</code> says: when <em>d</em> is 0.5, give 0. When it is 0.45, give 1. And in between, a smooth curve. Without this, the circle edge looks pixelated. With it, buttery smooth.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>0.5</code> to <code>0.8</code> (bigger circle) or <code>0.2</code> (smaller circle). Change the <code>sin(T)</code> that multiplies the radius to <code>sin(T*5.)</code> to make it pulse fast.</span></div>'
+    },
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  float d = length(p);\n  // Pulsing radial mask\n  float r = 0.5 + 0.1 * sin(T);\n  float circ = smoothstep(r, r - 0.02, d);\n  vec3 col = vec3(1., 0.7, 0.3) * circ;\n  gl_FragColor = vec4(col, 1.);\n}'
   },
 
-  // ===== 10 — TU PRIMERA OBRA =====
-  { num:'10', title:'Tu primera obra',
-    desc:'Junta todo lo que aprendiste.',
+  // ===== 10 =====
+  { num:'10',
+    title: { es: 'Tu primera obra', en: 'Your first piece' },
+    desc: { es: 'Junta todo lo que aprendiste.', en: 'Bring together everything you learned.' },
     finale: true,
-    explain: '<p>Esta lección junta todo lo anterior y agrega algo nuevo: <strong>noise y fbm</strong>. Son funciones que generan textura orgánica — como vetas de mármol, humo, nubes, piedra.</p><p>Mira el código. Lo que ya conoces:</p><ul style="list-style:none; padding-left:0; margin:18px 0;"><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">vec2 p = ...</code> &nbsp; coordenadas centradas (lección 06)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">T * .15</code> &nbsp; el tiempo animando lento (lección 07)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">mix(deep, vein, ...)</code> &nbsp; mezclar colores (lección 05)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">smoothstep()</code> &nbsp; transición suave (lección 09)</li></ul><p>Lo nuevo:</p><ul style="list-style:none; padding-left:0; margin:18px 0;"><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">noise(p)</code> &nbsp; ruido aleatorio suave — como arena</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">fbm(p)</code> &nbsp; capas de noise = relieve, vetas, textura</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">fbm(p + fbm(...))</code> &nbsp; domain warping = el fbm se alimenta de otro fbm</li></ul><p><em>Esta es tu primera obra.</em> Mármol vivo con vetas que respiran, hecho con todo lo que aprendiste.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia los colores <code>deep</code>, <code>vein</code> y <code>gold</code>. Cambia el <code>3.</code> en <code>p * 3.</code> a <code>8.</code> para vetas más finas. Cambia <code>T * .15</code> a <code>T * .5</code> para que fluya más rápido. <em>Esta es tu obra. Hazla tuya.</em></span></div>',
-    code: '// Noise — tu primer bloque reutilizable\nfloat hash(vec2 p){\n  return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);\n}\nfloat noise(vec2 p){\n  vec2 i = floor(p), f = fract(p);\n  f = f*f*(3.-2.*f);\n  float a = hash(i);\n  float b = hash(i+vec2(1.,0.));\n  float c = hash(i+vec2(0.,1.));\n  float d = hash(i+vec2(1.,1.));\n  return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);\n}\nvoid main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // Una sola capa de noise + tiempo\n  float n = noise(p * 3. + T * .2);\n  // Paleta sedosa\n  vec3 deep = vec3(0.02, 0.03, 0.12);\n  vec3 silk = vec3(0.15, 0.4, 0.7);\n  vec3 gold = vec3(0.9, 0.6, 0.85);\n  vec3 col = mix(deep, silk, smoothstep(.3,.6, n));\n  col = mix(col, gold, smoothstep(.6,.8, n));\n  gl_FragColor = vec4(col, 1.);\n}'
+    explain: {
+      es: '<p>Esta lección no enseña nada nuevo. <strong>Junta todo lo anterior</strong>: coordenadas centradas, el tiempo, ondas, círculos, colores que cambian.</p><p>Mira el código. Cada línea ya la conoces:</p><ul style="list-style:none; padding-left:0; margin:18px 0;"><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">vec2 p = ...</code> &nbsp; coordenadas centradas (lección 06)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">length(p)</code> &nbsp; distancia al centro (lección 09)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">sin(d * 8. - T)</code> &nbsp; ondas que se mueven (lección 08)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">mix(c1, c2, ...)</code> &nbsp; mezclar dos colores (lección 05)</li></ul><p><em>Esta es tu primera obra.</em> Anillos concéntricos que pulsan, hechos con todo lo que aprendiste en una hora.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>8.</code> a <code>20.</code> para anillos finos. Cambia los dos colores. Cambia el <code>T</code> por <code>T*3.</code> para que pulse rápido. <em>Esta es tu obra ahora.</em> Hazla tuya.</span></div>',
+      en: '<p>This lesson does not teach anything new. It <strong>brings everything together</strong>: centered coordinates, time, waves, circles, colors that change.</p><p>Look at the code. You already know every line:</p><ul style="list-style:none; padding-left:0; margin:18px 0;"><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">vec2 p = ...</code> &nbsp; centered coordinates (lesson 06)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">length(p)</code> &nbsp; distance to center (lesson 09)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">sin(d * 8. - T)</code> &nbsp; moving waves (lesson 08)</li><li style="padding:6px 0; font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);">→ <code style="background:var(--bg-deep);padding:2px 6px;border:1px solid var(--line);">mix(c1, c2, ...)</code> &nbsp; blend two colors (lesson 05)</li></ul><p><em>This is your first piece.</em> Concentric rings that pulse, made with everything you learned in an hour.</p><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>8.</code> to <code>20.</code> for thin rings. Change both colors. Change <code>T</code> to <code>T*3.</code> to make it pulse fast. <em>This is your piece now.</em> Make it yours.</span></div>'
+    },
+    celebrateTitle: { es: 'Hace una hora no sabías programar.', en: 'An hour ago you did not know how to code.' },
+    celebrateText: { es: 'Ahora hiciste anillos que pulsan con código que tú escribiste. <em>Eso es ser shader artist.</em> Lo siguiente es la sección de <strong>Patrones</strong> — vas a aprender a hacer rayas, espirales, mandalas. Cuando estés listo.', en: 'Now you made pulsing rings with code you wrote yourself. <em>That is being a shader artist.</em> Next up is the <strong>Patterns</strong> section — you will learn to make stripes, spirals, mandalas. Whenever you are ready.' },
+    code: 'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  float d = length(p);\n  float v = sin(d * 8. - T * 2.) * .5 + .5;\n  vec3 c1 = vec3(1., 0.4, 0.2);\n  vec3 c2 = vec3(0.3, 0.6, 1.);\n  vec3 col = mix(c1, c2, v);\n  col *= 1. - d * 0.6;  // edge vignette\n  gl_FragColor = vec4(col, 1.);\n}'
   },
 
 ];
 
 // ============================================================
-// HEAD del shader (mismo engine, simplificado al máximo)
+// Shader preamble
 // ============================================================
 var VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
 var HEAD = [
@@ -459,7 +578,7 @@ var HEAD = [
 ].join('\n');
 
 // ============================================================
-// Estado
+// State
 // ============================================================
 var currentIdx = 0;
 var visited = new Set();
@@ -481,30 +600,83 @@ function el(tag, attrs, kids) {
 }
 
 // ============================================================
-// Sidebar
+// Language initialization
 // ============================================================
-function buildSidebar() {
+function initLanguage() {
+  // Default to Spanish if no language saved
+  if (!lang) lang = 'es';
+  document.documentElement.lang = lang === 'en' ? 'en' : 'es';
+  bootAcademy();
+}
+
+function updateLangToggle() {
+  document.querySelectorAll('.lang-toggle-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+}
+
+function switchLanguage(newLang) {
+  lang = newLang;
+  localStorage.setItem('wogl-lang', lang);
+  document.documentElement.lang = lang === 'en' ? 'en' : 'es';
+  // Update page title
+  document.title = lang === 'en' ? 'WoGL Learn · Start Here' : 'WoGL Aprende · Start Here';
+  // Rebuild everything
+  updateLangToggle();
+  updateSidebarText();
+  rebuildToc();
+  rebuildKit();
+  renderLesson();
+  updateProgress();
+}
+
+function updateSidebarText() {
+  document.getElementById('sideTag').textContent = t(UI.sideTag);
+  document.getElementById('sideTitle').textContent = t(UI.sideTitle);
+  document.getElementById('sideSub').textContent = t(UI.sideSub);
+  document.getElementById('sideLessonsLabel').textContent = t(UI.lessonsLabel);
+  document.getElementById('sideKitLabel').textContent = t(UI.kitLabel);
+  document.getElementById('headerTagline').textContent = t(UI.headerTagline);
+}
+
+// ============================================================
+// Sidebar navigation
+// ============================================================
+function rebuildToc() {
   var toc = document.getElementById('toc');
+  toc.innerHTML = '';
   LESSONS.forEach(function(lesson, i) {
     var item = el('div', { class:'toc-item', 'data-idx':i }, [
       el('span', { class:'toc-num' }, lesson.num),
-      el('span', { class:'toc-name' }, lesson.title),
+      el('span', { class:'toc-name' }, t(lesson.title)),
       el('span', { class:'toc-mark' }, '')
     ]);
     item.addEventListener('click', function(){ goTo(i); });
     toc.appendChild(item);
   });
+}
 
+function rebuildKit() {
   var kitList = document.getElementById('kitList');
+  kitList.innerHTML = '';
   KIT.forEach(function(item, i) {
-    var card = el('div', { class:'kit-card locked', 'data-unlock': item.unlock }, [
-      el('div', { class:'kit-card-title' }, item.title),
+    var lessonText = (currentIdx + 1 >= item.unlock)
+      ? t(UI.learnedAt) + ' ' + String(item.unlock).padStart(2,'0')
+      : t(UI.unlockAt) + ' ' + String(item.unlock).padStart(2,'0');
+    var isUnlocked = currentIdx + 1 >= item.unlock;
+    var card = el('div', { class:'kit-card ' + (isUnlocked ? 'unlocked' : 'locked'), 'data-unlock': item.unlock }, [
+      el('div', { class:'kit-card-title' }, t(item.title)),
       el('pre', { class:'kit-card-code' }, item.code),
-      el('p', { class:'kit-card-explain' }, item.explain),
-      el('div', { class:'kit-card-lesson' }, 'Desbloquea en lección ' + String(item.unlock).padStart(2,'0'))
+      el('p', { class:'kit-card-explain' }, t(item.explain)),
+      el('div', { class:'kit-card-lesson' }, lessonText)
     ]);
     kitList.appendChild(card);
   });
+}
+
+function buildSidebar() {
+  rebuildToc();
+  rebuildKit();
 }
 
 function updateProgress() {
@@ -520,20 +692,20 @@ function updateProgress() {
     mark.textContent = visited.has(idx) ? '✓' : '';
   });
 
-  // Desbloquear kit cards conforme avanza
+  // Unlock kit cards by lesson index
   document.querySelectorAll('.kit-card').forEach(function(card){
     var unlock = parseInt(card.getAttribute('data-unlock'));
     if (currentIdx + 1 >= unlock) {
       card.classList.add('unlocked');
       card.classList.remove('locked');
       var lessonLabel = card.querySelector('.kit-card-lesson');
-      if (lessonLabel) lessonLabel.textContent = 'Aprendiste en lección ' + String(unlock).padStart(2,'0');
+      if (lessonLabel) lessonLabel.textContent = t(UI.learnedAt) + ' ' + String(unlock).padStart(2,'0');
     }
   });
 }
 
 // ============================================================
-// Main
+// Lesson renderer
 // ============================================================
 function goTo(idx) {
   if (idx < 0 || idx >= LESSONS.length) return;
@@ -550,60 +722,60 @@ function renderLesson() {
   var main = document.getElementById('main');
   main.innerHTML = '';
 
-  // Crumb
+  // Breadcrumb
   main.appendChild(el('div', { class:'crumb' }, [
-    el('span', null, 'Aprende'),
+    el('span', null, t(UI.crumbLearn)),
     el('span', { class:'sep' }, '›'),
     el('span', null, 'Start Here'),
     el('span', { class:'sep' }, '›'),
-    el('span', null, 'Lección ' + lesson.num)
+    el('span', null, t(UI.crumbLesson) + ' ' + lesson.num)
   ]));
 
-  // Welcome banner (solo lección 01)
+  // Welcome banner (lesson 01 only)
   if (lesson.welcome) {
     main.appendChild(el('div', { class:'welcome-banner' }, [
-      el('div', { class:'welcome-eyebrow' }, SECTION_DATA.welcome.eyebrow),
-      el('h2', { class:'welcome-title' }, SECTION_DATA.welcome.title),
-      el('p', { class:'welcome-text', html: SECTION_DATA.welcome.text })
+      el('div', { class:'welcome-eyebrow' }, t(SECTION_DATA.welcome.eyebrow)),
+      el('h2', { class:'welcome-title' }, t(SECTION_DATA.welcome.title)),
+      el('p', { class:'welcome-text', html: t(SECTION_DATA.welcome.text) })
     ]));
   }
 
-  // Title block
+  // Lesson header
   main.appendChild(el('div', { class:'lesson-num-big' }, lesson.num));
-  main.appendChild(el('h1', { class:'lesson-title-big' }, lesson.title));
-  main.appendChild(el('p', { class:'lesson-desc-big' }, lesson.desc));
+  main.appendChild(el('h1', { class:'lesson-title-big' }, t(lesson.title)));
+  main.appendChild(el('p', { class:'lesson-desc-big' }, t(lesson.desc)));
 
-  // Tips banner (solo en lección 01)
+  // Tips banner (lesson 01 only)
   if (lesson.welcome) {
     main.appendChild(el('div', { class:'tips-banner' }, [
-      el('span', { class:'tips-icon' }, 'Antes'),
-      el('p', { class:'tips-text', html: SECTION_DATA.tips })
+      el('span', { class:'tips-icon' }, t(UI.tipsIcon)),
+      el('p', { class:'tips-text', html: t(SECTION_DATA.tips) })
     ]));
   }
 
-  // Explain
-  main.appendChild(el('div', { class:'explain', html: lesson.explain }));
+  // Explanation content
+  main.appendChild(el('div', { class:'explain', html: t(lesson.explain) }));
 
-  // Sandbox label
-  main.appendChild(el('div', { class:'sandbox-label' }, '↓ Edita el código y mira'));
+  // Interactive sandbox
+  main.appendChild(el('div', { class:'sandbox-label' }, t(UI.sandboxLabel)));
 
-  // Sandbox
+  // Canvas + editor
   var canvas = el('canvas');
   var errEl = el('div', { class:'err' });
   var canvasWrap = el('div', { class:'canvas-wrap' }, [canvas, errEl, el('div', { class:'badge' }, 'live · webgl')]);
-  var statusEl = el('span', { class:'editor-status' }, 'compilado');
-  var textarea = el('textarea', { spellcheck:'false' });
+  var statusEl = el('span', { class:'editor-status' }, t(UI.editorCompiled));
+  var textarea = el('textarea', { spellcheck:'false', id:'shader-editor', name:'shader-editor' });
   textarea.value = lesson.code;
   var editor = el('div', { class:'editor' }, [
     el('div', { class:'editor-head' }, [
-      el('span', { class:'editor-label' }, 'tu código'),
+      el('span', { class:'editor-label' }, t(UI.editorLabel)),
       statusEl
     ]),
     textarea
   ]);
   main.appendChild(el('div', { class:'sandbox' }, [canvasWrap, editor]));
 
-  // Setup renderer
+  // WebGL compile loop
   setTimeout(function(){
     currentRenderer = createRenderer(canvas, lesson.code, statusEl, errEl);
     var debounce;
@@ -615,19 +787,19 @@ function renderLesson() {
     });
   }, 50);
 
-  // Actions
-  var btnCopy = el('button', { class:'btn' }, [el('span', { class:'icon' }, '⧉'), el('span', null, 'Copiar')]);
+  // Action buttons
+  var btnCopy = el('button', { class:'btn' }, [el('span', { class:'icon' }, '⧉'), el('span', null, t(UI.btnCopy))]);
   var btnReset = el('button', { class:'btn' }, [el('span', { class:'icon' }, '↺'), el('span', null, 'Reset')]);
 
   var btnNextLabel, btnNextIcon;
   if (lesson.finale) {
-    btnNextLabel = '¡Completaste!';
+    btnNextLabel = t(UI.btnCompleted);
     btnNextIcon = '✓';
   } else if (currentIdx < LESSONS.length - 1) {
-    btnNextLabel = 'Siguiente paso';
+    btnNextLabel = t(UI.btnNext);
     btnNextIcon = '→';
   } else {
-    btnNextLabel = 'Completaste';
+    btnNextLabel = t(UI.btnCompletedAlt);
     btnNextIcon = '✓';
   }
   var btnNext = el('button', { class:'btn primary' }, [
@@ -638,7 +810,7 @@ function renderLesson() {
   btnCopy.addEventListener('click', function(){
     navigator.clipboard.writeText(textarea.value).then(function(){
       var l = btnCopy.querySelector('span:last-child');
-      var o = l.textContent; l.textContent = 'Copiado ✓';
+      var o = l.textContent; l.textContent = t(UI.btnCopied);
       btnCopy.classList.add('copied');
       setTimeout(function(){ l.textContent = o; btnCopy.classList.remove('copied'); }, 1400);
     });
@@ -653,23 +825,23 @@ function renderLesson() {
 
   main.appendChild(el('div', { class:'actions' }, [btnCopy, btnReset, btnNext]));
 
-  // Celebración (solo en lección 10)
+  // Completion card (lesson 10 only)
   if (lesson.finale) {
     main.appendChild(el('div', { class:'celebrate' }, [
-      el('div', { class:'celebrate-eyebrow' }, '✓ Sección completada'),
-      el('h3', { class:'celebrate-title' }, 'Hace una hora no sabías programar.'),
-      el('p', { class:'celebrate-text', html: 'Ahora hiciste anillos que pulsan con código que tú escribiste. <em>Eso es ser shader artist.</em> Lo siguiente es la sección de <strong>Patrones</strong> — vas a aprender a hacer rayas, espirales, mandalas. Cuando estés listo.' })
+      el('div', { class:'celebrate-eyebrow' }, t(UI.celebrateEyebrow)),
+      el('h3', { class:'celebrate-title' }, t(lesson.celebrateTitle)),
+      el('p', { class:'celebrate-text', html: t(lesson.celebrateText) })
     ]));
   }
 
-  // Bottom nav
+  // Prev / next navigation
   var prevArrow = el('div', { class:'nav-arrow' + (currentIdx === 0 ? ' disabled' : '') }, [
-    el('span', { class:'nav-arrow-label' }, '← Anterior'),
-    el('span', { class:'nav-arrow-name' }, currentIdx > 0 ? LESSONS[currentIdx-1].title : '—')
+    el('span', { class:'nav-arrow-label' }, t(UI.navPrev)),
+    el('span', { class:'nav-arrow-name' }, currentIdx > 0 ? t(LESSONS[currentIdx-1].title) : '—')
   ]);
   var nextArrow = el('div', { class:'nav-arrow next' + (currentIdx === LESSONS.length - 1 ? ' disabled' : '') }, [
-    el('span', { class:'nav-arrow-label' }, 'Siguiente →'),
-    el('span', { class:'nav-arrow-name' }, currentIdx < LESSONS.length - 1 ? LESSONS[currentIdx+1].title : '—')
+    el('span', { class:'nav-arrow-label' }, t(UI.navNext)),
+    el('span', { class:'nav-arrow-name' }, currentIdx < LESSONS.length - 1 ? t(LESSONS[currentIdx+1].title) : '—')
   ]);
   prevArrow.addEventListener('click', function(){ if (currentIdx > 0) goTo(currentIdx - 1); });
   nextArrow.addEventListener('click', function(){ if (currentIdx < LESSONS.length - 1) goTo(currentIdx + 1); });
@@ -684,7 +856,8 @@ function createRenderer(canvas, code, statusEl, errEl) {
   var gl = canvas.getContext('webgl', { antialias:true, alpha:false });
   if (!gl) return null;
   var prog = null, uT, uR, uM;
-  var dpr = 1.0, mouseX = 0.5, mouseY = 0.5;
+  var dpr = Math.max(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.25 : 1.5);
+  var mouseX = 0.5, mouseY = 0.5;
   var paused = false, isVisible = true, isInViewport = true;
   var FPS = 30, FRAME = 1000/FPS, lastDraw = 0;
   var startTime = performance.now();
@@ -717,7 +890,7 @@ function createRenderer(canvas, code, statusEl, errEl) {
     uT = gl.getUniformLocation(prog, 'T');
     uR = gl.getUniformLocation(prog, 'R');
     uM = gl.getUniformLocation(prog, 'M');
-    if (statusEl) { statusEl.textContent = 'compilado'; statusEl.classList.remove('error'); }
+    if (statusEl) { statusEl.textContent = t(UI.editorCompiled); statusEl.classList.remove('error'); }
     if (errEl) errEl.classList.remove('show');
     return true;
   }
@@ -763,101 +936,38 @@ function createRenderer(canvas, code, statusEl, errEl) {
 }
 
 // ============================================================
-// Init
+// Boot academy after language is selected
 // ============================================================
-document.addEventListener('DOMContentLoaded', function(){
+function bootAcademy() {
+  // Update page title
+  document.title = lang === 'en' ? 'WoGL Learn · Start Here' : 'WoGL Aprende · Start Here';
+  updateLangToggle();
+  updateSidebarText();
   buildSidebar();
   goTo(0);
-  // Keyboard nav
+}
+
+// ============================================================
+// Bootstrap
+// ============================================================
+document.addEventListener('DOMContentLoaded', function(){
+  // Language toggle click handlers
+  document.querySelectorAll('.lang-toggle-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var newLang = btn.getAttribute('data-lang');
+      if (newLang !== lang) switchLanguage(newLang);
+    });
+  });
+
+  initLanguage();
+
+  // Arrow key navigation
   document.addEventListener('keydown', function(e){
     if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
     if (e.key === 'ArrowRight') goTo(currentIdx + 1);
     if (e.key === 'ArrowLeft') goTo(currentIdx - 1);
   });
 });
-</script>
-
-<!-- Silk shader background -->
-<script>
-(function(){
-  var c = document.getElementById('silkBg');
-  if (!c) return;
-  var gl = c.getContext('webgl');
-  if (!gl) return;
-
-  function resize() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    c.width = window.innerWidth * dpr;
-    c.height = window.innerHeight * dpr;
-    c.style.width = '100%';
-    c.style.height = '100%';
-    gl.viewport(0, 0, c.width, c.height);
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  var vs = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
-  var fs = [
-    'precision highp float;',
-    'uniform float T;uniform vec2 R;',
-    'float h2(vec2 p){vec3 p3=fract(vec3(p.xyx)*0.1031);p3+=dot(p3,p3.yzx+33.33);return fract((p3.x+p3.y)*p3.z);}',
-    'float n2(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h2(i),h2(i+vec2(1,0)),f.x),mix(h2(i+vec2(0,1)),h2(i+vec2(1,1)),f.x),f.y);}',
-    'float fb(vec2 p){float v=0.,a=.5;mat2 r=mat2(.8,.6,-.6,.8);for(int i=0;i<5;i++){v+=a*n2(p);p=r*p*2.;a*=.5;}return v;}',
-    'vec3 tm(vec3 c){return c*(2.51*c+.03)/(c*(2.43*c+.59)+.14);}',
-    'void main(){',
-    '  vec2 uv=(gl_FragCoord.xy/R-.5)*2.;uv.x*=R.x/R.y;',
-    '  vec2 p=uv*.8;p.y-=T*.02;',
-    '  vec2 q=vec2(fb(p+T*.03),fb(p+vec2(4.,2.)+T*.025));',
-    '  float f=fb(p+3.*q);',
-    '  float fold1=sin(f*8.+T*.15)*.5+.5;',
-    '  float fold2=sin(f*12.+q.x*3.+T*.1)*.5+.5;',
-    '  float fabric=fold1*.6+fold2*.4;',
-    '  fabric=pow(fabric,1.1);',
-    '  vec3 c=vec3(.045,.04,.03);',
-    '  c+=vec3(.14,.12,.08)*fabric;',
-    '  c+=vec3(.20,.17,.10)*pow(fabric,3.)*.6;',
-    '  c+=vec3(.70,.58,.35)*pow(fabric,4.)*.2;',
-    '  c*=.9+.1*sin(T*.15+f*3.);',
-    '  vec2 vc=(gl_FragCoord.xy/R-.5)*2.;',
-    '  float vig=1.-smoothstep(.5,1.4,length(vc));',
-    '  c*=vig*.7+.3;',
-    '  c=mix(c,c*c*1.5,.15);',
-    '  gl_FragColor=vec4(tm(c),1.);',
-    '}'
-  ].join('\n');
-
-  function makeShader(src, type) {
-    var s = gl.createShader(type);
-    gl.shaderSource(s, src);
-    gl.compileShader(s);
-    return s;
-  }
-  var prog = gl.createProgram();
-  gl.attachShader(prog, makeShader(vs, gl.VERTEX_SHADER));
-  gl.attachShader(prog, makeShader(fs, gl.FRAGMENT_SHADER));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
-
-  var buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-  var aLoc = gl.getAttribLocation(prog, 'a');
-  gl.enableVertexAttribArray(aLoc);
-  gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
-
-  var uT = gl.getUniformLocation(prog, 'T');
-  var uR = gl.getUniformLocation(prog, 'R');
-  var t0 = performance.now();
-
-  function frame() {
-    var t = (performance.now() - t0) * 0.001;
-    gl.uniform1f(uT, t);
-    gl.uniform2f(uR, c.width, c.height);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
 </script>
 
 </body>
