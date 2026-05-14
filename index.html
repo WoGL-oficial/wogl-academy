@@ -35,7 +35,15 @@
   --side-w: 320px;
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body); font-weight:300; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; }
+html { background:var(--bg); }
+body { background:transparent; color:var(--ink); font-family:var(--font-body); font-weight:300; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; }
+
+/* Background FBM */
+.bg-fbm {
+  position:fixed; top:0; left:0; width:100vw; height:100vh;
+  z-index:0; pointer-events:none;
+}
+.bg-fbm canvas { width:100%; height:100%; display:block; }
 ::selection { background:rgba(212,184,150,.25); }
 ::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:transparent; }
@@ -60,7 +68,7 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 }
 
 /* ===== LAYOUT ===== */
-.app { display:grid; grid-template-columns:var(--side-w) 1fr; min-height:100vh; min-height:100dvh; }
+.app { display:grid; grid-template-columns:var(--side-w) 1fr; min-height:100vh; min-height:100dvh; position:relative; z-index:1; }
 @media (max-width:900px) { .app { grid-template-columns:1fr; } }
 
 /* ===== SIDEBAR ===== */
@@ -303,6 +311,8 @@ html, body { background:var(--bg); color:var(--ink); font-family:var(--font-body
 </style>
 </head>
 <body>
+
+<div class="bg-fbm" id="bgFbm"><canvas></canvas></div>
 
 <!-- WoGL Academy Header -->
 <header class="wogl-academy-header">
@@ -938,6 +948,104 @@ function createRenderer(canvas, code, statusEl, errEl) {
 }
 
 // ============================================================
+// Background FBM — silky mantle
+// ============================================================
+function initBgFbm() {
+  var wrap = document.getElementById('bgFbm');
+  if (!wrap) return;
+  var canvas = wrap.querySelector('canvas');
+  var gl = canvas.getContext('webgl', { antialias:false, alpha:false });
+  if (!gl) return;
+
+  var dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.25 : 1.5);
+
+  var vsrc = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+  var fsrc = [
+    'precision mediump float;',
+    'uniform float T;',
+    'uniform vec2 R;',
+    '',
+    'float h2(vec2 p){',
+    '  vec3 p3=fract(vec3(p.xyx)*0.1031);',
+    '  p3+=dot(p3,p3.yzx+33.33);',
+    '  return fract((p3.x+p3.y)*p3.z);',
+    '}',
+    'float n2(vec2 p){',
+    '  vec2 i=floor(p),f=fract(p);',
+    '  f=f*f*f*(f*(f*6.-15.)+10.);',
+    '  return mix(mix(h2(i),h2(i+vec2(1,0)),f.x),',
+    '             mix(h2(i+vec2(0,1)),h2(i+vec2(1,1)),f.x),f.y);',
+    '}',
+    'float fb(vec2 p){',
+    '  float v=0.,a=.5;',
+    '  mat2 r=mat2(.8,.6,-.6,.8);',
+    '  for(int i=0;i<4;i++){v+=a*n2(p);p=r*p*2.07;a*=.5;}',
+    '  return v;',
+    '}',
+    'void main(){',
+    '  vec2 uv=(gl_FragCoord.xy/R-.5)*2.;',
+    '  uv.x*=R.x/R.y;',
+    '  float t=T*0.015;',
+    '  vec2 p=uv*.6;',
+    '  vec2 q=vec2(fb(p+t),fb(p+vec2(4.7,2.3)+t*0.8));',
+    '  float f=fb(p+3.*q);',
+    '  float fold=sin(f*6.+t*8.)*.5+.5;',
+    '  fold=pow(fold,1.2);',
+    '  vec3 c=vec3(0.04,0.03,0.10);',
+    '  c+=vec3(0.18,0.14,0.25)*fold;',
+    '  c+=vec3(0.25,0.18,0.35)*pow(fold,3.)*0.6;',
+    '  c+=vec3(0.22,0.14,0.08)*pow(fold,4.)*0.4;',
+    '  gl_FragColor=vec4(c,1.);',
+    '}',
+  ].join('\n');
+
+  var vs = gl.createShader(gl.VERTEX_SHADER);
+  gl.shaderSource(vs, vsrc); gl.compileShader(vs);
+  var fs = gl.createShader(gl.FRAGMENT_SHADER);
+  gl.shaderSource(fs, fsrc); gl.compileShader(fs);
+  if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
+    console.warn('BG FBM compile error:', gl.getShaderInfoLog(fs));
+    return;
+  }
+  var prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs);
+  gl.bindAttribLocation(prog, 0, 'a');
+  gl.linkProgram(prog); gl.useProgram(prog);
+
+  var uT = gl.getUniformLocation(prog, 'T');
+  var uR = gl.getUniformLocation(prog, 'R');
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+  function resize() {
+    canvas.width = Math.floor(window.innerWidth * dpr);
+    canvas.height = Math.floor(window.innerHeight * dpr);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var FPS = 30, FRAME = 1000/FPS, lastDraw = 0;
+  var startTime = performance.now();
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (reducedMotion || document.hidden) return;
+    if (now - lastDraw < FRAME) return;
+    lastDraw = now;
+    gl.uniform1f(uT, (now - startTime) * 0.001);
+    gl.uniform2f(uR, canvas.width, canvas.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+  requestAnimationFrame(frame);
+}
+
+// ============================================================
 // Boot academy after language is selected
 // ============================================================
 function bootAcademy() {
@@ -953,6 +1061,8 @@ function bootAcademy() {
 // Bootstrap
 // ============================================================
 document.addEventListener('DOMContentLoaded', function(){
+  initBgFbm();
+
   // Language toggle click handlers
   document.querySelectorAll('.lang-toggle-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
