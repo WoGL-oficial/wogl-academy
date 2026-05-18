@@ -183,12 +183,19 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 /* Inline glossary */
 .glossary {
   background:var(--bg-lift); border:1px solid var(--line); border-left:2px solid var(--gold);
-  padding:14px 18px; margin:18px 0;
-  font-family:var(--font-body); font-size:14px; line-height:1.55; color:var(--ink-soft);
+  padding:24px 28px; margin:18px 0;
+  font-family:var(--font-body); font-size:14px; line-height:1.7; color:var(--ink-soft);
 }
 .glossary-label {
   font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--gold);
-  text-transform:uppercase; margin-bottom:6px; display:block;
+  text-transform:uppercase; margin-bottom:10px; display:block;
+}
+.glossary .gold { color:var(--gold); font-weight:400; }
+
+/* Statement hero — the emotional hook */
+.statement-hero {
+  font-family:var(--font-display); font-weight:500; font-size:18px; line-height:1.5;
+  color:var(--gold); margin:28px 0; letter-spacing:.01em;
 }
 .glossary code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); margin:0 2px; }
 
@@ -218,6 +225,24 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 }
 .try-it code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--green); padding:2px 6px; border:1px solid rgba(180,220,150,.2); }
 .try-it em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
+
+/* Pulse prompt */
+.pulse-block {
+  background:rgba(200,160,255,.04); border:1px solid rgba(200,160,255,.15);
+  padding:16px 20px; margin-top:18px; margin-bottom:18px;
+  font-family:var(--font-body); font-size:14px; line-height:1.55; color:var(--ink-soft);
+}
+.pulse-label {
+  font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:rgba(200,160,255,.85);
+  text-transform:uppercase; margin-bottom:10px; display:block;
+}
+.pulse-block pre {
+  font-family:var(--font-mono); font-size:11px; line-height:1.6; color:var(--ink);
+  background:var(--bg-deep); border:1px solid var(--line); padding:12px 14px; margin:10px 0;
+  white-space:pre-wrap; word-break:break-word; -webkit-user-select:all; user-select:all; cursor:copy;
+}
+.pulse-block code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:rgba(200,160,255,.85); padding:2px 6px; border:1px solid rgba(200,160,255,.2); margin:0 2px; }
+.pulse-hint { font-size:13px; color:var(--ink-mute); margin-top:8px; }
 
 /* Sandbox */
 /* Intro — this is alive */
@@ -558,8 +583,8 @@ var LESSONS = [
     welcome: true,
     iridescent: true,
     explain: {
-      es: '<p>Tu pantalla tiene millones de cuadritos de luz. Lo que ves abajo es <strong>uno solo</strong>. Un <em>shader</em> le dice a cada cuadrito de qué color brillar.</p><p>Este pixel es <strong>iridiscente</strong> — cambia de color como una burbuja de jabón o una mancha de aceite en el agua. Esa magia la produce una fórmula matemática llamada <code>iri()</code>.</p><div class="glossary"><span class="glossary-label">¿Qué es un pixel?</span>Un pixel es uno de los cuadritos diminutos que forman tu pantalla. Tu pantalla tiene millones. Un <em>shader</em> es un programa que decide de qué color brilla cada uno. Lo que ves aquí es uno solo — y mira lo que puede hacer.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.42</code> a cualquier número — prueba <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Cada número cambia el color. Después cambia el <code>0.05</code> a <code>0.2</code> para que se mueva más rápido.</span></div>',
-      en: '<p>Your screen has millions of tiny squares of light. What you see below is <strong>just one</strong>. A <em>shader</em> tells each square what color to glow.</p><p>This pixel is <strong>iridescent</strong> — it shifts color like a soap bubble or an oil slick on water. That magic comes from a math formula called <code>iri()</code>. You will learn how to build it yourself in lesson 07.</p><div class="glossary"><span class="glossary-label">What is a pixel?</span>A pixel is one of the tiny squares that make up your screen. Your screen has millions. A <em>shader</em> is a program that decides what color each one glows. What you see here is just one — and look what it can do.</div><div class="ref-block"><span class="ref-block-label">Reading the code</span><code>void main()</code> — the starting point. Every shader begins here.<br><code>vec3 col</code> — a variable that holds 3 numbers: red, green, blue.<br><code>iri()</code> — the color formula. It cycles through 7 colors.<br><code>T</code> — time in seconds. It keeps growing, so the color keeps changing.<br><code>0.05</code> — how fast the color shifts. Bigger = faster.<br><code>0.42</code> — the starting point in the color cycle.<br><code>gl_FragColor</code> — the final output. This is what paints the pixel.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change the <code>0.42</code> to any number — try <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Each number shifts the color. Then change <code>0.05</code> to <code>0.2</code> to make it move faster.</span></div>'
+      es: '<div class="glossary"><span class="glossary-label">¿Qué es un pixel?</span>Un pixel es uno de los cuadritos diminutos que forman tu pantalla. <span class="gold">Tu pantalla tiene millones.</span> Un <em>shader</em> es un programa que decide de qué color brilla cada uno.</div><p class="statement-hero">Lo que ves abajo es uno solo. Un shader le dice de qué color brillar.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.42</code> a cualquier número — prueba <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Cada número cambia el color. Después cambia el <code>0.05</code> a <code>0.2</code> para que se mueva más rápido.</span></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Reemplaza todo el código con esto — ve cómo pulsa.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">¿Quieres que pulse más rápido? Cambia <code>T</code> por <code>T * 3.</code> — el punto después del 3 es importante. En shaders, los números siempre llevan punto: <code>3.</code> no <code>3</code></p></div>',
+      en: '<div class="glossary"><span class="glossary-label">What is a pixel?</span>A pixel is one of the tiny squares that make up your screen. <span class="gold">Your screen has millions.</span> A <em>shader</em> is a program that decides what color each one glows.</div><p class="statement-hero">What you see below is just one. A shader tells it what color to glow.</p><div class="ref-block"><span class="ref-block-label">Reading the code</span><code>void main()</code> — the starting point. Every shader begins here.<br><code>vec3 col</code> — a variable that holds 3 numbers: red, green, blue.<br><code>iri()</code> — the color formula. It cycles through 7 colors.<br><code>T</code> — time in seconds. It keeps growing, so the color keeps changing.<br><code>0.05</code> — how fast the color shifts. Bigger = faster.<br><code>0.42</code> — the starting point in the color cycle.<br><code>gl_FragColor</code> — the final output. This is what paints the pixel.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change the <code>0.42</code> to any number — try <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Each number shifts the color. Then change <code>0.05</code> to <code>0.2</code> to make it move faster.</span></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Replace all the code with this — watch it pulse.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">Want it faster? Change <code>T</code> to <code>T * 3.</code> — the dot after the 3 matters. In shaders, numbers always need a dot: <code>3.</code> not <code>3</code></p></div>'
     },
     code: 'void main(){\n  vec3 col = iri(T * 0.05 + 0.42);\n  gl_FragColor = vec4(col, 1.);\n}'
   },
