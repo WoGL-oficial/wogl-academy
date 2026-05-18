@@ -164,10 +164,10 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 /* Tips */
 .tips-banner {
   background:linear-gradient(180deg,rgba(168,112,76,.06),rgba(168,112,76,.02));
-  border:1px solid rgba(168,112,76,.2); border-left:3px solid var(--copper);
+  border:none; border-left:3px solid var(--copper);
   padding:20px 24px; margin-bottom:48px; display:flex; gap:18px; align-items:flex-start;
 }
-.tips-icon { font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--copper); text-transform:uppercase; padding:4px 10px; border:1px solid var(--copper); flex-shrink:0; margin-top:2px; }
+.tips-icon { font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--copper); text-transform:uppercase; padding:4px 10px; border:none; flex-shrink:0; margin-top:2px; }
 .tips-text { font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--ink-soft); line-height:1.6; }
 .tips-text em { color:var(--gold); font-style:normal; font-weight:500; }
 .tips-text code { font-family:var(--font-mono); font-style:normal; font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); }
@@ -182,7 +182,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 
 /* Inline glossary */
 .glossary {
-  background:var(--bg-lift); border:1px solid var(--line); border-left:2px solid var(--gold);
+  background:var(--bg-lift); border:none; border-left:2px solid var(--gold);
   padding:24px 28px; margin:18px 0;
   font-family:var(--font-body); font-size:14px; line-height:1.7; color:var(--ink-soft);
 }
@@ -201,7 +201,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 
 /* Reference block */
 .ref-block {
-  background:var(--bg-lift); border:1px solid var(--line); border-left:2px solid var(--copper);
+  background:var(--bg-lift); border:none; border-left:2px solid var(--copper);
   padding:14px 18px; margin:18px 0;
   font-family:var(--font-body); font-size:14px; line-height:1.7; color:var(--ink-soft);
 }
@@ -213,14 +213,14 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 
 /* Try it prompt */
 .try-it {
-  background:rgba(180,220,150,.04); border:1px solid rgba(180,220,150,.15);
+  background:rgba(180,220,150,.04); border:none;
   padding:16px 20px; margin-top:18px; margin-bottom:18px;
   font-family:var(--font-body); font-size:14px; line-height:1.55; color:var(--ink-soft);
   display:flex; gap:14px; align-items:flex-start;
 }
 .try-it-icon {
   font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--green);
-  text-transform:uppercase; padding:3px 8px; border:1px solid rgba(180,220,150,.3);
+  text-transform:uppercase; padding:3px 8px; border:none;
   flex-shrink:0; margin-top:1px;
 }
 .try-it code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--green); padding:2px 6px; border:1px solid rgba(180,220,150,.2); }
@@ -228,7 +228,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 
 /* Pulse prompt */
 .pulse-block {
-  background:rgba(200,160,255,.04); border:1px solid rgba(200,160,255,.15);
+  background:rgba(200,160,255,.04); border:none;
   padding:16px 20px; margin-top:18px; margin-bottom:18px;
   font-family:var(--font-body); font-size:14px; line-height:1.55; color:var(--ink-soft);
 }
@@ -244,23 +244,54 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 .pulse-block code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:rgba(200,160,255,.85); padding:2px 6px; border:1px solid rgba(200,160,255,.2); margin:0 2px; }
 .pulse-hint { font-size:13px; color:var(--ink-mute); margin-top:8px; }
 
+/* Supernova divider */
+.supernova {
+  position:relative; height:1px; margin:40px 0;
+  background:linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
+}
+.supernova::after {
+  content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:120px; height:1px;
+  background:radial-gradient(ellipse at center, rgba(232,200,154,0.9) 0%, rgba(212,165,116,0.4) 30%, transparent 70%);
+  box-shadow:0 0 20px rgba(232,200,154,0.4), 0 0 60px rgba(232,200,154,0.15), 0 0 100px rgba(212,165,116,0.08);
+  animation:supernova-breathe 5s ease-in-out infinite;
+}
+@keyframes supernova-breathe {
+  0%, 100% { width:120px; opacity:0.8; }
+  50% { width:180px; opacity:1; }
+}
+
 /* Sandbox */
 /* Intro — this is alive */
 .intro-alive { position:relative; padding:48px 0 56px; margin-bottom:48px; border-bottom:1px solid var(--line); overflow:hidden; }
 .intro-alive-line {
   font-family:var(--font-display); font-weight:300; font-size:clamp(24px, 4vw, 40px);
   color:var(--ink); line-height:1.4; letter-spacing:-0.01em;
-  opacity:0; transform:translateY(16px);
-  transition:opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.intro-alive-line.visible { opacity:1; transform:translateY(0); }
+.intro-alive-line.visible { clip-path:inset(0 0% 0 0); }
 .intro-alive-line .intro-glow { color:#e8c89a; text-shadow:0 0 30px rgba(232,200,154,0.3); }
-.intro-alive-sub {
-  font-family:var(--font-display); font-weight:300; font-size:clamp(20px, 3.2vw, 32px);
-  color:var(--ink); letter-spacing:-0.01em; margin-top:20px; line-height:1.4;
-  opacity:0; transition:opacity 1s ease 2s;
+@keyframes gradient-sweep {
+  0%   { background-position:0% 50%; }
+  100% { background-position:300% 50%; }
 }
-.intro-alive-sub.visible { opacity:0.92; }
+@keyframes sub-glow {
+  0%, 100% { filter:brightness(1) drop-shadow(0 0 8px rgba(232,200,154,0.0)); }
+  50% { filter:brightness(1.6) drop-shadow(0 0 30px rgba(232,200,154,0.6)); }
+}
+.intro-alive-sub {
+  font-family:var(--font-display); font-weight:500; font-size:clamp(24px, 4vw, 40px);
+  letter-spacing:-0.01em; margin-top:28px; line-height:1.4;
+  background:linear-gradient(90deg, #fff8ee, #e8c89a, #d4a876, #e8c89a, #fff8ee);
+  background-size:300% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:gradient-sweep 3s linear infinite, sub-glow 4s ease-in-out infinite;
+  opacity:0; transition:opacity 1s ease;
+}
+.intro-alive-sub.visible { opacity:1; }
 
 /* Slider + text field controls */
 .controls-row { display:flex; gap:16px; align-items:flex-end; margin-bottom:20px; flex-wrap:wrap; }
@@ -583,8 +614,8 @@ var LESSONS = [
     welcome: true,
     iridescent: true,
     explain: {
-      es: '<div class="glossary"><span class="glossary-label">¿Qué es un pixel?</span>Un pixel es uno de los cuadritos diminutos que forman tu pantalla. <span class="gold">Tu pantalla tiene millones.</span> Un <em>shader</em> es un programa que decide de qué color brilla cada uno.</div><p class="statement-hero">Lo que ves abajo es uno solo. Un shader le dice de qué color brillar.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.42</code> a cualquier número — prueba <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Cada número cambia el color. Después cambia el <code>0.05</code> a <code>0.2</code> para que se mueva más rápido.</span></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Reemplaza todo el código con esto — ve cómo pulsa.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">¿Quieres que pulse más rápido? Cambia <code>T</code> por <code>T * 3.</code> — el punto después del 3 es importante. En shaders, los números siempre llevan punto: <code>3.</code> no <code>3</code></p></div>',
-      en: '<div class="glossary"><span class="glossary-label">What is a pixel?</span>A pixel is one of the tiny squares that make up your screen. <span class="gold">Your screen has millions.</span> A <em>shader</em> is a program that decides what color each one glows.</div><p class="statement-hero">What you see below is just one. A shader tells it what color to glow.</p><div class="ref-block"><span class="ref-block-label">Reading the code</span><code>void main()</code> — the starting point. Every shader begins here.<br><code>vec3 col</code> — a variable that holds 3 numbers: red, green, blue.<br><code>iri()</code> — the color formula. It cycles through 7 colors.<br><code>T</code> — time in seconds. It keeps growing, so the color keeps changing.<br><code>0.05</code> — how fast the color shifts. Bigger = faster.<br><code>0.42</code> — the starting point in the color cycle.<br><code>gl_FragColor</code> — the final output. This is what paints the pixel.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change the <code>0.42</code> to any number — try <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Each number shifts the color. Then change <code>0.05</code> to <code>0.2</code> to make it move faster.</span></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Replace all the code with this — watch it pulse.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">Want it faster? Change <code>T</code> to <code>T * 3.</code> — the dot after the 3 matters. In shaders, numbers always need a dot: <code>3.</code> not <code>3</code></p></div>'
+      es: '<div class="glossary"><span class="glossary-label">¿Qué es un pixel?</span>Un pixel es uno de los cuadritos diminutos que forman tu pantalla. <span class="gold">Tu pantalla tiene millones.</span> Un <em>shader</em> es un programa que decide de qué color brilla cada uno.</div><p class="statement-hero">Lo que ves abajo es uno solo. Un shader le dice de qué color brillar.</p><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.42</code> a cualquier número — prueba <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Cada número cambia el color. Después cambia el <code>0.05</code> a <code>0.2</code> para que se mueva más rápido.</span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Reemplaza todo el código con esto — ve cómo pulsa.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">¿Quieres que pulse más rápido? Cambia <code>T</code> por <code>T * 3.</code> — el punto después del 3 es importante. En shaders, los números siempre llevan punto: <code>3.</code> no <code>3</code></p></div>',
+      en: '<div class="glossary"><span class="glossary-label">What is a pixel?</span>A pixel is one of the tiny squares that make up your screen. <span class="gold">Your screen has millions.</span> A <em>shader</em> is a program that decides what color each one glows.</div><p class="statement-hero">What you see below is just one. A shader tells it what color to glow.</p><div class="supernova"></div><div class="ref-block"><span class="ref-block-label">Reading the code</span><code>void main()</code> — the starting point. Every shader begins here.<br><code>vec3 col</code> — a variable that holds 3 numbers: red, green, blue.<br><code>iri()</code> — the color formula. It cycles through 7 colors.<br><code>T</code> — time in seconds. It keeps growing, so the color keeps changing.<br><code>0.05</code> — how fast the color shifts. Bigger = faster.<br><code>0.42</code> — the starting point in the color cycle.<br><code>gl_FragColor</code> — the final output. This is what paints the pixel.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change the <code>0.42</code> to any number — try <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Each number shifts the color. Then change <code>0.05</code> to <code>0.2</code> to make it move faster.</span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Replace all the code with this — watch it pulse.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">Want it faster? Change <code>T</code> to <code>T * 3.</code> — the dot after the 3 matters. In shaders, numbers always need a dot: <code>3.</code> not <code>3</code></p></div>'
     },
     code: 'void main(){\n  vec3 col = iri(T * 0.05 + 0.42);\n  gl_FragColor = vec4(col, 1.);\n}'
   },
@@ -944,17 +975,19 @@ function renderLesson() {
     var introLines = lang === 'en'
       ? [
           'Your computer has two engines.',
-          'The <span class="intro-glow">CPU</span> runs your apps — browser, music, files.',
-          'The <span class="intro-glow">GPU</span> runs graphics — every pixel you see on screen.',
-          '<span class="intro-glow">Graphics Processing Unit</span>. It is built to paint millions of pixels at the same time.',
-          'You talk to it by writing a small program called a <span class="intro-glow">shader</span>, in a language called <span class="intro-glow">GLSL</span>.'
+          '<span class="intro-glow">CPU</span> runs your apps — browser, music, files.',
+          '<span class="intro-glow">GPU</span> runs graphics — every pixel you see on screen.',
+          '<span class="intro-glow">Graphics Processing Unit</span> (GPU). Built to paint millions of pixels at the same time.',
+          'A <span class="intro-glow">shader</span> is a small program that runs on the GPU.',
+          '<span class="intro-glow">GLSL</span> — the language you write shaders in.'
         ]
       : [
           'Tu computadora tiene dos motores.',
-          'El <span class="intro-glow">CPU</span> corre tus apps — navegador, música, archivos.',
-          'El <span class="intro-glow">GPU</span> corre los gráficos — cada pixel que ves en pantalla.',
-          '<span class="intro-glow">Graphics Processing Unit</span>. Está hecho para pintar millones de pixeles al mismo tiempo.',
-          'Le hablas escribiendo un programa pequeño llamado <span class="intro-glow">shader</span>, en un lenguaje llamado <span class="intro-glow">GLSL</span>.'
+          '<span class="intro-glow">CPU</span> corre tus apps — navegador, música, archivos.',
+          '<span class="intro-glow">GPU</span> corre los gráficos — cada pixel que ves en pantalla.',
+          '<span class="intro-glow">Graphics Processing Unit</span> (GPU). Hecho para pintar millones de pixeles al mismo tiempo.',
+          'Un <span class="intro-glow">shader</span> es un programa pequeño que corre en la GPU.',
+          '<span class="intro-glow">GLSL</span> — el lenguaje en el que escribes shaders.'
         ];
     var introEl = el('div', { class:'intro-alive' });
     var lineEls = [];
@@ -964,39 +997,15 @@ function renderLesson() {
       introEl.appendChild(line);
       lineEls.push(line);
     });
-    var subText = lang === 'en' ? 'Everything you see here — you will learn to build it.' : 'Todo lo que ves aquí — vas a aprender a construirlo.';
+    var subText = lang === 'en' ? 'And you will learn how to build them all here.' : 'Y aquí vas a aprender a construirlos todos.';
     var sub = el('div', { class:'intro-alive-sub' });
-    // Split into spans for marea effect
-    subText.split('').forEach(function(ch, i) {
-      var span = document.createElement('span');
-      span.textContent = ch;
-      span.style.display = 'inline-block';
-      if (ch === ' ') span.style.width = '0.3em';
-      span.setAttribute('data-i', i);
-      sub.appendChild(span);
-    });
+    sub.textContent = subText;
     introEl.appendChild(sub);
     main.appendChild(introEl);
-
-    // Marea seda — vertical wave on sub line
-    var TAU = Math.PI * 2;
-    var mareaStart = performance.now();
-    function mareaFrame() {
-      if (!sub.isConnected) return;
-      var t = (performance.now() - mareaStart) * 0.001;
-      var spans = sub.querySelectorAll('span');
-      for (var si = 0; si < spans.length; si++) {
-        var s = Math.sin(TAU * (t / 6 + si * 0.18));
-        s = s * Math.abs(s); // silk curve
-        spans[si].style.transform = 'translateY(' + (s * 8) + 'px)';
-      }
-      requestAnimationFrame(mareaFrame);
-    }
-    requestAnimationFrame(mareaFrame);
     lineEls.forEach(function(line, i) {
-      setTimeout(function(){ line.classList.add('visible'); }, 300 + i * 500);
+      setTimeout(function(){ line.classList.add('visible'); }, 300 + i * 2000);
     });
-    setTimeout(function(){ sub.classList.add('visible'); }, 300 + lineEls.length * 500);
+    setTimeout(function(){ sub.classList.add('visible'); }, 300 + lineEls.length * 2000);
   }
 
   // Tips banner (lesson 01 only)
