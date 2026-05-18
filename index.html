@@ -124,9 +124,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
   border-left:2px solid var(--copper); padding:6px 10px; margin-bottom:8px;
   white-space:pre-wrap; word-break:break-word; -webkit-user-select:text; user-select:text;
 }
-.kit-card.locked .kit-card-code { color:var(--ink-mute); border-left-color:var(--ink-faint); }
 .kit-card-explain { font-family:var(--font-body); font-weight:300; font-size:12px; line-height:1.5; color:var(--ink-mute); }
-.kit-card-lesson { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; color:var(--ink-faint); text-transform:uppercase; margin-top:6px; }
 
 /* ===== MAIN ===== */
 .main { padding:48px 56px 80px; max-width:1100px; }
@@ -491,7 +489,7 @@ var UI = {
   sideTitle:        { es: 'Bienvenida', en: 'Welcome' },
   sideSub:          { es: 'Tus primeros 10 pasos en el mundo de los shaders.', en: 'Your first 10 steps into the world of shaders.' },
   lessonsLabel:     { es: 'Lecciones', en: 'Lessons' },
-  kitLabel:         { es: 'Lo que ya sabes', en: 'What you know' },
+  kitLabel:         { es: 'Primals', en: 'Primals' },
   crumbLearn:       { es: 'Aprende', en: 'Learn' },
   crumbLesson:      { es: 'Lección', en: 'Lesson' },
   tipsIcon:         { es: 'Nota', en: 'Note' },
@@ -507,8 +505,6 @@ var UI = {
   navPrev:          { es: '← Anterior', en: '← Previous' },
   navNext:          { es: 'Siguiente →', en: 'Next →' },
   celebrateEyebrow: { es: '✓ Sección completada', en: '✓ Section complete' },
-  unlockAt:         { es: 'Desbloquea en lección', en: 'Unlocks in lesson' },
-  learnedAt:        { es: 'Aprendiste en lección', en: 'Learned in lesson' },
   headerTagline:    { es: 'aprende GLSL desde cero', en: 'learn GLSL from zero' },
 };
 
@@ -528,37 +524,27 @@ var SECTION_DATA = {
   tips: { es: 'Es <em>imposible</em> romper nada aquí. En serio. Cambia cualquier número, borra una línea entera, escribe lo que quieras. Si algo truena, aparece un mensaje rojo — le das <em>Reset</em> y vuelves a empezar. Cero consecuencias. <em>La única manera de aprender es tocando.</em>', en: 'It is <em>impossible</em> to break anything here. Seriously. Change any number, delete a whole line, type whatever you want. If something breaks, a red message shows up — hit <em>Reset</em> and you are back. Zero consequences. <em>The only way to learn is by touching the code.</em>' },
 };
 
-// Progressive kit — unlocks per lesson (bilingual)
+// Primals — the absolute basics of reading code
 var KIT = [
-  { unlock: 1,
-    title: { es: 'Pintar la pantalla', en: 'Paint the screen' },
-    code: 'gl_FragColor = vec4(R, G, B, 1.);',
-    explain: { es: 'La línea mágica. R, G, B son tres números entre 0 y 1.', en: 'The magic line. R, G, B are three numbers between 0 and 1.' }
+  { title: { es: 'Las llaves', en: 'Curly braces' },
+    code: '{ }',
+    explain: { es: 'Agrupan código. Todo lo que va adentro se ejecuta junto.', en: 'They group code. Everything inside runs together.' }
   },
-  { unlock: 4,
-    title: { es: 'Saber dónde estás', en: 'Know where you are' },
-    code: 'vec2 p = gl_FragCoord.xy / R;',
-    explain: { es: 'p te dice la posición del pixel: 0 a la izquierda, 1 a la derecha.', en: 'p tells you the pixel position: 0 on the left, 1 on the right.' }
+  { title: { es: 'Los paréntesis', en: 'Parentheses' },
+    code: '( )',
+    explain: { es: 'Llaman una función — le dicen a la máquina "haz esto".', en: 'They call a function — they tell the machine "do this".' }
   },
-  { unlock: 6,
-    title: { es: 'El centro', en: 'The center' },
-    code: 'vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);',
-    explain: { es: 'Ahora 0 está en el centro de la pantalla, no en la esquina.', en: 'Now 0 is at the center of the screen, not in the corner.' }
+  { title: { es: 'El punto y coma', en: 'The semicolon' },
+    code: ';',
+    explain: { es: 'El punto final de cada instrucción. Sin él, la máquina se pierde.', en: 'The period at the end of each instruction. Without it, the machine gets lost.' }
   },
-  { unlock: 7,
-    title: { es: 'El tiempo', en: 'Time' },
-    code: 'col = col * (.5 + .5 * sin(T));',
-    explain: { es: 'T es el tiempo. Va creciendo. Lo usamos para animar.', en: 'T is time. It keeps growing. We use it to animate.' }
+  { title: { es: 'El igual', en: 'The equals sign' },
+    code: '=',
+    explain: { es: 'Asigna un valor. "x = 5" significa: guarda 5 dentro de x.', en: 'Assigns a value. "x = 5" means: store 5 inside x.' }
   },
-  { unlock: 8,
-    title: { es: 'Ondas con sin()', en: 'Waves with sin()' },
-    code: 'float v = sin(p.x * 10.) * .5 + .5;',
-    explain: { es: 'sin() es una onda. La fórmula la "traduce" para usarla como color.', en: 'sin() is a wave. The formula "translates" it so you can use it as color.' }
-  },
-  { unlock: 9,
-    title: { es: 'Distancia', en: 'Distance' },
-    code: 'float d = length(p);',
-    explain: { es: 'length() te dice qué tan lejos estás del centro.', en: 'length() tells you how far you are from the center.' }
+  { title: { es: 'El comentario', en: 'The comment' },
+    code: '// esto es un comentario',
+    explain: { es: 'La máquina lo ignora. Es una nota para ti o para quien lea tu código.', en: 'The machine ignores it. It is a note for you or whoever reads your code.' }
   },
 ];
 
@@ -856,16 +842,11 @@ function rebuildToc() {
 function rebuildKit() {
   var kitList = document.getElementById('kitList');
   kitList.innerHTML = '';
-  KIT.forEach(function(item, i) {
-    var lessonText = (currentIdx + 1 >= item.unlock)
-      ? t(UI.learnedAt) + ' ' + String(item.unlock).padStart(2,'0')
-      : t(UI.unlockAt) + ' ' + String(item.unlock).padStart(2,'0');
-    var isUnlocked = currentIdx + 1 >= item.unlock;
-    var card = el('div', { class:'kit-card ' + (isUnlocked ? 'unlocked' : 'locked'), 'data-unlock': item.unlock }, [
+  KIT.forEach(function(item) {
+    var card = el('div', { class:'kit-card unlocked' }, [
       el('div', { class:'kit-card-title' }, t(item.title)),
       el('pre', { class:'kit-card-code' }, item.code),
-      el('p', { class:'kit-card-explain' }, t(item.explain)),
-      el('div', { class:'kit-card-lesson' }, lessonText)
+      el('p', { class:'kit-card-explain' }, t(item.explain))
     ]);
     kitList.appendChild(card);
   });
@@ -889,16 +870,6 @@ function updateProgress() {
     mark.textContent = visited.has(idx) ? '✓' : '';
   });
 
-  // Unlock kit cards by lesson index
-  document.querySelectorAll('.kit-card').forEach(function(card){
-    var unlock = parseInt(card.getAttribute('data-unlock'));
-    if (currentIdx + 1 >= unlock) {
-      card.classList.add('unlocked');
-      card.classList.remove('locked');
-      var lessonLabel = card.querySelector('.kit-card-lesson');
-      if (lessonLabel) lessonLabel.textContent = t(UI.learnedAt) + ' ' + String(unlock).padStart(2,'0');
-    }
-  });
 }
 
 // ============================================================
