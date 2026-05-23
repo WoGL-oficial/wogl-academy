@@ -413,28 +413,15 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 .celebrate-text { font-family:var(--font-body); font-size:14px; line-height:1.65; color:var(--ink-soft); max-width:520px; margin:0 auto; }
 .celebrate-text em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
 /* ===== WOGL FOOTER ===== */
-.wogl-footer {
-  border-top:1px solid var(--line); padding:40px 28px 28px; margin-top:48px;
-  text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px;
+.foot-meta {
+  font-family:var(--font-mono); font-size:10px;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--ink-mute); opacity:0.9; text-align:center;
+  padding:60px 40px 40px; line-height:2; margin-top:48px;
 }
-.wogl-footer-logo {
-  font-family:'Outfit',sans-serif; font-weight:300; font-size:28px;
-  color:#e8c89a; letter-spacing:.18em;
-  text-shadow:0 0 40px rgba(232,200,154,0.3),0 0 80px rgba(212,165,116,0.15);
-}
-.wogl-footer-links {
-  display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;
-}
-.wogl-footer-links a {
-  font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em;
-  color:var(--ink-mute); text-decoration:none; transition:color .2s;
-}
-.wogl-footer-links a:hover { color:var(--gold); }
-.wogl-footer-dot { color:var(--ink-faint); font-size:10px; }
-.wogl-footer-copy {
-  font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.12em;
-  color:var(--ink-faint); text-transform:uppercase; margin-top:8px;
-}
+.foot-meta a { color:var(--ink-mute); text-decoration:none; transition:color .2s; }
+.foot-meta a:hover { color:var(--gold); }
+.foot-meta .foot-academy { color:var(--gold); border-bottom:1px solid var(--gold); }
 
 /* ===== WOGL ACADEMY HEADER ===== */
 .wogl-academy-header {
@@ -1104,22 +1091,11 @@ function renderLesson() {
 
   main.appendChild(el('div', { class:'nav-bottom' }, [prevArrow, nextArrow]));
 
-  // Footer
-  var footer = el('footer', { class:'wogl-footer' }, [
-    el('div', { class:'wogl-footer-logo' }, 'WoGL'),
-    el('div', { class:'wogl-footer-links' }, [
-      el('a', { href:'https://wogl.io' }, 'wogl.io'),
-      el('span', { class:'wogl-footer-dot' }, '·'),
-      el('a', { href:'https://studio.wogl.io' }, 'studio.wogl.io'),
-      el('span', { class:'wogl-footer-dot' }, '·'),
-      el('a', { href:'https://academy.wogl.io' }, 'academy.wogl.io'),
-      el('span', { class:'wogl-footer-dot' }, '·'),
-      el('a', { href:'https://worldofgl.com' }, 'worldofgl.com'),
-      el('span', { class:'wogl-footer-dot' }, '·'),
-      el('a', { href:'https://mundogl.com' }, 'mundogl.com'),
-    ]),
-    el('div', { class:'wogl-footer-copy' }, 'Proprietary. All rights reserved.')
-  ]);
+  // Footer — same as studio.wogl.io
+  var footer = el('div', { class:'foot-meta' });
+  footer.innerHTML = 'wogl academy &middot; CDMX &middot; 2026<br>' +
+    '<a href="https://wogl.io">wogl.io</a> &middot; <a href="https://worldofgl.com">worldofgl.com</a> &middot; <a href="https://mundogl.com">mundogl.com</a><br>' +
+    'want a website like this? <a href="https://studio.wogl.io" class="foot-academy">visit studio</a>';
   main.appendChild(footer);
 }
 
