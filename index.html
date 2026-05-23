@@ -108,6 +108,36 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 .toc-item.active .toc-name { color:var(--ink); font-weight:400; }
 .toc-mark { font-family:var(--font-mono); font-size:10px; color:var(--green); }
 
+/* Start Here nav divider */
+.side-start-here {
+  padding:14px 28px;
+  font-family:var(--font-display); font-weight:400; font-size:15px;
+  color:var(--ink); letter-spacing:.01em;
+  border-left:3px solid var(--gold);
+  cursor:pointer;
+  transition:all .3s var(--ease);
+  background:rgba(212,184,150,.04);
+}
+.side-start-here:hover { background:rgba(212,184,150,.08); color:var(--gold); }
+
+/* Sections nav */
+.sections-nav { display:flex; flex-direction:column; }
+.section-item {
+  display:grid; grid-template-columns:28px 1fr; align-items:center; gap:10px;
+  padding:9px 28px; cursor:pointer; border-left:2px solid transparent;
+  transition:all .3s var(--ease);
+}
+.section-item:hover { background:rgba(232,217,192,.025); border-left-color:var(--copper); }
+.section-item.active { background:rgba(212,184,150,.04); border-left-color:var(--gold); }
+.section-item .section-num { font-family:var(--font-mono); font-size:10px; letter-spacing:1px; color:var(--ink-faint); }
+.section-item.active .section-num { color:var(--gold); }
+.section-item .section-name { font-family:var(--font-body); font-size:13px; font-weight:300; color:var(--ink-mute); }
+.section-item.active .section-name { color:var(--ink-soft); }
+.section-item:hover .section-name { color:var(--ink-soft); }
+
+/* Separator between sections and lesson TOC */
+.sections-nav + .toc { border-top:1px solid var(--line); padding-top:8px; margin-top:8px; }
+
 /* Progressive kit */
 .kit-list { padding:0 28px 28px; display:flex; flex-direction:column; gap:12px; }
 .kit-card {
@@ -496,7 +526,11 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
       </div>
     </div>
 
-    <div class="side-section-label" id="sideLessonsLabel">Lecciones</div>
+    <div class="side-start-here" id="startHereNav">Start here</div>
+
+    <div class="side-section-label" id="sideSectionsLabel">Lecciones</div>
+    <nav class="sections-nav" id="sectionsNav"></nav>
+
     <nav class="toc" id="toc"></nav>
 
     <div class="side-section-label" id="sideKitLabel">Lo que ya sabes</div>
@@ -544,7 +578,8 @@ var UI = {
   sideTag:          { es: 'aprende · start here', en: 'learn · start here' },
   sideTitle:        { es: 'Bienvenida', en: 'Welcome' },
   sideSub:          { es: 'Tus primeros 10 pasos en el mundo de los shaders.', en: 'Your first 10 steps into the world of shaders.' },
-  lessonsLabel:     { es: 'Lecciones', en: 'Lessons' },
+  sectionsLabel:    { es: 'Lecciones', en: 'Lessons' },
+  startHere:        { es: 'Empieza aquí', en: 'Start here' },
   kitLabel:         { es: 'Primals', en: 'Primals' },
   crumbLearn:       { es: 'Aprende', en: 'Learn' },
   crumbLesson:      { es: 'Lección', en: 'Lesson' },
@@ -579,6 +614,23 @@ var SECTION_DATA = {
   },
   tips: { es: 'Es <em>imposible</em> romper nada aquí. En serio. Cambia cualquier número, borra una línea entera, escribe lo que quieras. Si algo truena, aparece un mensaje rojo — le das <em>Reset</em> y vuelves a empezar. Cero consecuencias. <em>La única manera de aprender es tocando.</em>', en: 'It is <em>impossible</em> to break anything here. Seriously. Change any number, delete a whole line, type whatever you want. If something breaks, a red message shows up — hit <em>Reset</em> and you are back. Zero consequences. <em>The only way to learn is by touching the code.</em>' },
 };
+
+// Sections — the 11 chapters of the academy
+var SECTIONS = [
+  { num:'00', name: { es:'Bienvenida', en:'Welcome' } },
+  { num:'01', name: { es:'Formas', en:'Shapes' } },
+  { num:'02', name: { es:'Patrones', en:'Patterns' } },
+  { num:'03', name: { es:'Color', en:'Color' } },
+  { num:'04', name: { es:'Movimiento', en:'Motion' } },
+  { num:'05', name: { es:'Ruido', en:'Noise' } },
+  { num:'06', name: { es:'Distorsión', en:'Distortion' } },
+  { num:'07', name: { es:'Texturas', en:'Textures' } },
+  { num:'08', name: { es:'SDF 2D', en:'SDF 2D' } },
+  { num:'09', name: { es:'Pseudo-3D', en:'Pseudo-3D' } },
+  { num:'10', name: { es:'Raymarching', en:'Raymarching' } },
+];
+
+var currentSection = '00';
 
 // Primals — the absolute basics of reading code
 var KIT = [
@@ -863,6 +915,7 @@ function switchLanguage(newLang) {
   // Rebuild everything
   updateLangToggle();
   updateSidebarText();
+  rebuildSections();
   rebuildToc();
   rebuildKit();
   renderLesson();
@@ -871,11 +924,13 @@ function switchLanguage(newLang) {
 
 function updateSidebarText() {
   document.getElementById('sideTag').textContent = t(UI.sideTag);
-  document.getElementById('sideTitle').textContent = t(UI.sideTitle);
+  var sec = SECTIONS.find(function(s) { return s.num === currentSection; });
+  document.getElementById('sideTitle').textContent = sec ? t(sec.name) : t(UI.sideTitle);
   document.getElementById('sideSub').textContent = t(UI.sideSub);
-  document.getElementById('sideLessonsLabel').textContent = t(UI.lessonsLabel);
+  document.getElementById('sideSectionsLabel').textContent = t(UI.sectionsLabel);
   document.getElementById('sideKitLabel').textContent = t(UI.kitLabel);
   document.getElementById('headerTagline').textContent = t(UI.headerTagline);
+  document.getElementById('startHereNav').textContent = t(UI.startHere);
 }
 
 // ============================================================
@@ -908,7 +963,38 @@ function rebuildKit() {
   });
 }
 
+function rebuildSections() {
+  var nav = document.getElementById('sectionsNav');
+  nav.innerHTML = '';
+  SECTIONS.forEach(function(sec) {
+    var item = el('div', { class:'section-item' + (sec.num === currentSection ? ' active' : '') }, [
+      el('span', { class:'section-num' }, sec.num),
+      el('span', { class:'section-name' }, t(sec.name))
+    ]);
+    item.addEventListener('click', function() { switchSection(sec.num); });
+    nav.appendChild(item);
+  });
+}
+
+function switchSection(secNum) {
+  if (currentRenderer) currentRenderer.destroy();
+  currentSection = secNum;
+  currentIdx = 0;
+  visited = new Set();
+  introShown = false;
+  var sec = SECTIONS.find(function(s) { return s.num === secNum; });
+  if (sec) {
+    document.getElementById('sideTitle').textContent = t(sec.name);
+  }
+  rebuildSections();
+  rebuildToc();
+  renderLesson();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function buildSidebar() {
+  rebuildSections();
   rebuildToc();
   rebuildKit();
 }
@@ -1331,6 +1417,11 @@ document.addEventListener('DOMContentLoaded', function(){
       var newLang = btn.getAttribute('data-lang');
       if (newLang !== lang) switchLanguage(newLang);
     });
+  });
+
+  // Start here nav — always goes back to section 00
+  document.getElementById('startHereNav').addEventListener('click', function() {
+    switchSection('00');
   });
 
   initLanguage();
