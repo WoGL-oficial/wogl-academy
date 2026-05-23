@@ -414,9 +414,10 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 .celebrate-text em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
 /* ===== WOGL FOOTER ===== */
 .wogl-footer {
-  border-top:1px solid var(--line); padding:40px 28px 28px;
+  grid-column:2; border-top:1px solid var(--line); padding:40px 28px 28px;
   text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px;
 }
+@media (max-width:900px) { .wogl-footer { grid-column:1; } }
 .wogl-footer-logo {
   font-family:'Outfit',sans-serif; font-weight:300; font-size:28px;
   color:#e8c89a; letter-spacing:.18em;
@@ -505,22 +506,23 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 
   <main class="main" id="main"></main>
 
-</div>
+  <footer class="wogl-footer">
+    <div class="wogl-footer-logo">WoGL</div>
+    <div class="wogl-footer-links">
+      <a href="https://wogl.io">wogl.io</a>
+      <span class="wogl-footer-dot">·</span>
+      <a href="https://studio.wogl.io">studio.wogl.io</a>
+      <span class="wogl-footer-dot">·</span>
+      <a href="https://academy.wogl.io">academy.wogl.io</a>
+      <span class="wogl-footer-dot">·</span>
+      <a href="https://worldofgl.com">worldofgl.com</a>
+      <span class="wogl-footer-dot">·</span>
+      <a href="https://mundogl.com">mundogl.com</a>
+    </div>
+    <div class="wogl-footer-copy">Proprietary. All rights reserved.</div>
+  </footer>
 
-<!-- Footer -->
-<footer class="wogl-footer">
-  <div class="wogl-footer-logo">WoGL</div>
-  <div class="wogl-footer-links">
-    <a href="https://wogl.io">wogl.io</a>
-    <span class="wogl-footer-dot">·</span>
-    <a href="https://studio.wogl.io">studio.wogl.io</a>
-    <span class="wogl-footer-dot">·</span>
-    <a href="https://worldofgl.com">worldofgl.com</a>
-    <span class="wogl-footer-dot">·</span>
-    <a href="https://mundogl.com">mundogl.com</a>
-  </div>
-  <div class="wogl-footer-copy">Proprietary. All rights reserved.</div>
-</footer>
+</div>
 
 <script>
 'use strict';
