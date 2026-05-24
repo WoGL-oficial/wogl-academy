@@ -447,10 +447,20 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
   letter-spacing:.04em; color:rgba(232,200,154,0.30);
   margin-left:auto;
 }
+.wogl-header-login {
+  font-family:var(--font-mono); font-weight:400; font-size:11px;
+  letter-spacing:0.12em; color:var(--ink-faint); text-decoration:none;
+  padding:6px 16px; border:1px solid var(--line); border-radius:2px;
+  transition:all 0.4s var(--ease); text-transform:uppercase; margin-left:8px;
+}
+.wogl-header-login:hover {
+  background:rgba(212,165,116,0.08); border-color:var(--gold); color:var(--ink);
+}
 @media (max-width:900px) {
   .wogl-academy-header { padding:12px 20px; gap:12px; }
   .wogl-academy-logo { font-size:28px; }
   .wogl-academy-tagline { display:none; }
+  .wogl-header-login { font-size:8px; padding:3px 8px; letter-spacing:0.08em; }
 }
 </style>
 </head>
@@ -468,7 +478,23 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
     <button class="lang-toggle-btn" data-lang="en">EN</button>
     <button class="lang-toggle-btn" data-lang="es">ES</button>
   </div>
+  <a href="#" class="wogl-header-login" id="loginBtn" onclick="document.getElementById('loginModal').style.display='flex';return false;">Log in</a>
 </header>
+
+<!-- Login Modal -->
+<div id="loginModal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div style="background:#000;border:1px solid rgba(232,217,192,0.1);border-radius:4px;padding:40px;max-width:380px;width:90%;text-align:center;">
+    <div style="font-family:'Outfit',sans-serif;font-weight:300;font-size:32px;color:#e8c89a;letter-spacing:.18em;margin-bottom:8px;">WoGL</div>
+    <div style="font-family:var(--font-mono);font-size:12px;color:var(--ink-mute);margin-bottom:28px;letter-spacing:0.08em;">academy</div>
+    <div id="loginForm">
+      <input type="email" id="loginEmail" placeholder="email" style="width:100%;padding:12px 16px;background:rgba(212,165,116,0.06);border:1px solid rgba(232,217,192,0.1);border-radius:2px;color:var(--ink);font-family:var(--font-mono);font-size:13px;outline:none;margin-bottom:12px;">
+      <button id="loginSubmit" onclick="doLogin()" style="width:100%;padding:12px;background:#d4b896;border:none;border-radius:2px;color:#02010a;font-family:var(--font-mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;">enter</button>
+    </div>
+    <div id="loginMsg" style="display:none;font-family:var(--font-mono);font-size:13px;color:#e8c89a;line-height:1.6;padding:12px 0;">check your email for the magic link</div>
+    <div id="loginError" style="display:none;font-family:var(--font-mono);font-size:12px;color:#ff6b6b;padding:8px 0;"></div>
+    <div style="margin-top:16px;font-family:var(--font-mono);font-size:10px;color:var(--ink-faint);cursor:pointer;letter-spacing:0.08em;" onclick="document.getElementById('loginModal').style.display='none';">close</div>
+  </div>
+</div>
 
 <div class="app" style="padding-top:60px;">
 
@@ -495,8 +521,47 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 'use strict';
+
+// ============================================================
+// Supabase Auth
+// ============================================================
+var _sb = supabase.createClient(
+  'https://ubvtspvlrukuayucpnwl.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVidnRzcHZscnVrdWF5dWNwbndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNzcwMTIsImV4cCI6MjA5MzY1MzAxMn0.Dav1A7ksKnnuv41Z8kGlMumbkvqF6UaXbGSEqpLtU4o'
+);
+
+async function doLogin() {
+  var email = document.getElementById('loginEmail').value.trim();
+  if (!email) return;
+  var btn = document.getElementById('loginSubmit');
+  btn.textContent = '...'; btn.disabled = true;
+  var { error } = await _sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: 'https://academy.wogl.io' } });
+  if (error) {
+    document.getElementById('loginError').textContent = error.message;
+    document.getElementById('loginError').style.display = 'block';
+    btn.textContent = 'enter'; btn.disabled = false;
+  } else {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('loginMsg').style.display = 'block';
+  }
+}
+
+async function doLogout() {
+  await _sb.auth.signOut();
+  var link = document.getElementById('loginBtn');
+  if (link) { link.textContent = 'Log in'; link.onclick = function(e) { e.preventDefault(); document.getElementById('loginModal').style.display='flex'; }; }
+}
+
+_sb.auth.onAuthStateChange(function(event, session) {
+  var link = document.getElementById('loginBtn');
+  if (session && link) {
+    link.textContent = session.user.email.split('@')[0];
+    link.onclick = function(e) { e.preventDefault(); doLogout(); };
+  }
+});
 
 // ============================================================
 // Language system
