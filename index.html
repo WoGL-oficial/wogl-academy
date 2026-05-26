@@ -3252,7 +3252,13 @@ function createRenderer(canvas, code, statusEl, errEl) {
   return {
     recompile: recompile,
     setU: function(v){ userUniformValue = v; },
-    destroy: function(){ paused = true; cancelAnimationFrame(rafId); }
+    destroy: function(){
+      paused = true;
+      cancelAnimationFrame(rafId);
+      if (prog) { gl.deleteProgram(prog); prog = null; }
+      var ext = gl.getExtension('WEBGL_lose_context');
+      if (ext) ext.loseContext();
+    }
   };
 }
 
