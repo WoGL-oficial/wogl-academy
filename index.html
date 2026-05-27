@@ -187,7 +187,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 /* ── DRAWERS (accordion sections) ── */
 .drawer-list {
   flex:1; overflow-y:auto;
-  scrollbar-width:thin; scrollbar-color:rgba(232,217,192,0.50) transparent;
+  scrollbar-width:thin; scrollbar-color:rgba(232,217,192,0.75) transparent;
 }
 
 .drawer { border-bottom:1px solid rgba(232,217,192,0.08); }
@@ -301,8 +301,9 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 }
 .remix-card {
   margin-bottom:28px; padding:28px 28px 24px;
-  border:1px solid rgba(232,180,100,.15);
-  background:rgba(232,180,100,.03);
+  border:1px solid rgba(232,180,100,.25);
+  background:rgba(232,180,100,.06);
+  border-left:3px solid rgba(232,180,100,.5);
 }
 .remix-label {
   font-family:var(--font-mono); font-size:8px; letter-spacing:2.5px; color:var(--copper);
@@ -321,12 +322,13 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
   font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px;
   padding:4px 10px; border-radius:2px;
 }
-.remix-tag.given { color:var(--green); background:rgba(180,220,150,.08); border:1px solid rgba(180,220,150,.15); }
-.remix-tag.todo { color:#e89b8b; background:rgba(232,155,139,.08); border:1px solid rgba(232,155,139,.15); }
+.remix-tag.given { color:var(--green); background:rgba(180,220,150,.12); border:1px solid rgba(180,220,150,.25); }
+.remix-tag.todo { color:#e89b8b; background:rgba(232,155,139,.12); border:1px solid rgba(232,155,139,.25); }
 .challenge-card {
   margin-bottom:28px; padding:28px 28px 24px;
-  border:1px solid rgba(200,160,255,.15);
-  background:rgba(200,160,255,.03);
+  border:1px solid rgba(200,160,255,.25);
+  background:rgba(200,160,255,.06);
+  border-left:3px solid rgba(200,160,255,.5);
 }
 .challenge-label {
   font-family:var(--font-mono); font-size:8px; letter-spacing:2.5px; color:rgba(200,160,255,.7);
@@ -346,10 +348,10 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
   font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px;
   padding:4px 10px; border-radius:2px;
 }
-.challenge-tag.mat { color:#e8c89a; background:rgba(232,200,154,.08); border:1px solid rgba(232,200,154,.15); }
-.challenge-tag.force { color:#c89be8; background:rgba(200,155,232,.08); border:1px solid rgba(200,155,232,.15); }
-.challenge-tag.light { color:#8be8c0; background:rgba(139,232,192,.08); border:1px solid rgba(139,232,192,.15); }
-.challenge-tag.shape { color:#e89b8b; background:rgba(232,155,139,.08); border:1px solid rgba(232,155,139,.15); }
+.challenge-tag.mat { color:#e8c89a; background:rgba(232,200,154,.12); border:1px solid rgba(232,200,154,.25); }
+.challenge-tag.force { color:#c89be8; background:rgba(200,155,232,.12); border:1px solid rgba(200,155,232,.25); }
+.challenge-tag.light { color:#8be8c0; background:rgba(139,232,192,.12); border:1px solid rgba(139,232,192,.25); }
+.challenge-tag.shape { color:#e89b8b; background:rgba(232,155,139,.12); border:1px solid rgba(232,155,139,.25); }
 .hint-drawers { margin-bottom:28px; }
 .hint-drawer {
   border:1px solid var(--line); border-bottom:none;
@@ -633,7 +635,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
   background:rgba(0,0,0,0.5); border:1px solid rgba(232,217,192,0.06);
   border-radius:4px; padding:14px 18px; margin-bottom:8px;
   font-family:var(--font-mono); font-size:13px; line-height:2;
-  color:rgba(232,217,192,0.6); white-space:pre; overflow-x:auto;
+  color:rgba(232,217,192,0.75); white-space:pre; overflow-x:auto;
 }
 .code-wall .code-hl {
   color:#e8c89a; background:rgba(232,200,154,0.1);
@@ -642,7 +644,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 }
 .code-wall-note {
   font-family:var(--font-mono); font-size:8px; letter-spacing:1px;
-  color:rgba(232,217,192,0.50); margin-bottom:0;
+  color:rgba(232,217,192,0.75); margin-bottom:0;
 }
 
 /* Iridescent sandbox right panel (lesson 1) */
@@ -658,7 +660,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 .sandbox > * { min-width:0; overflow:hidden; }
 @media (max-width:1100px) { .sandbox { grid-template-columns:1fr; } }
 .canvas-wrap { background:#000; border:1px solid var(--line); aspect-ratio:1/1; position:relative; overflow:hidden; max-width:100%; max-height:clamp(280px, 25vw, 500px); }
-.canvas-wrap canvas { width:100%; height:100%; display:block; }
+.canvas-wrap canvas { width:100%; height:100%; display:block; opacity:0.83; }
 .canvas-wrap .badge { position:absolute; bottom:12px; right:14px; font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:rgba(232,217,192,.3); pointer-events:none; }
 .canvas-wrap .err { position:absolute; top:14px; left:14px; right:14px; font-family:var(--font-mono); font-size:11px; color:#ff6b6b; background:rgba(0,0,0,.85); padding:8px 12px; border-left:2px solid #ff6b6b; display:none; max-height:60%; overflow-y:auto; white-space:pre-wrap; }
 .canvas-wrap .err.show { display:block; }
@@ -688,9 +690,9 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 .sh-paren { color:#d898c0; }
 .sh-num { color:#e8d8a0; }
 .sh-op { color:#d0c8d8; }
-.sh-semi { color:rgba(232,217,192,0.50); }
-.sh-comment { color:rgba(232,217,192,0.50); font-style:italic; }
-.sh-plain { color:rgba(232,217,192,0.6); }
+.sh-semi { color:rgba(232,217,192,0.75); }
+.sh-comment { color:rgba(232,217,192,0.75); font-style:italic; }
+.sh-plain { color:rgba(232,217,192,0.75); }
 
 /* Buttons */
 .actions { display:flex; gap:10px; flex-wrap:wrap; padding-top:24px; border-top:1px solid transparent; border-image:linear-gradient(90deg, transparent, rgba(160,140,200,0.10) 20%, rgba(180,160,220,0.16) 50%, rgba(160,140,200,0.10) 80%, transparent) 1; }
@@ -811,7 +813,7 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 }
 .wogl-academy-tagline {
   font-family:'Outfit',sans-serif; font-weight:300; font-size:clamp(10px, 1vw, 12px);
-  letter-spacing:.04em; color:rgba(232,200,154,0.55);
+  letter-spacing:.04em; color:rgba(232,200,154,0.75);
   margin-left:auto; white-space:nowrap;
 }
 .wogl-header-login {
@@ -1235,12 +1237,12 @@ var SECTION_LESSONS = {
       },
       code:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  float slow = T * 0.15;\n  float field = 0.0;\n  for(int i = 0; i < 5; i++){\n    float fi = float(i);\n    vec2 c = vec2(sin(slow*(.4+fi*.1)+fi*2.1)*.6, cos(slow*(.3+fi*.08)+fi*1.7)*.5);\n    float r = 0.1+sin(fi*3.3)*.03;\n    vec2 d = p-c;\n    float shape = mix(length(d), max(abs(d.x),abs(d.y)), sin(fi*2.7)*.5+.5);\n    field += r*r/(shape*shape+0.0001);\n  }\n  float edge = smoothstep(0.6,1.0,field);\n  float body = smoothstep(1.0,2.0,field);\n  float core = smoothstep(3.0,5.0,field);\n  float spec = smoothstep(6.0,10.0,field);\n  vec3 col = vec3(0.02,0.02,0.04);\n  col += vec3(.15,.15,.2)*edge*(1.-body);\n  col = mix(col, vec3(.55,.58,.65), body);\n  col = mix(col, vec3(.8,.82,.88), core);\n  col = mix(col, vec3(1.,.98,.95), spec);\n  col += vec3(.1,.1,.15)*pow(edge,2.)*(1.-body);\n  gl_FragColor = vec4(col, 1.0);\n}'
     },
-    { num:'10', title:{es:'Tu Patrón',en:'Your Pattern'}, desc:{es:'Azulejos oscuros. Tu material, tu firma.',en:'Dark tiles. Your material, your signature.'},
+    { num:'10', title:{es:'Tu Patrón',en:'Your Pattern'}, desc:{es:'Cada punto gobierna lo más cercano. Las guerras están en las fronteras.',en:'Each point rules what is closest. Wars happen at the borders.'},
       explain: {
         es:'<p>Todo lo que aprendiste en una pieza: coordenadas polares que giran con <code>T</code>, doble domain warp, bandas de color con <code>sin()</code> que ciclan, vignette radial. <strong>Un animal print que pulsa.</strong></p><p>Las tres constantes de color arriba son tu firma. Cambia los colores y la pieza se transforma completamente — misma estructura, diferente identidad.</p><p><em>fract() + sin() + h2(). Tres funciones, una superficie.</em></p><div class="glossary"><span class="glossary-label">Todo conectado</span>Polar (Snake) + domain warp (todas) + sin bands (Wood, Tie-dye) + T animado (Lava Lamp) + vignette. Cada técnica que aprendiste vive en este shader.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia los 3 colores. Cambia el <code>4.0</code> de dist (zoom del patrón). Cambia el <code>8.0</code> del sin() (cantidad de bandas). <em>Fírmalo.</em></span></div>',
         en:'<p>Everything you learned in one piece: polar coordinates rotating with <code>T</code>, double domain warp, color bands with <code>sin()</code> that cycle, radial vignette. <strong>An animal print that pulses.</strong></p><p>The three color constants at top are your signature. Change colors and the piece transforms completely — same structure, different identity.</p><p><em>fract() + sin() + h2(). Three functions, one surface.</em></p><div class="glossary"><span class="glossary-label">Everything connected</span>Polar (Snake) + domain warp (all) + sin bands (Wood, Tie-dye) + animated T (Lava Lamp) + vignette. Every technique you learned lives in this shader.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change all 3 colors. Change the <code>4.0</code> on dist (pattern zoom). Change the <code>8.0</code> on sin() (number of bands). <em>Sign it.</em></span></div>'
       },
-      code:'void main(){\n  vec2 p = gl_FragCoord.xy / R * 3.0;\n  float warp = fb(p);\n  vec2 wp = p + warp * 0.5;\n  vec2 cell = fract(wp * 3.0);\n  vec2 id = floor(wp * 3.0);\n  float tint = h2(id);\n  float vein = sin(cell.x * 8.0 + warp * 2.5) * 0.5 + 0.5;\n  float line = step(0.86, vein);\n  float fine = exp(-abs(sin(cell.y*12.+warp*1.5))*10.) * 0.15;\n  float edge = min(step(0.92,max(cell.x,cell.y))+step(cell.x,0.08)+step(cell.y,0.08), 1.0);\n  vec3 base = mix(vec3(0.6,0.4,0.28), vec3(0.45,0.55,0.48), tint);\n  vec3 dark = vec3(0.06, 0.04, 0.02);\n  vec3 grout = vec3(0.12, 0.1, 0.08);\n  vec3 col = base;\n  col = mix(col, dark, line * 0.6);\n  col += dark * fine * (1.0-edge);\n  col = mix(col, grout, edge);\n  col *= 0.78 + 0.22 * (1.0 - edge);\n  col += vec3(.1,.07,.03) * pow(vein, 4.) * (1.0-edge) * 0.4;\n  gl_FragColor = vec4(col, 1.0);\n}',
+      code:'void main(){\n  vec2 uv = gl_FragCoord.xy / R * 5.0;\n  float warp = fb(uv * 0.4 + T * 0.03) * 0.8;\n  vec2 p = uv + warp;\n  vec2 g = floor(p);\n  float d1 = 10., d2 = 10.;\n  float cid = 0.;\n  for(int y=-1;y<=1;y++){\n    for(int x=-1;x<=1;x++){\n      vec2 nb = vec2(float(x),float(y));\n      vec2 cp = g + nb;\n      vec2 seed = vec2(h2(cp), h2(cp+99.));\n      seed = 0.5+0.4*sin(T*0.3+6.2831*seed);\n      float d = length(nb+seed-fract(p));\n      if(d<d1){d2=d1;d1=d;cid=h2(cp+50.);}\n      else if(d<d2){d2=d;}\n    }\n  }\n  float edge = d2-d1;\n  float border = exp(-edge*15.);\n  vec3 col = vec3(0.02, 0.01, 0.03);\n  col += mix(vec3(0.15,0.04,0.08), vec3(0.08,0.03,0.15), cid) * smoothstep(0.4,0.0,d1);\n  col += vec3(0.9,0.7,0.2) * border * 0.7;\n  col += vec3(1.,0.9,0.5) * pow(border,4.) * 0.4;\n  col += vec3(0.4,0.15,0.05) * exp(-d1*3.) * 0.3;\n  col *= 1.0 - length(gl_FragCoord.xy/R-0.5)*0.6;\n  gl_FragColor = vec4(col, 1.0);\n}',
       finale: true,
       celebrateTitle: { es:'Domain Warp: Dominado.', en:'Domain Warp: Mastered.' },
       celebrateText: { es:'Jirafa, camo, vaca, leopardo, madera, tie-dye, serpiente, mármol, lava lamp — todo con domain warp y colores. <em>Lo siguiente es Motion</em> — vas a coreografiar el tiempo.', en:'Giraffe, camo, cow, leopard, wood, tie-dye, snake, marble, lava lamp — all with domain warp and colors. <em>Next up is Motion</em> — you will choreograph time.' },
@@ -2380,22 +2382,7 @@ function renderPracticeWelcome() {
   ]);
   main.appendChild(banner);
 
-  // Stats
-  var stats = el('div', { style:'display:flex;gap:clamp(24px,3vw,40px);margin-bottom:clamp(28px,3vw,48px);padding-bottom:clamp(18px,2vw,28px);border-bottom:1px solid var(--line);' }, [
-    el('div', null, [
-      el('div', { style:'font-family:var(--font-display);font-size:clamp(24px,2.5vw,36px);font-weight:400;color:var(--gold);line-height:1;margin-bottom:4px;' }, '70'),
-      el('div', { style:'font-family:var(--font-mono);font-size:clamp(7px,0.7vw,9px);letter-spacing:2px;color:var(--ink-mute);text-transform:uppercase;' }, t({ es:'Lecciones', en:'Lessons' }))
-    ]),
-    el('div', null, [
-      el('div', { style:'font-family:var(--font-display);font-size:clamp(24px,2.5vw,36px);font-weight:400;color:var(--gold);line-height:1;margin-bottom:4px;' }, '7'),
-      el('div', { style:'font-family:var(--font-mono);font-size:clamp(7px,0.7vw,9px);letter-spacing:2px;color:var(--ink-mute);text-transform:uppercase;' }, t({ es:'Secciones', en:'Sections' }))
-    ]),
-    el('div', null, [
-      el('div', { style:'font-family:var(--font-display);font-size:clamp(24px,2.5vw,36px);font-weight:400;color:var(--gold);line-height:1;margin-bottom:4px;' }, '2'),
-      el('div', { style:'font-family:var(--font-mono);font-size:clamp(7px,0.7vw,9px);letter-spacing:2px;color:var(--ink-mute);text-transform:uppercase;' }, t({ es:'Modos', en:'Modes' }))
-    ])
-  ]);
-  main.appendChild(stats);
+  // Stats removed
 
   // Mode cards
   var modes = [
@@ -2484,8 +2471,8 @@ function renderPracticeRemix() {
 
     // Intro
     main.appendChild(el('div', { class:'practice-intro' }, [
-      el('h1', { class:'practice-intro-title' }, t({ es:'Remixar lección', en:'Remix a lesson' })),
-      el('p', { class:'practice-intro-punch' }, t({ es:'La mitad del código está escrita. Termina la otra mitad.', en:'Half the code is written. Finish the other half.' }))
+      el('h1', { class:'practice-intro-title' }, t({ es:'Remix', en:'Remix' })),
+      el('p', { class:'practice-intro-punch' }, t({ es:'Un shader y una fuerza. Combínalos.', en:'A shader and a force. Combine them.' }))
     ]));
 
     // Gen button
@@ -2705,7 +2692,7 @@ function renderPracticeChallenge() {
     // Intro
     main.appendChild(el('div', { class:'practice-intro' }, [
       el('h1', { class:'practice-intro-title' }, t({ es:'Reto', en:'Challenge' })),
-      el('p', { class:'practice-intro-punch' }, t({ es:'Prompt aleatorio. Tu código.', en:'Random prompt. Your code.' }))
+      el('p', { class:'practice-intro-punch' }, t({ es:'Prompt aleatorio. Sin código de arranque. Solo tú.', en:'Random prompt. No starter code. Just you.' }))
     ]));
 
     // Gen button
@@ -3199,14 +3186,13 @@ function renderLesson() {
 // WebGL renderer
 // ============================================================
 function createRenderer(canvas, code, statusEl, errEl) {
-  var gl = canvas.getContext('webgl', { antialias:true, alpha:false });
+  var gl = canvas.getContext('webgl', { antialias:false, alpha:false });
   if (!gl) return null;
   var prog = null, uT, uR, uM, uU;
   var userUniformValue = 0.42;
-  var dpr = Math.max(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.25 : 1.5);
+  var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
   var mouseX = 0.5, mouseY = 0.5;
   var paused = false, isVisible = true, isInViewport = true;
-  var FPS = 30, FRAME = 1000/FPS, lastDraw = 0;
   var startTime = performance.now();
 
   var buf = gl.createBuffer();
@@ -3268,8 +3254,6 @@ function createRenderer(canvas, code, statusEl, errEl) {
   function frame(now) {
     rafId = requestAnimationFrame(frame);
     if (paused || !isVisible || !isInViewport || !prog) return;
-    if (now - lastDraw < FRAME) return;
-    lastDraw = now;
     gl.uniform1f(uT, (now - startTime) * 0.001);
     gl.uniform2f(uR, canvas.width, canvas.height);
     gl.uniform2f(uM, mouseX, mouseY);
@@ -3284,6 +3268,7 @@ function createRenderer(canvas, code, statusEl, errEl) {
     destroy: function(){
       paused = true;
       cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', resize);
       if (prog) { gl.deleteProgram(prog); prog = null; }
       var ext = gl.getExtension('WEBGL_lose_context');
       if (ext) ext.loseContext();
@@ -3301,7 +3286,7 @@ function initBgFbm() {
   var gl = canvas.getContext('webgl', { antialias:false, alpha:false });
   if (!gl) return;
 
-  var dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.25 : 1.5);
+  var dpr = Math.min(window.devicePixelRatio || 1, 2.0);
 
   var vsrc = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
   var fsrc = [
@@ -3370,15 +3355,12 @@ function initBgFbm() {
   window.addEventListener('resize', resize);
   resize();
 
-  var FPS = 30, FRAME = 1000/FPS, lastDraw = 0;
   var startTime = performance.now();
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function frame(now) {
     requestAnimationFrame(frame);
     if (reducedMotion || document.hidden) return;
-    if (now - lastDraw < FRAME) return;
-    lastDraw = now;
     gl.uniform1f(uT, (now - startTime) * 0.001);
     gl.uniform2f(uR, canvas.width, canvas.height);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -3561,7 +3543,7 @@ function initPunchGradient(container) {
   var running = true;
   var isVisible = true;
   var trailAlpha = 0.92;
-  var FPS = 30, FRAME_MS = 1000/FPS, lastDraw = 0;
+  var FRAME_MS = 16, lastDraw = 0;
 
   // Pause when off-screen
   if ('IntersectionObserver' in window) {
