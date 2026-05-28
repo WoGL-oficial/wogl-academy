@@ -17,36 +17,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #03020a;
-  --bg-lift: #07061a;
-  --bg-deep: #000;
-  --bg-side: rgba(3,4,14,0.45);
+  --bg: #0c0418;
+  --bg-lift: #140a28;
+  --bg-deep: #060210;
+  --bg-side: rgba(10,3,24,0.45);
   --ink: #f2efe8;
   --ink-soft: #c0bcc0;
   --ink-mute: #8a8690;
   --ink-faint: #686470;
-  --gold: #d4a8a0;
-  --copper: #a87060;
-  --green: rgb(180, 220, 150);
-  --line: rgba(212, 168, 160, 0.14);
+  --gold: #d080ff;
+  --copper: #a860d0;
+  --green: rgb(150, 220, 160);
+  --line: rgba(180, 80, 255, 0.12);
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --side-w: 320px;
   --sidebar-slim: 80px;
-  --accent: #a8e4dc;
+  --accent: #d080ff;
+  --header-bg: rgba(12,4,24,0.92);
+  --glow1: rgba(140,40,220,0.18);
+  --glow2: rgba(220,60,160,0.08);
+  --glow3: rgba(80,40,180,0.12);
+  --glow4: rgba(160,60,200,0.05);
+}
+
+/* ===== THEME: NEBULA ELÉCTRICA (default) ===== */
+[data-theme="nebula"] {
+  --bg: #0c0418; --bg-lift: #140a28; --bg-deep: #060210;
+  --bg-side: rgba(10,3,24,0.45);
+  --gold: #d080ff; --copper: #a860d0; --green: rgb(150,220,160);
+  --line: rgba(180,80,255,0.12); --accent: #d080ff;
+  --header-bg: rgba(12,4,24,0.92);
+  --glow1: rgba(140,40,220,0.18); --glow2: rgba(220,60,160,0.08);
+  --glow3: rgba(80,40,180,0.12); --glow4: rgba(160,60,200,0.05);
+}
+/* ===== THEME: LAVA DORADA ===== */
+[data-theme="lava"] {
+  --bg: #120808; --bg-lift: #1e0e0e; --bg-deep: #0a0404;
+  --bg-side: rgba(16,6,6,0.45);
+  --gold: #ffb060; --copper: #c83228; --green: rgb(255,220,140);
+  --line: rgba(255,140,60,0.12); --accent: #ffb060;
+  --header-bg: rgba(18,8,8,0.92);
+  --glow1: rgba(255,100,40,0.12); --glow2: rgba(200,40,80,0.06);
+  --glow3: rgba(255,180,80,0.10); --glow4: rgba(220,80,60,0.04);
+}
+/* ===== THEME: ABISMO AURORA ===== */
+[data-theme="aurora"] {
+  --bg: #040e12; --bg-lift: #0a1a1e; --bg-deep: #020a0c;
+  --bg-side: rgba(3,12,16,0.45);
+  --gold: #40e8c8; --copper: #0a8a70; --green: rgb(180,230,140);
+  --line: rgba(40,220,180,0.12); --accent: #40e8c8;
+  --header-bg: rgba(4,14,18,0.92);
+  --glow1: rgba(20,200,160,0.14); --glow2: rgba(40,100,200,0.06);
+  --glow3: rgba(80,220,180,0.08); --glow4: rgba(40,160,200,0.04);
+}
+/* ===== THEME: OBSIDIANA ROYAL ===== */
+[data-theme="royal"] {
+  --bg: #06080f; --bg-lift: #0e1228; --bg-deep: #030408;
+  --bg-side: rgba(5,7,12,0.45);
+  --gold: #809cff; --copper: #3c50dc; --green: rgb(150,220,160);
+  --line: rgba(100,140,255,0.12); --accent: #809cff;
+  --header-bg: rgba(6,8,15,0.92);
+  --glow1: rgba(60,80,220,0.14); --glow2: rgba(100,60,180,0.06);
+  --glow3: rgba(232,200,154,0.08); --glow4: rgba(200,160,100,0.03);
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html { background:var(--bg); }
-body { background:transparent; color:var(--ink); font-family:var(--font-body); font-weight:400; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; }
+html { background:var(--bg); transition:background .6s ease; }
+body { background:transparent; color:var(--ink); font-family:var(--font-body); font-weight:400; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; transition:color .6s ease; }
 
-/* Background — Cisne */
-.bg-fbm {
-  position:fixed; top:0; left:0; width:100vw; height:100vh;
-  z-index:0; pointer-events:none;
+/* Background — Animated theme glows */
+.bg-fbm { display:none; }
+body::before {
+  content:''; position:fixed; top:-40%; right:-30%; width:120%; height:120%;
+  background:radial-gradient(ellipse at 70% 30%, var(--glow1) 0%, var(--glow2) 40%, transparent 70%);
+  animation:glow-drift-1 8s ease-in-out infinite alternate;
+  pointer-events:none; z-index:0; transition:background 0.8s ease;
 }
-.bg-fbm canvas { width:100%; height:100%; display:block; }
+body::after {
+  content:''; position:fixed; bottom:-20%; left:-20%; width:80%; height:80%;
+  background:radial-gradient(ellipse at 30% 70%, var(--glow3) 0%, var(--glow4) 50%, transparent 75%);
+  animation:glow-drift-2 10s ease-in-out infinite alternate;
+  pointer-events:none; z-index:0; transition:background 0.8s ease;
+}
+@keyframes glow-drift-1 {
+  0% { transform:translate(0,0) scale(1); opacity:.8; }
+  100% { transform:translate(-5%,8%) scale(1.1); opacity:1; }
+}
+@keyframes glow-drift-2 {
+  0% { transform:translate(0,0) scale(1); opacity:.6; }
+  100% { transform:translate(8%,-5%) scale(1.15); opacity:1; }
+}
 ::selection { background:rgba(212,184,150,.25); }
 ::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:transparent; }
@@ -68,6 +130,45 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
 }
 .lang-toggle-btn:hover:not(.active) {
   color:var(--ink-soft);
+}
+
+/* ===== THEME PICKER (pills) ===== */
+.theme-picker {
+  display:flex; align-items:center; gap:4px; margin-right:8px;
+}
+.theme-pill {
+  display:flex; align-items:center; gap:5px; padding:4px 10px 4px 6px;
+  border-radius:20px; cursor:pointer;
+  border:1px solid rgba(255,255,255,0.06);
+  background:transparent;
+  transition:all .3s var(--ease); flex-shrink:0;
+}
+.theme-pill:hover { background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.12); }
+.theme-pill.active {
+  border-color:rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.05);
+}
+.theme-pill .swatch {
+  width:10px; height:10px; border-radius:50%; flex-shrink:0;
+  transition:box-shadow .3s var(--ease);
+}
+.theme-pill .pill-name {
+  font-family:var(--font-mono); font-size:8px; letter-spacing:1px;
+  color:rgba(232,217,192,0.3); text-transform:uppercase;
+  transition:color .3s var(--ease);
+}
+.theme-pill.active .pill-name { color:rgba(232,217,192,0.7); }
+.theme-pill[data-theme="nebula"] .swatch { background:#d080ff; }
+.theme-pill[data-theme="lava"] .swatch { background:#ffb060; }
+.theme-pill[data-theme="aurora"] .swatch { background:#40e8c8; }
+.theme-pill[data-theme="royal"] .swatch { background:#809cff; }
+.theme-pill[data-theme="nebula"].active .swatch { box-shadow:0 0 8px #d080ff; }
+.theme-pill[data-theme="lava"].active .swatch { box-shadow:0 0 8px #ffb060; }
+.theme-pill[data-theme="aurora"].active .swatch { box-shadow:0 0 8px #40e8c8; }
+.theme-pill[data-theme="royal"].active .swatch { box-shadow:0 0 8px #809cff; }
+@media (max-width:560px) {
+  .theme-pill .pill-name { display:none; }
+  .theme-pill { padding:4px 6px; }
 }
 
 /* ===== LAYOUT ===== */
@@ -797,8 +898,9 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
   position:fixed; top:0; left:0; right:0; z-index:500;
   display:flex; align-items:center; gap:clamp(8px, 1.5vw, 18px);
   padding:clamp(10px, 1.2vw, 14px) clamp(14px, 2vw, 28px);
-  background:rgba(2,1,10,0.92);
+  background:var(--header-bg);
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  transition:background .6s ease;
   border-bottom:1px solid var(--line);
 }
 .wogl-academy-logo {
@@ -863,6 +965,12 @@ body { background:transparent; color:var(--ink); font-family:var(--font-body); f
   <div class="wogl-academy-divider"></div>
   <span class="wogl-academy-label">academy</span>
   <span class="wogl-academy-tagline" id="headerTagline">learn GLSL from zero</span>
+  <div class="theme-picker" id="themePicker">
+    <div class="theme-pill active" data-theme="nebula"><span class="swatch"></span><span class="pill-name">nebula</span></div>
+    <div class="theme-pill" data-theme="lava"><span class="swatch"></span><span class="pill-name">lava</span></div>
+    <div class="theme-pill" data-theme="aurora"><span class="swatch"></span><span class="pill-name">aurora</span></div>
+    <div class="theme-pill" data-theme="royal"><span class="swatch"></span><span class="pill-name">royal</span></div>
+  </div>
   <div class="lang-toggle" id="langToggle">
     <button class="lang-toggle-btn" data-lang="en">EN</button>
     <button class="lang-toggle-btn" data-lang="es">ES</button>
@@ -1032,14 +1140,14 @@ var SECTION_LESSONS = {
     },
     { num:'02', title:{es:'Rayas',en:'Stripes'}, desc:{es:'La alfombra del Overlook. Hexágonos que hipnotizan.',en:'The Overlook carpet. Hexagons that hypnotize.'},
       explain: {
-        es:'<p>Las rayas de la lección anterior eran <em>duras</em> — prendido o apagado. Ahora quitas el <code>step()</code> y dejas que <code>sin()</code> haga lo suyo: una onda suave que se funde entre dos colores. <strong>Rayas con degradé.</strong></p><p><em>sin() se repite para siempre. Loop infinito.</em></p><p>Un patrón es una forma que se <em>repite</em>. Y <code>sin()</code> ya se repite — oscila eternamente. Si mapeas eso a dos colores con <code>mix()</code>, tienes <em>rayas infinitas</em>.</p><div class="glossary"><span class="glossary-label">La frecuencia</span>El número que multiplica <code>p.x</code> (el <code>6.</code>) controla cuántas rayas caben en la pantalla. Más alto = más rayas, más finas. Más bajo = menos rayas, más anchas. Es como girar la perilla de un sintonizador.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> — las rayas se vuelven horizontales. Cambia el <code>6.</code> a <code>20.</code> para rayas finas. Prueba <code>p.x + p.y</code> para rayas diagonales.</span></div>',
+        es:'<p>Las rayas de la lección anterior eran <em>duras</em> — prendido o apagado. Ahora quitas el <code>step()</code> y dejas que <code>sin()</code> haga lo suyo: una onda suave que se funde entre dos colores. <strong>Rayas con gradiente.</strong></p><p><em>sin() se repite para siempre. Loop infinito.</em></p><p>Un patrón es una forma que se <em>repite</em>. Y <code>sin()</code> ya se repite — oscila eternamente. Si mapeas eso a dos colores con <code>mix()</code>, tienes <em>rayas infinitas</em>.</p><div class="glossary"><span class="glossary-label">La frecuencia</span>El número que multiplica <code>p.x</code> (el <code>6.</code>) controla cuántas rayas caben en la pantalla. Más alto = más rayas, más finas. Más bajo = menos rayas, más anchas. Es como girar la perilla de un sintonizador.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> — las rayas se vuelven horizontales. Cambia el <code>6.</code> a <code>20.</code> para rayas finas. Prueba <code>p.x + p.y</code> para rayas diagonales.</span></div>',
         en:'<p>The stripes from the last lesson were <em>hard</em> — on or off. Now you remove the <code>step()</code> and let <code>sin()</code> do its thing: a smooth wave that blends between two colors. <strong>Gradient stripes.</strong></p><p><em>sin() repeats forever. Infinite loop.</em></p><p>A pattern is a shape that <em>repeats</em>. And <code>sin()</code> already repeats — it oscillates forever. If you map that to two colors with <code>mix()</code>, you get <em>infinite stripes</em>.</p><div class="glossary"><span class="glossary-label">Frequency</span>The number that multiplies <code>p.x</code> (the <code>6.</code>) controls how many stripes fit on the screen. Higher = more stripes, thinner. Lower = fewer stripes, thicker. It is like turning the dial on a radio tuner.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>p.x</code> to <code>p.y</code> — the stripes become horizontal. Change <code>6.</code> to <code>20.</code> for thin stripes. Try <code>p.x + p.y</code> for diagonal stripes.</span></div>'
       },
       code:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  vec2 uv = p * 3.5;\n  vec2 s = vec2(1., 1.732);\n  vec2 a = mod(uv, s) - s*.5;\n  vec2 b = mod(uv + s*.5, s) - s*.5;\n  vec2 g = dot(a,a) < dot(b,b) ? a : b;\n  vec2 ag = abs(g);\n  float d = max(ag.x*.866+ag.y*.5, ag.y);\n  float outline = smoothstep(.5,.48,d)*(1.-smoothstep(.44,.42,d));\n  float fill = smoothstep(.44,.42,d)*(1.-smoothstep(.36,.34,d));\n  float band = smoothstep(.36,.34,d)*(1.-smoothstep(.28,.26,d));\n  float core = smoothstep(.18,.16,d);\n  vec3 col = vec3(0.05, 0.02, 0.01);\n  col += vec3(.92,.48,.08) * outline;\n  col += vec3(.6,.1,.03) * fill;\n  col += vec3(.92,.48,.08) * band;\n  col += vec3(.95,.68,.12) * core;\n  gl_FragColor = vec4(col, 1.);\n}'
     },
     { num:'03', title:{es:'El grid',en:'The grid'}, desc:{es:'Un ojo por celda. El grid te observa.',en:'One eye per cell. The grid watches you.'},
       explain: {
-        es:'<p>Hasta ahora tus rayas eran una onda continua — <code>sin()</code> se estira suave de un lado al otro. Ahora vas a aprender a <strong>cortar el espacio en celdas</strong>.</p><p><code>fract()</code> toma solo la parte decimal de un número. Si le pasas <em>3.7</em>, devuelve <em>0.7</em>. Si le pasas <em>5.2</em>, devuelve <em>0.2</em>. El resultado: las coordenadas se <em>reinician</em> cada vez que cruzan un entero. El espacio se repite.</p><p><em>fract() — el espacio se reinicia. Tiling infinito.</em></p><div class="glossary"><span class="glossary-label">fract(p * N)</span>Multiplicas las coordenadas por <code>N</code> y luego tomas <code>fract()</code>. El espacio se divide en <em>N × N</em> celdas idénticas. Cada celda va de 0 a 1. Lo que dibujes en una celda aparece en todas. <em>Infinito gratis.</em></div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>4.</code> a <code>8.</code> — más celdas, más chicas. A <code>2.</code> — pocas celdas, más grandes. Cambia <code>length(cell - 0.5)</code> por <code>cell.x</code> para ver degradés por celda en vez de círculos.</span></div>',
+        es:'<p>Hasta ahora tus rayas eran una onda continua — <code>sin()</code> se estira suave de un lado al otro. Ahora vas a aprender a <strong>cortar el espacio en celdas</strong>.</p><p><code>fract()</code> toma solo la parte decimal de un número. Si le pasas <em>3.7</em>, devuelve <em>0.7</em>. Si le pasas <em>5.2</em>, devuelve <em>0.2</em>. El resultado: las coordenadas se <em>reinician</em> cada vez que cruzan un entero. El espacio se repite.</p><p><em>fract() — el espacio se reinicia. Tiling infinito.</em></p><div class="glossary"><span class="glossary-label">fract(p * N)</span>Multiplicas las coordenadas por <code>N</code> y luego tomas <code>fract()</code>. El espacio se divide en <em>N × N</em> celdas idénticas. Cada celda va de 0 a 1. Lo que dibujes en una celda aparece en todas. <em>Infinito gratis.</em></div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>4.</code> a <code>8.</code> — más celdas, más chicas. A <code>2.</code> — pocas celdas, más grandes. Cambia <code>length(cell - 0.5)</code> por <code>cell.x</code> para ver gradientes por celda en vez de círculos.</span></div>',
         en:'<p>Until now your stripes were a continuous wave — <code>sin()</code> stretches smoothly from side to side. Now you will learn to <strong>cut space into cells</strong>.</p><p><code>fract()</code> takes only the decimal part of a number. If you give it <em>3.7</em>, it returns <em>0.7</em>. If you give it <em>5.2</em>, it returns <em>0.2</em>. The result: the coordinates <em>reset</em> every time they cross an integer. Space repeats.</p><p><em>fract() — space resets. Infinite tiling.</em></p><div class="glossary"><span class="glossary-label">fract(p * N)</span>You multiply the coordinates by <code>N</code> and then take <code>fract()</code>. Space splits into <em>N × N</em> identical cells. Each cell goes from 0 to 1. Whatever you draw in one cell shows up in all of them. <em>Infinity for free.</em></div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>4.</code> to <code>8.</code> — more cells, smaller. To <code>2.</code> — fewer cells, bigger. Change <code>length(cell - 0.5)</code> to <code>cell.x</code> to see gradients per cell instead of circles.</span></div>'
       },
       code:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  vec2 cell = fract(p * 3.);\n  float d = length(cell - 0.5);\n  float white = smoothstep(0.35, 0.33, d);\n  float iris = smoothstep(0.22, 0.2, d);\n  float pupil = smoothstep(0.1, 0.08, d);\n  float ds = length(cell - 0.5 + vec2(.05,-.07));\n  float shadow = smoothstep(0.35, 0.05, ds) * (1.-white) * 0.5;\n  float spec = smoothstep(0.06, 0.02, length(cell-vec2(.44,.56)));\n  vec3 col = vec3(0.04,0.03,0.08) * (1.-shadow);\n  col += vec3(0.9,0.88,0.85) * white;\n  col = mix(col, vec3(0.15,0.5,0.4), iris);\n  col = mix(col, vec3(0.02), pupil);\n  col += vec3(0.9) * spec * white;\n  gl_FragColor = vec4(col, 1.);\n}'
@@ -1053,7 +1161,7 @@ var SECTION_LESSONS = {
     },
     { num:'05', title:{es:'Polar',en:'Going polar'}, desc:{es:'HAL te ve. Sectores de una iris.',en:'HAL sees you. Sectors of an iris.'},
       explain: {
-        es:'<p>Hasta ahora todo era horizontal y vertical — <code>p.x</code> y <code>p.y</code>. Pero hay otra forma de describir una posición: <strong>¿a qué ángulo estás?</strong> y <strong>¿qué tan lejos del centro?</strong></p><p>Eso son las <em>coordenadas polares</em>. En vez de izquierda-derecha y arriba-abajo, piensas en giro y distancia. Como un reloj: cada punto tiene una hora (ángulo) y una distancia al centro.</p><p><em>Mismo espacio. Otra forma de recorrerlo.</em></p><div class="glossary"><span class="glossary-label">atan(p.y, p.x)</span>Te da el ángulo del frag respecto al centro. Va de <em>-3.14</em> a <em>3.14</em> (una vuelta completa). Arriba es 1.57, a la derecha es 0, abajo es -1.57. Con esto puedes hacer <em>cualquier cosa circular</em>.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>3.</code> a <code>6.</code> — más rebanadas. A <code>1.</code> — solo un degradé que gira. Prueba sumarle <code>+ T</code> al ángulo para que todo rote lentamente. <em>Pista:</em> <code>sin(ang * 3. + T)</code></span></div>',
+        es:'<p>Hasta ahora todo era horizontal y vertical — <code>p.x</code> y <code>p.y</code>. Pero hay otra forma de describir una posición: <strong>¿a qué ángulo estás?</strong> y <strong>¿qué tan lejos del centro?</strong></p><p>Eso son las <em>coordenadas polares</em>. En vez de izquierda-derecha y arriba-abajo, piensas en giro y distancia. Como un reloj: cada punto tiene una hora (ángulo) y una distancia al centro.</p><p><em>Mismo espacio. Otra forma de recorrerlo.</em></p><div class="glossary"><span class="glossary-label">atan(p.y, p.x)</span>Te da el ángulo del frag respecto al centro. Va de <em>-3.14</em> a <em>3.14</em> (una vuelta completa). Arriba es 1.57, a la derecha es 0, abajo es -1.57. Con esto puedes hacer <em>cualquier cosa circular</em>.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>3.</code> a <code>6.</code> — más rebanadas. A <code>1.</code> — solo un gradiente que gira. Prueba sumarle <code>+ T</code> al ángulo para que todo rote lentamente. <em>Pista:</em> <code>sin(ang * 3. + T)</code></span></div>',
         en:'<p>Until now everything was horizontal and vertical — <code>p.x</code> and <code>p.y</code>. But there is another way to describe a position: <strong>what angle are you at?</strong> and <strong>how far from the center?</strong></p><p>Those are <em>polar coordinates</em>. Instead of left-right and up-down, you think in spin and distance. Like a clock: every point has an hour (angle) and a distance from the center.</p><p><em>Same space. Another way to traverse it.</em></p><div class="glossary"><span class="glossary-label">atan(p.y, p.x)</span>Gives you the angle of the frag relative to the center. It goes from <em>-3.14</em> to <em>3.14</em> (one full turn). Top is 1.57, right is 0, bottom is -1.57. With this you can make <em>anything circular</em>.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>3.</code> to <code>6.</code> — more slices. To <code>1.</code> — just a spinning gradient. Try adding <code>+ T</code> to the angle to make it all rotate slowly. <em>Hint:</em> <code>sin(ang * 3. + T)</code></span></div>'
       },
       code:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  float ang = atan(p.y, p.x);\n  float d = length(p);\n  float v = sin(ang * 3.) * .5 + .5;\n  float rings = smoothstep(.03,.0, abs(fract(d*4.)-.5)-.2);\n  float eye = smoothstep(0.25, 0.23, d);\n  float pupil = smoothstep(0.12, 0.1, d);\n  float shadow = smoothstep(0.0,.3, length(p+vec2(.05,-.07))-.8);\n  vec3 col = vec3(0.04,0.03,0.06) * shadow;\n  col += vec3(.2,.15,.1) * rings * (1.-eye);\n  col += vec3(.3,.12,.08) * v * (1.-eye) * .3;\n  col = mix(col, vec3(0.9,0.15,0.05), eye);\n  col = mix(col, vec3(0.95,0.85,0.2), pupil*.8);\n  col += vec3(.9,.2,.1) * exp(-d*2.) * .5;\n  gl_FragColor = vec4(col, 1.);\n}'
@@ -1423,12 +1531,12 @@ var LESSONS = [
   // ===== 01 =====
   { num:'01',
     title: { es: 'Hola, luz', en: 'Hello, light' },
-    desc: { es: 'Un fragment. Millones de colores. Tu primera pieza.', en: 'One fragment. Millions of colors. Your first piece.' },
+    desc: { es: 'Tu primera pieza. Un color. Millones de puntos de luz.', en: 'One fragment. Millions of colors. Your first piece.' },
     welcome: true,
     iridescent: true,
     explain: {
-      es: '<p><em>Tu primer pixel encendido. La GPU esperando instrucciones.</em></p><div class="glossary"><span class="glossary-label">¿Qué es un fragment?</span>Tu pantalla está hecha de millones de puntos de luz. La GPU los llama <em>fragments</em> — cada uno es un pedacito independiente de la imagen. <span class="gold">Tu pantalla tiene millones.</span> Un <em>fragment shader</em> es el programa que decide de qué color se enciende cada uno. Eso es lo que vas a escribir aquí.</div><p class="statement-hero">Lo que ves abajo es un solo fragment. Un shader le dice de qué color encenderse.</p><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.42</code> a cualquier número — prueba <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Cada número cambia el color. Después cambia el <code>0.05</code> a <code>0.2</code> para que se mueva más rápido.</span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Reemplaza todo el código con esto — ve cómo pulsa.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">¿Quieres que pulse más rápido? Cambia <code>T</code> por <code>T * 3.</code> — el punto después del 3 es importante. En shaders, los números siempre llevan punto: <code>3.</code> no <code>3</code></p></div>',
-      en: '<p><em>Your first pixel lit. The GPU waiting for instructions.</em></p><div class="glossary"><span class="glossary-label">What is a fragment?</span>Your screen is made of millions of points of light. The GPU calls them <em>fragments</em> — each one is an independent piece of the image. <span class="gold">Your screen has millions.</span> A <em>fragment shader</em> is the program that decides what color each one lights up. That is what you are going to write here.</div><p class="statement-hero">What you see below is a single fragment. A shader tells it what color to light up.</p><div class="supernova"></div><div class="ref-block"><span class="ref-block-label">Reading the code</span><code>void main()</code> — the starting point. Every shader begins here.<br><code>vec3 col</code> — a variable that holds 3 numbers: red, green, blue.<br><code>iri()</code> — the color formula. It cycles through 7 colors.<br><code>T</code> — time in seconds. It keeps growing, so the color keeps changing.<br><code>0.05</code> — how fast the color shifts. Bigger = faster.<br><code>0.42</code> — the starting point in the color cycle.<br><code>gl_FragColor</code> — the final output. This is what paints the fragment.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change the <code>0.42</code> to any number — try <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Each number shifts the color. Then change <code>0.05</code> to <code>0.2</code> to make it move faster.</span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Replace all the code with this — watch it pulse.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">Want it faster? Change <code>T</code> to <code>T * 3.</code> — the dot after the 3 matters. In shaders, numbers always need a dot: <code>3.</code> not <code>3</code></p></div>'
+      es: '<p><em>Tu primer pixel encendido. La GPU esperando instrucciones.</em></p><div class="glossary"><span class="glossary-label">¿Qué es un shader?</span>Un <em>shader</em> es un programa que corre en tu GPU — el chip gráfico de tu computadora. Tu pantalla está hecha de millones de puntos de luz. El shader decide de qué color se enciende <em>cada uno</em>. Esos puntos se llaman <em>frags</em>. <span class="gold">Tu pantalla tiene millones.</span> Eso es lo que vas a escribir aquí.</div><p class="statement-hero">Lo que ves abajo es un <em>fragment shader</em>. El código decide el color — y la última línea, <code style="background:var(--bg-deep);padding:2px 8px;border:1px solid var(--line);font-size:.88em;color:#fff">gl_FragColor</code>, es la que lo enciende.</p><div class="supernova"></div><div class="ref-block"><span class="ref-block-label">Leyendo el código</span><code>void main()</code> — el punto de inicio. Todo shader arranca aquí.<br><code>vec3 col</code> — una variable que guarda 3 números: rojo, verde, azul.<br><code>iri()</code> — la fórmula de color. Cicla entre 7 colores.<br><code>T</code> — el tiempo en segundos. Sigue creciendo, así que el color sigue cambiando.<br><code>0.05</code> — qué tan rápido cambia el color. Más grande = más rápido.<br><code>0.42</code> — el punto de inicio en el ciclo de color.<br><code>gl_FragColor</code> — la salida final. Esto es lo que pinta el frag.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.42</code> a cualquier número — prueba <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Cada número cambia el color. Después cambia el <code>0.05</code> a <code>0.2</code> para que se mueva más rápido.</span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Reemplaza todo el código con esto — ve cómo pulsa.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">¿Quieres que pulse más rápido? Cambia <code>T</code> por <code>T * 3.</code> — el punto después del 3 es importante. En shaders, los números siempre llevan punto: <code>3.</code> no <code>3</code></p></div>',
+      en: '<p><em>Your first pixel lit. The GPU waiting for instructions.</em></p><div class="glossary"><span class="glossary-label">What is a shader?</span>A <em>shader</em> is a program that runs on your GPU — the graphics chip in your computer. Your screen is made of millions of points of light. The shader decides what color <em>each one</em> lights up. Those points are called <em>frags</em>. <span class="gold">Your screen has millions.</span> That is what you are going to write here.</div><p class="statement-hero">What you see below is a <em>fragment shader</em>. The code decides the color — and the last line, <code style="background:var(--bg-deep);padding:2px 8px;border:1px solid var(--line);font-size:.88em;color:#fff">gl_FragColor</code>, is what lights it up.</p><div class="supernova"></div><div class="ref-block"><span class="ref-block-label">Reading the code</span><code>void main()</code> — the starting point. Every shader begins here.<br><code>vec3 col</code> — a variable that holds 3 numbers: red, green, blue.<br><code>iri()</code> — the color formula. It cycles through 7 colors.<br><code>T</code> — time in seconds. It keeps growing, so the color keeps changing.<br><code>0.05</code> — how fast the color shifts. Bigger = faster.<br><code>0.42</code> — the starting point in the color cycle.<br><code>gl_FragColor</code> — the final output. This is what paints the frag.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change the <code>0.42</code> to any number — try <code>0.1</code>, <code>0.5</code>, <code>0.9</code>. Each number shifts the color. Then change <code>0.05</code> to <code>0.2</code> to make it move faster.</span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Pulse</span>Replace all the code with this — watch it pulse.<pre>void main(){&#10;  vec3 col = iri(T * 0.05 + 0.42);&#10;  col *= .5 + .5 * sin(T);&#10;  gl_FragColor = vec4(col, 1.);&#10;}</pre><p class="pulse-hint">Want it faster? Change <code>T</code> to <code>T * 3.</code> — the dot after the 3 matters. In shaders, numbers always need a dot: <code>3.</code> not <code>3</code></p></div>'
     },
     code:'void main(){\n  vec3 col = iri(T * 0.05 + 0.42);\n  col *= 0.85 + 0.15 * sin(T * 0.618);\n  gl_FragColor = vec4(col, 1.);\n}'
   },
@@ -1468,10 +1576,10 @@ var LESSONS = [
 
   // ===== 05 =====
   { num:'05',
-    title: { es: 'El degradé', en: 'The gradient' },
+    title: { es: 'El gradiente', en: 'The gradient' },
     desc: { es: 'Una posición controla un color. Ya está, eres artista.', en: 'A position controls a color. There you go, you are an artist.' },
     explain: {
-      es: '<p>Esto es la <strong>idea más poderosa</strong> que vas a aprender hoy: <em>la posición puede convertirse en color</em>. Y al revés: <em>las matemáticas que apliques a la posición se ven como imagen</em>.</p><p><em>La posición se convierte en imagen. Bienvenido a los shaders.</em></p><p>Un degradé es solo eso: tomas <code>p.x</code> (la posición horizontal) y la usas como un canal de color. El frag de la izquierda tiene <code>p.x = 0</code>, el de la derecha tiene <code>p.x = 1</code>. Si lo conectas al rojo, queda un degradé de negro a rojo.</p><div class="glossary"><span class="glossary-label">mix()</span>La función <code>mix(A, B, t)</code> "mezcla" dos cosas. Cuando <code>t</code> es 0, te da A puro. Cuando es 1, te da B puro. Cuando es 0.5, te da la mitad de cada uno. Es como un slider.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> para que el degradé sea vertical. Cambia los colores <code>vec3(1.,0.3,0.2)</code> y <code>vec3(0.2,0.5,1.)</code> a otros que tú elijas.</span></div>',
+      es: '<p>Esto es la <strong>idea más poderosa</strong> que vas a aprender hoy: <em>la posición puede convertirse en color</em>. Y al revés: <em>las matemáticas que apliques a la posición se ven como imagen</em>.</p><p><em>La posición se convierte en imagen. Bienvenido a los shaders.</em></p><p>Un gradiente es solo eso: tomas <code>p.x</code> (la posición horizontal) y la usas como un canal de color. El frag de la izquierda tiene <code>p.x = 0</code>, el de la derecha tiene <code>p.x = 1</code>. Si lo conectas al rojo, queda un gradiente de negro a rojo.</p><div class="glossary"><span class="glossary-label">mix()</span>La función <code>mix(A, B, t)</code> "mezcla" dos cosas. Cuando <code>t</code> es 0, te da A puro. Cuando es 1, te da B puro. Cuando es 0.5, te da la mitad de cada uno. Es como un slider.</div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> para que el gradiente sea vertical. Cambia los colores <code>vec3(1.,0.3,0.2)</code> y <code>vec3(0.2,0.5,1.)</code> a otros que tú elijas.</span></div>',
       en: '<p>This is the <strong>most powerful idea</strong> you will learn today: <em>position can become color</em>. And the other way around: <em>the math you apply to the position shows up as an image</em>.</p><p><em>Position becomes image. Welcome to shaders.</em></p><p>A gradient is just that: you take <code>p.x</code> (the horizontal position) and use it as a color channel. The frag on the left has <code>p.x = 0</code>, the one on the right has <code>p.x = 1</code>. Connect it to red, and you get a gradient from black to red.</p><div class="glossary"><span class="glossary-label">mix()</span>The function <code>mix(A, B, t)</code> "blends" two things. When <code>t</code> is 0, you get pure A. When it is 1, you get pure B. When it is 0.5, you get half and half. It is like a slider.</div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>p.x</code> to <code>p.y</code> to make the gradient vertical. Change the colors <code>vec3(1.,0.3,0.2)</code> and <code>vec3(0.2,0.5,1.)</code> to anything you like.</span></div>'
     },
     code:'void main(){\n  vec2 p = gl_FragCoord.xy / R;\n  vec3 a = vec3(0.95, 0.15, 0.55);\n  vec3 b = vec3(0.1, 0.85, 0.5);\n  float t = p.x * p.x;\n  vec3 col = mix(a, b, t);\n  gl_FragColor = vec4(col, 1.);\n}'
@@ -1482,7 +1590,7 @@ var LESSONS = [
     title: { es: 'El centro', en: 'The center' },
     desc: { es: 'El punto de origen de cada shader.', en: 'The origin point of every shader.' },
     explain: {
-      es: '<p>Hasta ahora <code>p</code> iba de <em>0 (esquina)</em> a <em>1 (esquina opuesta)</em>. Eso es útil para degradés, pero no para cosas centradas, como un círculo en el medio.</p><p><em>(0, 0). Ground zero. Todo se mide desde aquí.</em></p><p>Hay una fórmula que todos los shaders usan al inicio. <em>Piénsalo como afinar tu instrumento antes de tocar</em>:</p><div class="glossary"><span class="glossary-label">La fórmula del centro</span><code>vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);</code><br><br>Lo que hace: el centro de la pantalla ahora es <em>(0,0)</em>. La esquina superior derecha es <em>(1,1)</em>. La inferior izquierda es <em>(-1,-1)</em>. Y funciona aunque la pantalla sea cuadrada o alargada — no se distorsiona.</div><p>No tienes que entender la fórmula completa todavía. Es la primera línea de casi cualquier shader que escribas.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.4</code> (azul) a <code>0.9</code> — el centro se vuelve lavanda. Cambia <code>p.x</code> por <code>p.y</code> en la primera línea del color — el degradé se voltea.</span></div>',
+      es: '<p>Hasta ahora <code>p</code> iba de <em>0 (esquina)</em> a <em>1 (esquina opuesta)</em>. Eso es útil para gradientes, pero no para cosas centradas, como un círculo en el medio.</p><p><em>(0, 0). Ground zero. Todo se mide desde aquí.</em></p><p>Hay una fórmula que todos los shaders usan al inicio. <em>Piénsalo como afinar tu instrumento antes de tocar</em>:</p><div class="glossary"><span class="glossary-label">La fórmula del centro</span><code>vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);</code><br><br>Lo que hace: el centro de la pantalla ahora es <em>(0,0)</em>. La esquina superior derecha es <em>(1,1)</em>. La inferior izquierda es <em>(-1,-1)</em>. Y funciona aunque la pantalla sea cuadrada o alargada — no se distorsiona.</div><p>No tienes que entender la fórmula completa todavía. Es la primera línea de casi cualquier shader que escribas.</p><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>0.4</code> (azul) a <code>0.9</code> — el centro se vuelve lavanda. Cambia <code>p.x</code> por <code>p.y</code> en la primera línea del color — el gradiente se voltea.</span></div>',
       en: '<p>So far <code>p</code> went from <em>0 (corner)</em> to <em>1 (opposite corner)</em>. That is useful for gradients, but not for centered things like a circle in the middle.</p><p><em>(0, 0). Ground zero. Everything is measured from here.</em></p><p>There is a formula that almost every shader uses at the start. <em>Think of it as tuning your instrument before you play</em>:</p><div class="glossary"><span class="glossary-label">The center formula</span><code>vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);</code><br><br>What it does: the center of the screen is now <em>(0,0)</em>. The top-right corner is <em>(1,1)</em>. The bottom-left is <em>(-1,-1)</em>. And it works whether the screen is square or wide — no distortion.</div><p>You do not need to understand the full formula yet. It is the first line of almost every shader you write.</p><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>0.4</code> (blue) to <code>0.9</code> — the center turns lavender. Swap <code>p.x</code> for <code>p.y</code> on the first color line — the gradient flips.</span></div>'
     },
     code:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  vec3 col = vec3(p.x * 0.5 + 0.5, p.y * 0.5 + 0.5, 0.4);\n  col *= 0.9 + 0.1 * (1.0 - length(p));\n  gl_FragColor = vec4(col, 1.);\n}'
@@ -3477,6 +3585,21 @@ document.addEventListener('DOMContentLoaded', function(){
   var toggleBtn = document.getElementById('sidebarToggle');
   if (toggleBtn) toggleBtn.addEventListener('click', toggleSidebar);
 
+
+  // Theme picker
+  var savedTheme = localStorage.getItem('wogl-academy-theme') || 'nebula';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.querySelectorAll('.theme-pill').forEach(function(pill) {
+    pill.classList.toggle('active', pill.getAttribute('data-theme') === savedTheme);
+    pill.addEventListener('click', function() {
+      var theme = pill.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('wogl-academy-theme', theme);
+      document.querySelectorAll('.theme-pill').forEach(function(p) {
+        p.classList.toggle('active', p.getAttribute('data-theme') === theme);
+      });
+    });
+  });
 
   initLanguage();
 
