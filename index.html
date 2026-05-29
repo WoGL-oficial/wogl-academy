@@ -923,9 +923,20 @@ body::after {
   letter-spacing:clamp(0.06em, 0.1em, 0.12em); color:var(--ink-faint); text-decoration:none;
   padding:clamp(3px, 0.5vw, 6px) clamp(8px, 1.2vw, 16px); border:1px solid var(--line); border-radius:2px;
   transition:all 0.4s var(--ease); text-transform:uppercase; margin-left:auto; white-space:nowrap; flex-shrink:0;
+  opacity:0.35; cursor:default; position:relative;
 }
-.wogl-header-login:hover {
-  background:rgba(212,165,116,0.55); border-color:var(--gold); color:var(--ink);
+.wogl-header-login:hover { opacity:0.5; }
+.wogl-header-login::after {
+  content:attr(data-tooltip);
+  position:absolute; top:calc(100% + 8px); right:0;
+  font-family:var(--font-mono); font-size:9px; letter-spacing:0.06em; color:var(--ink-mute);
+  background:rgba(3,2,10,0.92); border:1px solid var(--line); border-radius:3px;
+  padding:6px 10px; white-space:nowrap;
+  opacity:0; pointer-events:none; transform:translateY(-4px);
+  transition:opacity 0.2s, transform 0.2s;
+}
+.wogl-header-login:hover::after {
+  opacity:1; transform:translateY(0);
 }
 @media (max-width:600px) {
   .wogl-academy-tagline { display:none; }
@@ -990,23 +1001,10 @@ body::after {
     <button class="lang-toggle-btn" data-lang="en">EN</button>
     <button class="lang-toggle-btn" data-lang="es">ES</button>
   </div>
-  <a href="#" class="wogl-header-login" id="loginBtn" onclick="document.getElementById('loginModal').style.display='flex';return false;">Log in</a>
+  <a class="wogl-header-login" id="loginBtn" data-tooltip="traveler login — coming soon">Log in</a>
 </header>
 
-<!-- Login Modal -->
-<div id="loginModal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;">
-  <div style="background:#000;border:1px solid rgba(232,217,192,0.1);border-radius:4px;padding:40px;max-width:380px;width:90%;text-align:center;">
-    <div style="font-family:'Outfit',sans-serif;font-weight:300;font-size:32px;color:#e8c89a;letter-spacing:.18em;margin-bottom:8px;">WoGL</div>
-    <div style="font-family:var(--font-mono);font-size:12px;color:var(--ink-mute);margin-bottom:28px;letter-spacing:0.08em;">academy</div>
-    <div id="loginForm">
-      <input type="email" id="loginEmail" placeholder="email" style="width:100%;padding:12px 16px;background:rgba(212,165,116,0.06);border:1px solid rgba(232,217,192,0.1);border-radius:2px;color:var(--ink);font-family:var(--font-mono);font-size:13px;outline:none;margin-bottom:12px;">
-      <button id="loginSubmit" onclick="doLogin()" style="width:100%;padding:12px;background:#d4b896;border:none;border-radius:2px;color:#02010a;font-family:var(--font-mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;">enter</button>
-    </div>
-    <div id="loginMsg" style="display:none;font-family:var(--font-mono);font-size:13px;color:#e8c89a;line-height:1.6;padding:12px 0;">check your email for the magic link</div>
-    <div id="loginError" style="display:none;font-family:var(--font-mono);font-size:12px;color:#ff6b6b;padding:8px 0;"></div>
-    <div style="margin-top:16px;font-family:var(--font-mono);font-size:10px;color:var(--ink-faint);cursor:pointer;letter-spacing:0.08em;" onclick="document.getElementById('loginModal').style.display='none';">close</div>
-  </div>
-</div>
+<!-- Login disabled — traveler auth coming soon -->
 
 <div class="app" style="padding-top:60px;">
 
@@ -1033,47 +1031,8 @@ body::after {
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 'use strict';
-
-// ============================================================
-// Supabase Auth
-// ============================================================
-var _sb = supabase.createClient(
-  'https://ubvtspvlrukuayucpnwl.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVidnRzcHZscnVrdWF5dWNwbndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNzcwMTIsImV4cCI6MjA5MzY1MzAxMn0.Dav1A7ksKnnuv41Z8kGlMumbkvqF6UaXbGSEqpLtU4o'
-);
-
-async function doLogin() {
-  var email = document.getElementById('loginEmail').value.trim();
-  if (!email) return;
-  var btn = document.getElementById('loginSubmit');
-  btn.textContent = '...'; btn.disabled = true;
-  var { error } = await _sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: 'https://academy.wogl.io' } });
-  if (error) {
-    document.getElementById('loginError').textContent = error.message;
-    document.getElementById('loginError').style.display = 'block';
-    btn.textContent = 'enter'; btn.disabled = false;
-  } else {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('loginMsg').style.display = 'block';
-  }
-}
-
-async function doLogout() {
-  await _sb.auth.signOut();
-  var link = document.getElementById('loginBtn');
-  if (link) { link.textContent = 'Log in'; link.onclick = function(e) { e.preventDefault(); document.getElementById('loginModal').style.display='flex'; }; }
-}
-
-_sb.auth.onAuthStateChange(function(event, session) {
-  var link = document.getElementById('loginBtn');
-  if (session && link) {
-    link.textContent = session.user.email.split('@')[0];
-    link.onclick = function(e) { e.preventDefault(); doLogout(); };
-  }
-});
 
 // ============================================================
 // Language system
@@ -1817,6 +1776,9 @@ function switchLanguage(newLang) {
   document.documentElement.lang = lang === 'en' ? 'en' : 'es';
   // Update page title
   document.title = lang === 'en' ? 'WoGL Learn · Start Here' : 'WoGL Aprende · Start Here';
+  // Update login tooltip
+  var loginEl = document.getElementById('loginBtn');
+  if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
   // Destroy current renderer before rebuilding
   if (currentRenderer) currentRenderer.destroy();
   // Rebuild everything
@@ -3557,6 +3519,9 @@ function initCardTilt() {
 function bootAcademy() {
   // Update page title
   document.title = lang === 'en' ? 'WoGL Learn · Start Here' : 'WoGL Aprende · Start Here';
+  // Set login tooltip for current lang
+  var loginEl = document.getElementById('loginBtn');
+  if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
   updateLangToggle();
   updateSidebarText();
   buildSidebar();
