@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="google" content="notranslate">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.85, maximum-scale=1.25, viewport-fit=cover">
 <title>WoGL Academy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +43,7 @@
   --glow4: rgba(160,60,200,0.05);
 }
 
-/* ===== THEME: NEBULA ELÉCTRICA (default) ===== */
+/* ===== THEME: NEBULA ELECTRIC (default) ===== */
 [data-theme="nebula"] {
   --bg: #0c0418; --bg-lift: #140a28; --bg-deep: #060210;
   --bg-side: rgba(10,3,24,0.45);
@@ -53,7 +53,7 @@
   --glow1: rgba(140,40,220,0.18); --glow2: rgba(220,60,160,0.08);
   --glow3: rgba(80,40,180,0.12); --glow4: rgba(160,60,200,0.05);
 }
-/* ===== THEME: LAVA DORADA ===== */
+/* ===== THEME: LAVA GOLD ===== */
 [data-theme="lava"] {
   --bg: #120808; --bg-lift: #1e0e0e; --bg-deep: #0a0404;
   --bg-side: rgba(16,6,6,0.45);
@@ -63,7 +63,7 @@
   --glow1: rgba(255,100,40,0.12); --glow2: rgba(200,40,80,0.06);
   --glow3: rgba(255,180,80,0.10); --glow4: rgba(220,80,60,0.04);
 }
-/* ===== THEME: ABISMO AURORA ===== */
+/* ===== THEME: ABYSS AURORA ===== */
 [data-theme="aurora"] {
   --bg: #040e12; --bg-lift: #0a1a1e; --bg-deep: #020a0c;
   --bg-side: rgba(3,12,16,0.45);
@@ -73,7 +73,7 @@
   --glow1: rgba(20,200,160,0.14); --glow2: rgba(40,100,200,0.06);
   --glow3: rgba(80,220,180,0.08); --glow4: rgba(40,160,200,0.04);
 }
-/* ===== THEME: OBSIDIANA ROYAL ===== */
+/* ===== THEME: OBSIDIAN ROYAL ===== */
 [data-theme="royal"] {
   --bg: #06080f; --bg-lift: #0e1228; --bg-deep: #030408;
   --bg-side: rgba(5,7,12,0.45);
@@ -88,7 +88,6 @@ html { background:var(--bg); transition:background .6s ease; }
 body { background:transparent; color:var(--ink); font-family:var(--font-body); font-weight:400; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; transition:color .6s ease; }
 
 /* Background — Animated theme glows */
-.bg-fbm { display:none; }
 body::before {
   content:''; position:fixed; top:-40%; right:-30%; width:120%; height:120%;
   background:radial-gradient(ellipse at 70% 30%, var(--glow1) 0%, var(--glow2) 40%, transparent 70%);
@@ -248,32 +247,6 @@ body::after {
   cursor:pointer; text-transform:uppercase; transition:color .3s;
 }
 .mobile-overlay-close:hover { color:var(--gold); }
-.side-subtitle { font-family:var(--font-body); font-weight:400; font-size:13px; color:var(--ink-soft); margin-top:8px; line-height:1.4; letter-spacing:.01em; }
-.side-progress { margin-top:18px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:10px; color:var(--ink-mute); letter-spacing:1.5px; }
-.side-progress .bar { flex:1; height:2px; background:var(--line); position:relative; overflow:hidden; }
-.side-progress .bar-fill { position:absolute; left:0; top:0; bottom:0; background:var(--gold); transition:width .6s var(--ease); }
-
-.side-section-label {
-  font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--ink-mute);
-  text-transform:uppercase; padding:24px 28px 12px;
-}
-
-/* TOC */
-.toc { display:flex; flex-direction:column; }
-.toc-item {
-  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px;
-  padding:14px 28px; cursor:pointer; border-left:2px solid transparent;
-  transition:all .3s var(--ease);
-}
-.toc-item:hover { background:rgba(232,217,192,.025); border-left-color:var(--copper); }
-.toc-item.active { background:rgba(212,184,150,.06); border-left-color:var(--gold); }
-.toc-item.done .toc-num { color:var(--green); }
-.toc-num { font-family:var(--font-mono); font-size:10px; letter-spacing:1px; color:var(--ink-faint); width:24px; }
-.toc-item.active .toc-num { color:var(--gold); }
-.toc-name { font-family:var(--font-body); font-size:14px; font-weight:400; color:var(--ink-soft); letter-spacing:.005em; line-height:1.3; }
-.toc-item.active .toc-name { color:var(--ink); font-weight:400; }
-.toc-mark { font-family:var(--font-mono); font-size:10px; color:var(--green); }
-
 /* Top context tabs — Logic style */
 .side-top-tabs { display:flex; border-bottom:1px solid var(--line); }
 .side-top-tab {
@@ -506,24 +479,6 @@ body::after {
 .hint-lesson-ref {
   font-family:var(--font-mono); font-size:10px; color:var(--copper); opacity:.8; margin-left:4px;
 }
-
-/* Progressive kit */
-.kit-list { padding:0 28px 28px; display:flex; flex-direction:column; gap:12px; }
-.kit-card {
-  background:var(--bg-deep); border:1px solid var(--line); padding:14px; position:relative;
-  opacity:.80; transition:opacity .5s var(--ease);
-}
-.kit-card.unlocked { opacity:1; }
-.kit-card-title {
-  font-family:var(--font-display); font-weight:400;
-  font-size:13px; color:var(--gold); margin-bottom:8px; letter-spacing:.02em;
-}
-.kit-card-code {
-  font-family:var(--font-mono); font-size:10.5px; line-height:1.55; color:var(--ink);
-  border-left:2px solid var(--copper); padding:6px 10px; margin-bottom:8px;
-  white-space:pre-wrap; word-break:break-word; -webkit-user-select:text; user-select:text;
-}
-.kit-card-explain { font-family:var(--font-body); font-weight:400; font-size:12px; line-height:1.5; color:var(--ink-mute); }
 
 /* ===== MAIN ===== */
 .main { padding:clamp(32px, 3vw, 64px) clamp(32px, 4vw, 80px) 80px; max-width:100%; min-width:0; overflow-x:hidden; word-wrap:break-word; box-sizing:border-box; }
@@ -784,7 +739,7 @@ body::after {
   white-space:pre-wrap; word-wrap:break-word; tab-size:2; -moz-tab-size:2;
   -webkit-user-select:text; user-select:text;
 }
-/* Opalo syntax palette */
+/* Opal syntax palette */
 .sh-kw { color:#e8c070; }
 .sh-type { color:#d4a850; }
 .sh-fn { color:#885878; }
@@ -957,33 +912,9 @@ body::after {
   }
 }
 
-/* ── Punch Gradient Demo (Start Here 05) ── */
-.punch-gradient-demo {
-  position:relative; margin:1.2em 0; padding:18px 0;
-  user-select:none; -webkit-user-select:none;
-  overflow:visible;
-}
-.punch-gradient-demo canvas {
-  position:absolute; inset:0; width:100%; height:100%;
-  pointer-events:none; opacity:0.75;
-}
-.punch-gradient-letters {
-  position:relative; z-index:1;
-  font-family:var(--font-display); font-weight:500;
-  font-size:clamp(15px, 1.3vw, 20px); line-height:1.6;
-  display:flex; flex-wrap:wrap; gap:0;
-  cursor:default;
-}
-.punch-gradient-letters .pg-char {
-  display:inline-block; position:relative;
-  transition:none; will-change:transform;
-}
-.punch-gradient-letters .pg-space { width:0.35em; }
 </style>
 </head>
 <body>
-
-<div class="bg-fbm" id="bgFbm"><canvas></canvas></div>
 
 <!-- WoGL Academy Header -->
 <header class="wogl-academy-header">
@@ -1050,23 +981,13 @@ function t(obj) {
 // UI strings (bilingual)
 // ============================================================
 var UI = {
-  sideTag:          { es: 'aprende · start here', en: 'learn · start here' },
-  sideTitle:        { es: 'Bienvenida', en: 'Welcome' },
-  sideSub:          { es: 'Tus primeros 10 pasos en el mundo de los shaders.', en: 'Your first 10 steps into the world of shaders.' },
-  sectionsLabel:    { es: 'Lecciones', en: 'Lessons' },
-  startHere:        { es: 'Empieza aquí', en: 'Start here' },
-  kitLabel:         { es: 'Primals', en: 'Primals' },
   crumbLearn:       { es: 'Aprende', en: 'Learn' },
-  crumbLesson:      { es: 'Lección', en: 'Lesson' },
   tipsIcon:         { es: 'Nota', en: 'Note' },
-  tryItIcon:        { es: 'Prueba', en: 'Try' },
   sandboxLabel:     { es: '↓ Edita el código y mira', en: '↓ Edit the code and see' },
-  editorLabel:      { es: 'tu código', en: 'your code' },
   editorCompiled:   { es: 'compilado', en: 'compiled' },
   btnCopy:          { es: 'Copiar', en: 'Copy' },
   btnCopied:        { es: 'Copiado ✓', en: 'Copied ✓' },
   btnNext:          { es: 'Siguiente paso', en: 'Next step' },
-  btnCompleted:     { es: '¡Completaste!', en: 'Completed!' },
   btnCompletedAlt:  { es: 'Completaste', en: 'Completed' },
   navPrev:          { es: '← Anterior', en: '← Previous' },
   navNext:          { es: 'Siguiente →', en: 'Next →' },
@@ -1079,9 +1000,6 @@ var UI = {
 // ============================================================
 
 var SECTION_DATA = {
-  tag: UI.sideTag,
-  title: UI.sideTitle,
-  sub: UI.sideSub,
   welcome: {
     eyebrow: { es: 'Bienvenido', en: 'Welcome' },
     title: { es: '¿Te interesa hacer arte con código?', en: 'Interested in making art with code?' },
@@ -1090,7 +1008,7 @@ var SECTION_DATA = {
   tips: { es: 'Es <em>imposible</em> romper nada aquí. En serio. Cambia cualquier número, borra una línea entera, escribe lo que quieras. Si algo truena, aparece un mensaje rojo — le das <em>Reset</em> y vuelves a empezar. Cero consecuencias. <em>La única manera de aprender es tocando.</em>', en: 'It is <em>impossible</em> to break anything here. Seriously. Change any number, delete a whole line, type whatever you want. If something breaks, a red message shows up — hit <em>Reset</em> and you are back. Zero consequences. <em>The only way to learn is by touching the code.</em>' },
 };
 
-// Sections — the 7 chapters of the academy (Life, Fractals, Raymarching, Mandelbulb coming soon)
+// Sections — academy chapters live today; Life, Fractals, Raymarching, Mandelbulb pending
 var SECTIONS = [
   { num:'00', name: { es:'Start Here', en:'Start Here' } },
   { num:'01', name: { es:'Patterns', en:'Patterns' } },
@@ -1102,7 +1020,7 @@ var SECTIONS = [
 
 var currentSection = '00';
 
-// Lesson titles per section (placeholder lessons use Start Here's code)
+// Lesson titles per section.
 var SECTION_LESSONS = {
   '01': [
     { num:'01', title:{es:'Figuras',en:'Shapes'}, desc:{es:'Anillos, líneas, cruces. Pura geometría.',en:'Rings, lines, crosses. Pure geometry.'},
@@ -1241,7 +1159,7 @@ var SECTION_LESSONS = {
         es:'<p>El noise no solo colorea — puede <strong>empujar</strong>. Usa el noise para desplazar las coordenadas de un patrón y ese patrón se deforma. Las rayas rectas se tuercen.</p><p><em>Broadcast limpio. El noise lo destruye.</em></p><div class="glossary"><span class="glossary-label">Noise como fuerza</span>En vez de <code>sin(p.x)</code> usas <code>sin(p.x + noise)</code>. El noise empuja antes de evaluar. Preview de lo que viene en Domain Warp.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>0.5</code> a <code>1.5</code> — deformación extrema. A <code>0.1</code> — apenas se nota.</span></div>',
         en:'<p>Noise does not only color — it can <strong>push</strong>. Use noise to displace the coordinates of a pattern and that pattern deforms. Straight stripes twist.</p><p><em>Clean broadcast. Noise destroys it.</em></p><div class="glossary"><span class="glossary-label">Noise as force</span>Instead of <code>sin(p.x)</code> you use <code>sin(p.x + noise)</code>. Noise pushes before evaluating. Preview of what comes in Domain Warp.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>0.5</code> to <code>1.5</code> — extreme deformation. To <code>0.1</code> — barely noticeable.</span></div>'
       },
-      code:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // Broadcast bars — señal limpia\n  float bar = floor(p.x * 7.0 + 3.5) / 7.0;\n  vec3 signal = vec3(0.0);\n  signal += vec3(0.9, 0.9, 0.9) * step(0.0, bar) * step(bar, 0.14);\n  signal += vec3(0.9, 0.9, 0.0) * step(0.14, bar) * step(bar, 0.28);\n  signal += vec3(0.0, 0.9, 0.9) * step(0.28, bar) * step(bar, 0.42);\n  signal += vec3(0.0, 0.9, 0.0) * step(0.42, bar) * step(bar, 0.56);\n  signal += vec3(0.9, 0.0, 0.9) * step(0.56, bar) * step(bar, 0.7);\n  signal += vec3(0.9, 0.0, 0.0) * step(0.7, bar) * step(bar, 0.84);\n  signal += vec3(0.0, 0.0, 0.9) * step(0.84, bar);\n  // Noise destruye la señal\n  float push = n2(vec2(p.y * 4.0, 0.5)) * 0.5;\n  float destroy = n2(vec2(p.y * 8.0, 1.5));\n  float glitch = step(0.7, destroy);\n  vec2 broken = p + vec2(push * glitch, 0.0);\n  float bar2 = floor(broken.x * 7.0 + 3.5) / 7.0;\n  vec3 corrupt = vec3(0.0);\n  corrupt += vec3(0.9, 0.9, 0.9) * step(0.0, bar2) * step(bar2, 0.14);\n  corrupt += vec3(0.9, 0.9, 0.0) * step(0.14, bar2) * step(bar2, 0.28);\n  corrupt += vec3(0.0, 0.9, 0.9) * step(0.28, bar2) * step(bar2, 0.42);\n  corrupt += vec3(0.0, 0.9, 0.0) * step(0.42, bar2) * step(bar2, 0.56);\n  corrupt += vec3(0.9, 0.0, 0.9) * step(0.56, bar2) * step(bar2, 0.7);\n  corrupt += vec3(0.9, 0.0, 0.0) * step(0.7, bar2) * step(bar2, 0.84);\n  corrupt += vec3(0.0, 0.0, 0.9) * step(0.84, bar2);\n  vec3 col = mix(signal, corrupt, glitch);\n  col += vec3(0.9, 0.0, 0.5) * glitch * 0.15;\n  float scan = step(0.5, sin(gl_FragCoord.y * 2.0) * 0.5 + 0.5) * 0.08;\n  col *= 1.0 - scan;\n  col += vec3(0.01);\n  gl_FragColor = vec4(col, 1.);\n}'
+      code:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  // Broadcast bars — clean signal\n  float bar = floor(p.x * 7.0 + 3.5) / 7.0;\n  vec3 signal = vec3(0.0);\n  signal += vec3(0.9, 0.9, 0.9) * step(0.0, bar) * step(bar, 0.14);\n  signal += vec3(0.9, 0.9, 0.0) * step(0.14, bar) * step(bar, 0.28);\n  signal += vec3(0.0, 0.9, 0.9) * step(0.28, bar) * step(bar, 0.42);\n  signal += vec3(0.0, 0.9, 0.0) * step(0.42, bar) * step(bar, 0.56);\n  signal += vec3(0.9, 0.0, 0.9) * step(0.56, bar) * step(bar, 0.7);\n  signal += vec3(0.9, 0.0, 0.0) * step(0.7, bar) * step(bar, 0.84);\n  signal += vec3(0.0, 0.0, 0.9) * step(0.84, bar);\n  // Noise destroys the signal\n  float push = n2(vec2(p.y * 4.0, 0.5)) * 0.5;\n  float destroy = n2(vec2(p.y * 8.0, 1.5));\n  float glitch = step(0.7, destroy);\n  vec2 broken = p + vec2(push * glitch, 0.0);\n  float bar2 = floor(broken.x * 7.0 + 3.5) / 7.0;\n  vec3 corrupt = vec3(0.0);\n  corrupt += vec3(0.9, 0.9, 0.9) * step(0.0, bar2) * step(bar2, 0.14);\n  corrupt += vec3(0.9, 0.9, 0.0) * step(0.14, bar2) * step(bar2, 0.28);\n  corrupt += vec3(0.0, 0.9, 0.9) * step(0.28, bar2) * step(bar2, 0.42);\n  corrupt += vec3(0.0, 0.9, 0.0) * step(0.42, bar2) * step(bar2, 0.56);\n  corrupt += vec3(0.9, 0.0, 0.9) * step(0.56, bar2) * step(bar2, 0.7);\n  corrupt += vec3(0.9, 0.0, 0.0) * step(0.7, bar2) * step(bar2, 0.84);\n  corrupt += vec3(0.0, 0.0, 0.9) * step(0.84, bar2);\n  vec3 col = mix(signal, corrupt, glitch);\n  col += vec3(0.9, 0.0, 0.5) * glitch * 0.15;\n  float scan = step(0.5, sin(gl_FragCoord.y * 2.0) * 0.5 + 0.5) * 0.08;\n  col *= 1.0 - scan;\n  col += vec3(0.01);\n  gl_FragColor = vec4(col, 1.);\n}'
     },
     { num:'10', title:{es:'Tu pieza de noise',en:'Your noise piece'}, desc:{es:'Dos capas. Dos direcciones. Tu pieza.',en:'Two layers. Two directions. Your piece.'},
       explain: {
@@ -1475,7 +1393,7 @@ var SECTION_LESSONS = {
 
 };
 
-// Primals — the absolute basics of reading code
+// Primals — the absolute basics of reading code.
 var KIT = [
   { title: { es: 'Las llaves', en: 'Curly braces' },
     code: '{ }',
@@ -1494,7 +1412,7 @@ var KIT = [
     explain: { es: 'Asigna un valor. "x = 5" significa: guarda 5 dentro de x.', en: 'Assigns a value. "x = 5" means: store 5 inside x.' }
   },
   { title: { es: 'El comentario', en: 'The comment' },
-    code: '// esto es un comentario',
+    code: '// this is a comment',
     explain: { es: 'La máquina lo ignora. Es una nota para ti o para quien lea tu código.', en: 'The machine ignores it. It is a note for you or whoever reads your code.' }
   },
 ];
@@ -1674,7 +1592,7 @@ var introShown = false;
 var codeHighlightEl = null;
 
 // ============================================================
-// GLSL syntax highlighter — Opalo palette
+// GLSL syntax highlighter — Opal palette
 // ============================================================
 var GLSL_KW = /^(void|return|if|else|for|while|break|continue|discard|precision|mediump|highp|lowp|in|out|inout|uniform|attribute|varying|const)$/;
 var GLSL_TYPE = /^(float|int|bool|vec2|vec3|vec4|mat2|mat3|mat4|sampler2D|ivec2|ivec3|ivec4|bvec2|bvec3|bvec4)$/;
@@ -1788,32 +1706,8 @@ function switchLanguage(newLang) {
 }
 
 function updateSidebarText() {
-  var tagEl = document.getElementById('sideTag');
-  var titleEl = document.getElementById('sideTitle');
   var taglineEl = document.getElementById('headerTagline');
-  if (tagEl) tagEl.textContent = t(UI.crumbLearn).toUpperCase();
-  if (titleEl) titleEl.textContent = t({ es:'Bienvenida', en:'Welcome' });
   if (taglineEl) taglineEl.textContent = t(UI.headerTagline);
-}
-
-// ============================================================
-// Sidebar navigation
-// ============================================================
-function rebuildToc() {
-  buildDrawers();
-}
-
-function rebuildKit() {
-  var kitList = document.getElementById('kitList');
-  kitList.innerHTML = '';
-  KIT.forEach(function(item) {
-    var card = el('div', { class:'kit-card unlocked' }, [
-      el('div', { class:'kit-card-title' }, t(item.title)),
-      el('pre', { class:'kit-card-code' }, item.code),
-      el('p', { class:'kit-card-explain' }, t(item.explain))
-    ]);
-    kitList.appendChild(card);
-  });
 }
 
 // Practice data
@@ -1826,6 +1720,13 @@ var CREATE_ITEMS = [
 // Practice data pools
 // ============================================================
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// Praise pool — used by lesson unlock and practice modes
+function getPraise() {
+  return lang === 'en'
+    ? ['Well done!','Nice!','Awesome!','You got it!','Clean!','Solid!','Nailed it!','Yes!','Boom!','Sharp!','Move on!','Let\'s go!','Keep going!','Next one!','On fire!','Unlocked!','Crushed it!','Level up!','Go go go!','Easy!','Pro move!','Smooth!','Got it!']
+    : ['Bien hecho!','Chido!','Excelente!','Lo lograste!','Limpio!','Sólido!','De lujo!','Eso!','Boom!','Crack!','Dale!','Vámonos!','Sigue!','La siguiente!','En fuego!','Desbloqueado!','La rompiste!','Nivel arriba!','Go go go!','Fácil!','Movimiento pro!','Suave!','Listo!'];
+}
 
 var PRACTICE_TEMPLATES = [
   { name:'Lava rivers', desc:'Noise bands carving hot channels through dark rock.',
@@ -2247,21 +2148,22 @@ function buildDrawers() {
   });
 }
 
-function buildSlimSections() { /* removed for iteration */ }
-function toggleSidebar() { /* removed for iteration */
-}
-
 function getActiveLessons() {
   if (currentSection === '00') return LESSONS;
   var secLessons = SECTION_LESSONS[currentSection];
-  if (!secLessons) return LESSONS;
+  if (!secLessons) {
+    console.warn('[academy] no lessons defined for section', currentSection);
+    return [];
+  }
   return secLessons.map(function(sl) {
+    if (!sl.explain) console.warn('[academy] lesson missing explain:', currentSection, sl.num);
+    if (!sl.code) console.warn('[academy] lesson missing code:', currentSection, sl.num);
     return {
       num: sl.num,
       title: sl.title,
       desc: sl.desc,
-      explain: sl.explain || LESSONS[0].explain,
-      code: sl.code || LESSONS[0].code,
+      explain: sl.explain,
+      code: sl.code,
       welcome: false,
       iridescent: false,
     };
@@ -2392,61 +2294,6 @@ function buildPracticeSandbox(main, code, onRecompile) {
   textarea.addEventListener('scroll', function() { hlPre.scrollTop = textarea.scrollTop; });
 
   return { canvas: canvas, textarea: textarea, hlPre: hlPre, renderer: renderer };
-}
-
-// ============================================================
-// Practice: From Template
-// ============================================================
-function renderPracticeTemplate() {
-  if (currentRenderer) currentRenderer.destroy();
-  var main = document.getElementById('main');
-  main.innerHTML = '';
-  activePracticeGenerator = 'template';
-
-  var currentTemplate = null;
-
-  function generate() {
-    main.innerHTML = '';
-    var pool = PRACTICE_TEMPLATES.filter(function(t) { return t !== currentTemplate; });
-    currentTemplate = pool[Math.floor(Math.random() * pool.length)];
-
-    // Gen button
-    var genBtn = el('button', { class:'practice-gen-btn' }, [
-      el('span', null, '\u27F3'),
-      el('span', null, t({ es:'Desde plantilla', en:'From template' }))
-    ]);
-    genBtn.addEventListener('click', generate);
-    main.appendChild(genBtn);
-
-    // Template info
-    var info = el('div', { class:'template-info' }, [
-      el('div', { class:'template-label' }, 'Template'),
-      el('div', { class:'template-name' }, currentTemplate.name),
-      el('div', { class:'template-desc' }, currentTemplate.desc)
-    ]);
-    main.appendChild(info);
-
-    // Sandbox
-    var sb = buildPracticeSandbox(main, currentTemplate.code);
-
-    // Actions
-    var btnCopy = el('button', { class:'btn' }, [el('span', null, '\u29C9'), el('span', null, 'Copy')]);
-    var btnReset = el('button', { class:'btn' }, [el('span', null, '\u21BA'), el('span', null, 'Reset')]);
-    btnCopy.addEventListener('click', function() {
-      navigator.clipboard.writeText(sb.textarea.value);
-      btnCopy.classList.add('copied');
-      btnCopy.querySelector('span:last-child').textContent = 'Copied';
-      setTimeout(function() { btnCopy.classList.remove('copied'); btnCopy.querySelector('span:last-child').textContent = 'Copy'; }, 2000);
-    });
-    btnReset.addEventListener('click', function() {
-      sb.textarea.value = currentTemplate.code;
-      syncHighlight(sb.textarea, sb.hlPre);
-      if (currentRenderer) currentRenderer.recompile(currentTemplate.code);
-    });
-    main.appendChild(el('div', { class:'actions' }, [btnCopy, btnReset]));
-  }
-
-  generate();
 }
 
 // ============================================================
@@ -2679,10 +2526,6 @@ function renderPracticeRemix() {
     var pPraiseShown = false;
     var pHintLoop = setInterval(function() { if (pPraiseShown) { clearInterval(pHintLoop); return; } runPHintDrop(); }, pDropDur + 3000);
 
-    var PRAISE_P = lang === 'en'
-      ? ['Well done!','Nice!','Awesome!','You got it!','Clean!','Solid!','Nailed it!','Yes!','Boom!','Sharp!','Move on!','Let\'s go!','Keep going!','On fire!','Crushed it!','Level up!','Go go go!','Pro move!','Smooth!']
-      : ['Bien hecho!','Chido!','Excelente!','Lo lograste!','Limpio!','Sólido!','De lujo!','Eso!','Boom!','Crack!','Dale!','Vámonos!','Sigue!','En fuego!','La rompiste!','Nivel arriba!','Go go go!','Movimiento pro!','Suave!'];
-
     // Detect code change
     var pModified = false;
     sb.textarea.addEventListener('input', function() {
@@ -2696,7 +2539,7 @@ function renderPracticeRemix() {
           btnRemix.style.opacity = '1';
           btnRemix.style.pointerEvents = 'auto';
           function runPraise() {
-            var phrase = PRAISE_P[Math.floor(Math.random() * PRAISE_P.length)];
+            var phrase = pick(getPraise());
             pHint.innerHTML = '';
             ('✦ ' + phrase).split('').forEach(function(ch, idx) {
               var sp = document.createElement('span');
@@ -2896,10 +2739,6 @@ function renderPracticeChallenge() {
     var cPraiseShown = false;
     var cHintLoop = setInterval(function() { if (cPraiseShown) { clearInterval(cHintLoop); return; } runCHintDrop(); }, cDropDur + 3000);
 
-    var PRAISE_C = lang === 'en'
-      ? ['Well done!','Nice!','Awesome!','You got it!','Clean!','Solid!','Nailed it!','Yes!','Boom!','Sharp!','Move on!','Let\'s go!','Keep going!','On fire!','Crushed it!','Level up!','Go go go!','Pro move!','Smooth!']
-      : ['Bien hecho!','Chido!','Excelente!','Lo lograste!','Limpio!','Sólido!','De lujo!','Eso!','Boom!','Crack!','Dale!','Vámonos!','Sigue!','En fuego!','La rompiste!','Nivel arriba!','Go go go!','Movimiento pro!','Suave!'];
-
     // Detect code change
     var cModified = false;
     sb.textarea.addEventListener('input', function() {
@@ -2913,7 +2752,7 @@ function renderPracticeChallenge() {
           btnChallenge.style.opacity = '1';
           btnChallenge.style.pointerEvents = 'auto';
           function runCPraise() {
-            var phrase = PRAISE_C[Math.floor(Math.random() * PRAISE_C.length)];
+            var phrase = pick(getPraise());
             cHint.innerHTML = '';
             ('✦ ' + phrase).split('').forEach(function(ch, idx) {
               var sp = document.createElement('span');
@@ -2948,18 +2787,6 @@ function appendFooter(container) {
     'want a website like this? <a href="https://studio.wogl.io" class="foot-academy">visit studio</a>';
   container.appendChild(footer);
   setTimeout(initCardTilt, 50);
-}
-
-function renderWelcome() {
-  if (currentRenderer) currentRenderer.destroy();
-  var main = document.getElementById('main');
-  main.innerHTML = '';
-  main.appendChild(el('div', { class:'welcome-banner' }, [
-    el('div', { class:'welcome-eyebrow' }, t(SECTION_DATA.welcome.eyebrow)),
-    el('h2', { class:'welcome-title' }, t(SECTION_DATA.welcome.title)),
-    el('p', { class:'welcome-text', html: t(SECTION_DATA.welcome.text) })
-  ]));
-  appendFooter(main);
 }
 
 // ============================================================
@@ -3057,9 +2884,6 @@ function renderLesson() {
   main.appendChild(el('div', { class:'explain', html: t(lesson.explain) }));
 
   // Punch Gradient Demo — interactive punchline for Start Here 05
-  var pgDemo = main.querySelector('.punch-gradient-demo');
-  if (pgDemo) initPunchGradient(pgDemo);
-
   // Interactive sandbox
   main.appendChild(el('div', { class:'sandbox-label' }, t(UI.sandboxLabel)));
 
@@ -3113,9 +2937,6 @@ function renderLesson() {
   btnNext.style.pointerEvents = 'none';
 
   var praiseShown = false;
-  var PRAISE = lang === 'en'
-    ? ['Well done!','Nice!','Awesome!','You got it!','Clean!','Solid!','Nailed it!','Yes!','Boom!','Sharp!','Move on!','Let\'s go!','Keep going!','Next one!','On fire!','Unlocked!','Crushed it!','Level up!','Go go go!','Easy!','Pro move!','Smooth!','Got it!']
-    : ['Bien hecho!','Chido!','Excelente!','Lo lograste!','Limpio!','Sólido!','De lujo!','Eso!','Boom!','Crack!','Dale!','Vámonos!','Sigue!','La siguiente!','En fuego!','Desbloqueado!','La rompiste!','Nivel arriba!','Go go go!','Fácil!','Movimiento pro!','Suave!','Listo!'];
   function checkUnlock() {
     if (userModified && compileOk) {
       btnNext.classList.remove('disabled');
@@ -3126,7 +2947,7 @@ function renderLesson() {
       if (!praiseShown) {
         praiseShown = true;
         function runPraiseDrop() {
-          var praise = PRAISE[Math.floor(Math.random() * PRAISE.length)];
+          var praise = pick(getPraise());
           unlockHint.innerHTML = '';
           var letters = ('✦ ' + praise).split('');
           letters.forEach(function(ch, idx) {
@@ -3360,106 +3181,11 @@ function createRenderer(canvas, code, statusEl, errEl) {
 }
 
 // ============================================================
-// Background FBM — silky mantle
-// ============================================================
-function initBgFbm() {
-  var wrap = document.getElementById('bgFbm');
-  if (!wrap) return;
-  var canvas = wrap.querySelector('canvas');
-  var gl = canvas.getContext('webgl', { antialias:false, alpha:false });
-  if (!gl) return;
-
-  var dpr = Math.min(window.devicePixelRatio || 1, 2.0);
-
-  var vsrc = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
-  var fsrc = [
-    'precision mediump float;',
-    'uniform float T;',
-    'uniform vec2 R;',
-    '',
-    'float h(vec2 p){',
-    '  vec3 p3=fract(vec3(p.xyx)*0.1031);',
-    '  p3+=dot(p3,p3.yzx+33.33);',
-    '  return fract((p3.x+p3.y)*p3.z);',
-    '}',
-    'float n(vec2 p){',
-    '  vec2 i=floor(p),f=fract(p);',
-    '  f=f*f*f*(f*(f*6.-15.)+10.);',
-    '  return mix(mix(h(i),h(i+vec2(1,0)),f.x),',
-    '             mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);',
-    '}',
-    'float fb(vec2 p){',
-    '  float v=0.,a=.5; mat2 r=mat2(.8,.6,-.6,.8);',
-    '  for(int i=0;i<5;i++){v+=a*n(p);p=r*p*2.;a*=.5;}',
-    '  return v;',
-    '}',
-    'void main(){',
-    '  vec2 uv=gl_FragCoord.xy/R;',
-    '  uv.x*=R.x/R.y;',
-    '  vec2 l1=vec2(0.4+sin(T/19.0)*0.35,0.45+sin(T/27.0)*0.35);',
-    '  vec2 l2=vec2(0.6+sin(T/23.0)*0.35,0.55+cos(T/31.0)*0.35);',
-    '  float s1=exp(-dot(uv-l1,uv-l1)*2.8)*(0.7+0.3*sin(T*0.618));',
-    '  float s2=exp(-dot(uv-l2,uv-l2)*2.8)*(0.7+0.3*sin(T*0.437));',
-    '  vec3 col=vec3(0.003,0.005,0.016);',
-    '  col+=vec3(0.008,0.02,0.06)*s1;',
-    '  col+=vec3(0.005,0.028,0.045)*s2;',
-    '  col+=vec3(0.006,0.018,0.04)*s1*s2*3.0;',
-    '  gl_FragColor=vec4(col,1.0);',
-    '}',
-  ].join('\n');
-
-  var vs = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(vs, vsrc); gl.compileShader(vs);
-  var fs = gl.createShader(gl.FRAGMENT_SHADER);
-  gl.shaderSource(fs, fsrc); gl.compileShader(fs);
-  if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
-    console.warn('BG FBM compile error:', gl.getShaderInfoLog(fs));
-    return;
-  }
-  var prog = gl.createProgram();
-  gl.attachShader(prog, vs); gl.attachShader(prog, fs);
-  gl.bindAttribLocation(prog, 0, 'a');
-  gl.linkProgram(prog); gl.useProgram(prog);
-
-  var uT = gl.getUniformLocation(prog, 'T');
-  var uR = gl.getUniformLocation(prog, 'R');
-
-  var buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(0);
-  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
-
-  function resize() {
-    canvas.width = Math.floor(window.innerWidth * dpr);
-    canvas.height = Math.floor(window.innerHeight * dpr);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  var startTime = performance.now();
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function frame(now) {
-    requestAnimationFrame(frame);
-    if (reducedMotion || document.hidden) return;
-    gl.uniform1f(uT, (now - startTime) * 0.001);
-    gl.uniform2f(uR, canvas.width, canvas.height);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-  }
-  requestAnimationFrame(frame);
-}
-
-// ============================================================
-// Boot academy after language is selected
-// ============================================================
-// ============================================================
 // Card 3D tilt + shine (desktop: mouse, mobile: auto-float)
 // ============================================================
 var _tiltRaf = null;
 function initCardTilt() {
-  var selectors = '.welcome-banner, .tips-banner, .glossary, .try-it, .pulse-block, .ref-block, .pw-mode-card, .celebrate, .hint-drawer';
+  var selectors = '.welcome-banner, .tips-banner, .glossary, .try-it, .pulse-block, .ref-block, .celebrate, .hint-drawer';
   var targets = document.querySelectorAll(selectors);
   var isMobile = 'ontouchstart' in window;
 
@@ -3531,20 +3257,12 @@ function bootAcademy() {
 // Bootstrap
 // ============================================================
 document.addEventListener('DOMContentLoaded', function(){
-  initBgFbm();
-
   // Language toggle click handlers
   document.querySelectorAll('.lang-toggle-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var newLang = btn.getAttribute('data-lang');
       if (newLang !== lang) switchLanguage(newLang);
     });
-  });
-
-  // Welcome title — show welcome banner (if element exists)
-  var sideTitleEl = document.getElementById('sideTitle');
-  if (sideTitleEl) sideTitleEl.addEventListener('click', function() {
-    renderWelcome();
   });
 
   // Top context tabs — Learn / Practice
@@ -3558,11 +3276,6 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('mobileOverlayClose').addEventListener('click', function() {
     document.getElementById('mobileOverlay').classList.remove('open');
   });
-
-  // Sidebar toggle
-  var toggleBtn = document.getElementById('sidebarToggle');
-  if (toggleBtn) toggleBtn.addEventListener('click', toggleSidebar);
-
 
   // Theme picker
   var savedTheme = localStorage.getItem('wogl-academy-theme') || 'nebula';
@@ -3589,212 +3302,6 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 
-/* ═══════════════════════════════════════
-   Punch Gradient Demo — S+ interactive punchline
-   Position becomes image. Each letter's color = its X position.
-   Mouse repels letters. Spring physics settle. Canvas trails.
-   ═══════════════════════════════════════ */
-function initPunchGradient(container) {
-  var text = container.getAttribute('data-text') || '';
-  var lettersDiv = container.querySelector('.punch-gradient-letters');
-  var canvas = container.querySelector('canvas');
-  if (!lettersDiv || !canvas || !text) return;
-
-  var ctx = canvas.getContext('2d');
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-  // Lesson colors: vec3(0.95, 0.15, 0.55) → vec3(0.1, 0.85, 0.5)
-  var colA = [242, 38, 140];
-  var colB = [26, 217, 128];
-
-  function lerpCol(t) {
-    t = Math.max(0, Math.min(1, t));
-    return 'rgb(' +
-      Math.round(colA[0] + (colB[0] - colA[0]) * t) + ',' +
-      Math.round(colA[1] + (colB[1] - colA[1]) * t) + ',' +
-      Math.round(colA[2] + (colB[2] - colA[2]) * t) + ')';
-  }
-
-  // Build letter spans
-  var chars = [];
-  for (var i = 0; i < text.length; i++) {
-    var ch = text[i];
-    if (ch === ' ') {
-      var sp = document.createElement('span');
-      sp.className = 'pg-char pg-space';
-      sp.textContent = '\u00A0';
-      lettersDiv.appendChild(sp);
-      chars.push({ el: sp, isSpace: true, homeX: 0, homeY: 0, x: 0, y: 0, vx: 0, vy: 0 });
-    } else {
-      var s = document.createElement('span');
-      s.className = 'pg-char';
-      s.textContent = ch;
-      lettersDiv.appendChild(s);
-      chars.push({ el: s, isSpace: false, homeX: 0, homeY: 0, x: 0, y: 0, vx: 0, vy: 0 });
-    }
-  }
-
-  // Physics constants
-  var SPRING = 0.06;
-  var DAMPING = 0.82;
-  var REPULSE_R = 70;
-  var REPULSE_F = 4.5;
-  var mouseX = -9999, mouseY = -9999;
-  var containerRect = null;
-  var running = true;
-  var isVisible = true;
-  var trailAlpha = 0.92;
-  var FRAME_MS = 16, lastDraw = 0;
-
-  // Pause when off-screen
-  if ('IntersectionObserver' in window) {
-    var visObs = new IntersectionObserver(function(es){ isVisible = es[0].isIntersecting; }, { threshold:0.01 });
-    visObs.observe(container);
-  }
-
-  function measure() {
-    containerRect = container.getBoundingClientRect();
-    var cw = containerRect.width;
-    var ch = containerRect.height;
-    canvas.width = cw * dpr;
-    canvas.height = ch * dpr;
-    canvas.style.width = cw + 'px';
-    canvas.style.height = ch + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    for (var i = 0; i < chars.length; i++) {
-      var rect = chars[i].el.getBoundingClientRect();
-      chars[i].homeX = rect.left - containerRect.left + rect.width * 0.5;
-      chars[i].homeY = rect.top - containerRect.top + rect.height * 0.5;
-      if (chars[i].x === 0 && chars[i].y === 0) {
-        chars[i].x = chars[i].homeX;
-        chars[i].y = chars[i].homeY;
-      }
-    }
-  }
-
-  function onPointerMove(e) {
-    if (!containerRect) return;
-    mouseX = e.clientX - containerRect.left;
-    mouseY = e.clientY - containerRect.top;
-  }
-  function onPointerLeave() {
-    mouseX = -9999;
-    mouseY = -9999;
-  }
-
-  container.addEventListener('pointermove', onPointerMove);
-  container.addEventListener('pointerleave', onPointerLeave);
-
-  function tick(now) {
-    if (!running) return;
-    requestAnimationFrame(tick);
-    if (!isVisible || document.hidden) return;
-    if (now - lastDraw < FRAME_MS) return;
-    lastDraw = now;
-    if (!containerRect) measure();
-
-    var totalW = containerRect ? containerRect.width : 400;
-
-    // Fade canvas trails
-    ctx.fillStyle = 'rgba(14,12,20,' + (1 - trailAlpha) + ')';
-    ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-
-    for (var i = 0; i < chars.length; i++) {
-      var c = chars[i];
-      if (c.isSpace) continue;
-
-      // Spring toward home
-      var dx = c.homeX - c.x;
-      var dy = c.homeY - c.y;
-      c.vx += dx * SPRING;
-      c.vy += dy * SPRING;
-
-      // Mouse repulsion
-      var mx = c.x - mouseX;
-      var my = c.y - mouseY;
-      var md = Math.sqrt(mx * mx + my * my);
-      if (md < REPULSE_R && md > 0.1) {
-        var force = (1 - md / REPULSE_R) * REPULSE_F;
-        c.vx += (mx / md) * force;
-        c.vy += (my / md) * force;
-      }
-
-      // Damping
-      c.vx *= DAMPING;
-      c.vy *= DAMPING;
-
-      // Update position
-      c.x += c.vx;
-      c.y += c.vy;
-
-      // Color = current X position normalized
-      var t = Math.max(0, Math.min(1, c.x / totalW));
-      var col = lerpCol(t);
-      c.el.style.color = col;
-
-      // Transform
-      var offX = c.x - c.homeX;
-      var offY = c.y - c.homeY;
-      c.el.style.transform = 'translate(' + offX.toFixed(1) + 'px,' + offY.toFixed(1) + 'px)';
-
-      // Canvas trail dot
-      var speed = Math.sqrt(c.vx * c.vx + c.vy * c.vy);
-      if (speed > 0.3) {
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, 1.5 + speed * 0.3, 0, 6.28);
-        ctx.fillStyle = col;
-        ctx.globalAlpha = Math.min(0.5, speed * 0.08);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-    }
-  }
-
-  // Init
-  requestAnimationFrame(function() {
-    measure();
-    // Set initial colors
-    var totalW = containerRect ? containerRect.width : 400;
-    for (var i = 0; i < chars.length; i++) {
-      if (chars[i].isSpace) continue;
-      var t = chars[i].homeX / totalW;
-      chars[i].el.style.color = lerpCol(t);
-    }
-    tick();
-  });
-
-  // Resize
-  var resizeTimer;
-  window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-      // Reset positions before re-measuring
-      for (var i = 0; i < chars.length; i++) {
-        chars[i].el.style.transform = '';
-      }
-      requestAnimationFrame(function() {
-        measure();
-        for (var i = 0; i < chars.length; i++) {
-          chars[i].x = chars[i].homeX;
-          chars[i].y = chars[i].homeY;
-          chars[i].vx = 0;
-          chars[i].vy = 0;
-        }
-      });
-    }, 200);
-  });
-
-  // Cleanup on lesson change
-  var obs = new MutationObserver(function() {
-    if (!document.contains(container)) {
-      running = false;
-      obs.disconnect();
-      if (visObs) visObs.disconnect();
-    }
-  });
-  obs.observe(document.getElementById('main'), { childList: true });
-}
 </script>
 
 <!-- Mobile lesson overlay -->
