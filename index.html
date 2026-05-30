@@ -11,7 +11,94 @@
 <meta charset="UTF-8">
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.85, maximum-scale=1.25, viewport-fit=cover">
-<title>WoGL Academy</title>
+<title>WoGL Academy — Learn GLSL from zero</title>
+
+<!-- ═══════════════════════════════════════
+     SEO — primary
+     ═══════════════════════════════════════ -->
+<meta name="description" content="Learn GLSL shaders from zero. Real-time WebGL visuals running on your GPU — gradients, waves, circles, patterns — with a few lines of code. No experience needed.">
+<meta name="keywords" content="GLSL, WebGL, shaders, creative coding, generative art, shader tutorial, GPU programming, WoGL, learn shaders, beginner shaders">
+<meta name="author" content="WoGL — World of GL">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://academy.wogl.io/">
+
+<!-- ═══════════════════════════════════════
+     Open Graph — Facebook, LinkedIn, Discord, Slack, Telegram, WhatsApp
+     ═══════════════════════════════════════ -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WoGL — World of GL">
+<meta property="og:url" content="https://academy.wogl.io/">
+<meta property="og:title" content="WoGL Academy — Learn GLSL from zero">
+<meta property="og:description" content="Real-time WebGL visuals running on your GPU. Go from one fragment to your first shader in 10 lessons.">
+<meta property="og:image" content="https://academy.wogl.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="WoGL Academy — learn GLSL shaders from zero">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_MX">
+
+<!-- ═══════════════════════════════════════
+     Twitter Card
+     ═══════════════════════════════════════ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://academy.wogl.io/">
+<meta name="twitter:title" content="WoGL Academy — Learn GLSL from zero">
+<meta name="twitter:description" content="Real-time WebGL visuals running on your GPU. Go from one fragment to your first shader in 10 lessons.">
+<meta name="twitter:image" content="https://academy.wogl.io/og.png">
+<meta name="twitter:image:alt" content="WoGL Academy — learn GLSL shaders from zero">
+
+<!-- ═══════════════════════════════════════
+     Favicon (PNG covers all modern browsers)
+     ═══════════════════════════════════════ -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<!-- ═══════════════════════════════════════
+     Structured data — schema.org
+     ═══════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "WoGL Academy",
+  "alternateName": "WoGL — World of GL",
+  "url": "https://academy.wogl.io/",
+  "logo": "https://academy.wogl.io/og.png",
+  "description": "WoGL Academy teaches GLSL shaders and generative art from zero, with bilingual lessons that run live on your GPU.",
+  "sameAs": [
+    "https://wogl.io",
+    "https://worldofgl.com",
+    "https://mundogl.com"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "WoGL Academy — Learn GLSL from zero",
+  "description": "From one fragment to your first shader in 10 lessons. Real-time WebGL visuals running on your GPU, with bilingual explanations.",
+  "url": "https://academy.wogl.io/",
+  "image": "https://academy.wogl.io/og.png",
+  "inLanguage": ["en", "es"],
+  "isAccessibleForFree": true,
+  "educationalLevel": "Beginner",
+  "learningResourceType": "Course",
+  "teaches": "GLSL, WebGL, fragment shaders, generative art, creative coding",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "WoGL Academy",
+    "url": "https://academy.wogl.io/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -1693,7 +1780,7 @@ function switchLanguage(newLang) {
   localStorage.setItem('wogl-lang', lang);
   document.documentElement.lang = lang === 'en' ? 'en' : 'es';
   // Update page title
-  document.title = lang === 'en' ? 'WoGL Learn · Start Here' : 'WoGL Aprende · Start Here';
+  document.title = lang === 'en' ? 'WoGL Academy — Learn GLSL from zero' : 'WoGL Academy — Aprende GLSL desde cero';
   // Update login tooltip
   var loginEl = document.getElementById('loginBtn');
   if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
@@ -3244,7 +3331,7 @@ function initCardTilt() {
 
 function bootAcademy() {
   // Update page title
-  document.title = lang === 'en' ? 'WoGL Learn · Start Here' : 'WoGL Aprende · Start Here';
+  document.title = lang === 'en' ? 'WoGL Academy — Learn GLSL from zero' : 'WoGL Academy — Aprende GLSL desde cero';
   // Set login tooltip for current lang
   var loginEl = document.getElementById('loginBtn');
   if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
