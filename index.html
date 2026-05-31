@@ -978,7 +978,8 @@ body::after {
   opacity:0; pointer-events:none; transform:translateY(-4px);
   transition:opacity 0.2s, transform 0.2s;
 }
-.wogl-header-login:hover::after {
+.wogl-header-login:hover::after,
+.wogl-header-login.tooltip-open::after {
   opacity:1; transform:translateY(0);
 }
 @media (max-width:600px) {
@@ -3521,6 +3522,24 @@ document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     document.querySelectorAll('.scatter-settle').forEach(function(el){initScatter(el);});
   },300);
+})();
+</script>
+<script>
+(function(){
+  var loginBtns=document.querySelectorAll('.wogl-header-login');
+  if(!loginBtns.length) return;
+  loginBtns.forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      btn.classList.toggle('tooltip-open');
+    });
+  });
+  document.addEventListener('click',function(e){
+    loginBtns.forEach(function(btn){
+      if(!btn.contains(e.target)) btn.classList.remove('tooltip-open');
+    });
+  });
 })();
 </script>
 </body>
