@@ -1,8 +1,0 @@
-# WoGL Academy — robots.txt
-# Welcome all benign bots. Static assets, no honeypot, no scrape limits.
-
-User-agent: *
-Allow: /
-
-# Sitemap location
-Sitemap: https://academy.wogl.io/sitemap.xml
