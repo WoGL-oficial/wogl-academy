@@ -344,6 +344,8 @@ body::after {
 }
 .side-top-tab:hover { color:var(--ink-soft); background:rgba(232,217,192,.02); }
 .side-top-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+.scramble-char { display:inline-block; transition:opacity 120ms cubic-bezier(0.4, 0, 0.2, 1); will-change:opacity; }
+@media (prefers-reduced-motion: reduce) { .scramble-char { transition:none; opacity:1 !important; } }
 
 /* ── DRAWERS (accordion sections) ── */
 .drawer-list {
@@ -610,7 +612,7 @@ body::after {
 
 .lesson-num-big { font-family:var(--font-display); font-weight:700; font-size:clamp(64px, 5vw, 120px); line-height:1; color:var(--accent); letter-spacing:-.04em; margin-bottom:clamp(4px, 0.5vw, 12px); }
 .lesson-title-big { font-family:var(--font-display); font-weight:400; font-size:clamp(36px, 4vw, 80px); line-height:1; color:var(--ink); letter-spacing:-.02em; margin-bottom:clamp(12px, 1vw, 20px); }
-.lesson-desc-big { font-family:var(--font-body); font-weight:400; font-size:clamp(14px, 1.2vw, 20px); color:var(--ink-soft); margin-bottom:clamp(28px, 2.5vw, 48px); line-height:1.5; max-width:clamp(480px, 45vw, 800px); }
+.lesson-desc-big { font-family:var(--font-body); font-weight:400; font-size:clamp(14px, 1.8vw, 28px); color:var(--ink-soft); margin-bottom:clamp(28px, 2.5vw, 48px); line-height:1.45; max-width:clamp(480px, 62vw, 1100px); }
 
 /* Tips */
 .tips-banner {
@@ -618,13 +620,14 @@ body::after {
   border:none; border-left:3px solid var(--copper);
   padding:clamp(14px, 1.5vw, 20px) clamp(16px, 1.8vw, 24px); margin-bottom:clamp(28px, 3vw, 48px); display:flex; gap:clamp(10px, 1.2vw, 18px); align-items:flex-start;
 }
-.tips-icon { font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--copper); text-transform:uppercase; padding:4px 10px; border:none; flex-shrink:0; margin-top:2px; }
-.tips-text { font-family:var(--font-body); font-weight:400; font-size:clamp(12px, 0.9vw, 15px); color:var(--ink-soft); line-height:1.6; }
+.tips-icon { font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:var(--copper); text-transform:uppercase; padding:4px 10px; border:none; flex-shrink:0; margin-top:2px; }
+.tips-text { font-family:var(--font-body); font-weight:400; font-size:clamp(13px, 1.2vw, 18px); color:var(--ink-soft); line-height:1.6; }
 .tips-text em { color:var(--gold); font-style:normal; font-weight:500; }
 .tips-text code { font-family:var(--font-mono); font-style:normal; font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); }
 
 /* Explain */
-.explain { font-family:var(--font-body); font-size:clamp(14px, 1.1vw, 18px); line-height:1.7; color:var(--ink-soft); font-weight:400; max-width:clamp(480px, 45vw, 800px); margin-bottom:clamp(24px, 2vw, 40px); }
+.explain { font-family:var(--font-body); font-size:clamp(14px, 1.5vw, 22px); line-height:1.6; color:var(--ink-soft); font-weight:400; margin-bottom:clamp(24px, 2vw, 40px); }
+.explain > p, .explain > .statement-hero { max-width:clamp(480px, 62vw, 1100px); }
 .explain p { margin-bottom:1em; }
 .explain p:last-child { margin-bottom:0; }
 .explain strong { color:var(--ink); font-weight:400; }
@@ -635,17 +638,17 @@ body::after {
 .glossary {
   background:var(--bg-lift); border:none; border-left:2px solid rgba(80,140,200,0.35);
   padding:clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 28px); margin:clamp(12px, 1.2vw, 18px) 0;
-  font-family:var(--font-body); font-size:clamp(12px, 1vw, 14px); line-height:1.7; color:var(--ink-soft);
+  font-family:var(--font-body); font-size:clamp(13px, 1.2vw, 18px); line-height:1.6; color:var(--ink-soft);
 }
 .glossary-label {
-  font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--gold);
+  font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:var(--gold);
   text-transform:uppercase; margin-bottom:10px; display:block;
 }
 .glossary .gold { color:var(--gold); font-weight:400; }
 
 /* Statement hero — the emotional hook */
 .statement-hero {
-  font-family:var(--font-display); font-weight:500; font-size:clamp(15px, 1.3vw, 18px); line-height:1.5;
+  font-family:var(--font-display); font-weight:500; font-size:clamp(15px, 1.5vw, 22px); line-height:1.45;
   color:var(--gold); margin:clamp(18px, 2vw, 28px) 0; letter-spacing:.01em;
 }
 .glossary code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid rgba(80,140,200,0.12); margin:0 2px; }
@@ -653,11 +656,11 @@ body::after {
 /* Reference block */
 .ref-block {
   background:var(--bg-lift); border:none; border-left:2px solid var(--copper);
-  padding:clamp(10px, 1vw, 14px) clamp(14px, 1.3vw, 18px); margin:clamp(12px, 1.2vw, 18px) 0;
-  font-family:var(--font-body); font-size:clamp(12px, 1vw, 14px); line-height:1.7; color:var(--ink-soft);
+  padding:clamp(14px, 1.5vw, 20px) clamp(16px, 1.6vw, 24px); margin:clamp(12px, 1.2vw, 18px) 0;
+  font-family:var(--font-body); font-size:clamp(13px, 1.2vw, 18px); line-height:1.6; color:var(--ink-soft);
 }
 .ref-block-label {
-  font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--copper);
+  font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:var(--copper);
   text-transform:uppercase; margin-bottom:10px; display:block;
 }
 .ref-block code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); margin:0 2px; }
@@ -665,14 +668,14 @@ body::after {
 /* Try it prompt */
 .try-it {
   background:rgba(80,140,200,.03); border:none;
-  padding:clamp(12px, 1.2vw, 16px) clamp(14px, 1.5vw, 20px); margin-top:clamp(12px, 1.2vw, 18px); margin-bottom:clamp(12px, 1.2vw, 18px);
-  font-family:var(--font-body); font-size:clamp(12px, 1vw, 14px); line-height:1.55; color:var(--ink-soft);
-  display:flex; gap:clamp(8px, 1vw, 14px); align-items:flex-start;
+  padding:clamp(14px, 1.4vw, 20px) clamp(16px, 1.6vw, 24px); margin-top:clamp(12px, 1.2vw, 18px); margin-bottom:clamp(12px, 1.2vw, 18px);
+  font-family:var(--font-body); font-size:clamp(13px, 1.2vw, 18px); line-height:1.55; color:var(--ink-soft);
+  display:flex; gap:clamp(10px, 1.2vw, 18px); align-items:flex-start;
 }
 .try-it-icon {
-  font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--green);
+  font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:var(--green);
   text-transform:uppercase; padding:3px 8px; border:none;
-  flex-shrink:0; margin-top:1px;
+  flex-shrink:0; margin-top:2px;
 }
 .try-it code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--green); padding:2px 6px; border:1px solid rgba(80,140,200,0.12); }
 .try-it em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
@@ -680,20 +683,20 @@ body::after {
 /* Pulse prompt */
 .pulse-block {
   background:rgba(80,140,200,.03); border:none;
-  padding:clamp(12px, 1.2vw, 16px) clamp(14px, 1.5vw, 20px); margin-top:clamp(12px, 1.2vw, 18px); margin-bottom:clamp(12px, 1.2vw, 18px);
-  font-family:var(--font-body); font-size:clamp(12px, 1vw, 14px); line-height:1.55; color:var(--ink-soft);
+  padding:clamp(14px, 1.4vw, 20px) clamp(16px, 1.6vw, 24px); margin-top:clamp(12px, 1.2vw, 18px); margin-bottom:clamp(12px, 1.2vw, 18px);
+  font-family:var(--font-body); font-size:clamp(13px, 1.2vw, 18px); line-height:1.55; color:var(--ink-soft);
 }
 .pulse-label {
-  font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:rgba(200,160,255,.85);
+  font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:rgba(200,160,255,.85);
   text-transform:uppercase; margin-bottom:10px; display:block;
 }
 .pulse-block pre {
-  font-family:var(--font-mono); font-size:11px; line-height:1.6; color:var(--ink);
-  background:var(--bg-deep); border:1px solid rgba(80,140,200,0.12); padding:12px 14px; margin:10px 0;
+  font-family:var(--font-mono); font-size:clamp(12px, 0.95vw, 15px); line-height:1.6; color:var(--ink);
+  background:var(--bg-deep); border:1px solid rgba(80,140,200,0.12); padding:clamp(12px, 1.2vw, 16px) clamp(14px, 1.4vw, 18px); margin:10px 0;
   white-space:pre-wrap; word-break:break-word; -webkit-user-select:all; user-select:all; cursor:copy;
 }
 .pulse-block code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:rgba(200,160,255,.85); padding:2px 6px; border:1px solid rgba(80,140,200,0.12); margin:0 2px; }
-.pulse-hint { font-size:13px; color:var(--ink-mute); margin-top:8px; }
+.pulse-hint { font-size:clamp(12px, 0.95vw, 15px); color:var(--ink-mute); margin-top:8px; }
 
 /* Supernova divider — Biolum Line */
 .supernova {
@@ -954,7 +957,7 @@ body::after {
 .wogl-academy-divider { width:1px; height:clamp(14px, 1.8vw, 22px); background:rgba(232,200,154,0.55); flex-shrink:0; }
 .wogl-academy-label {
   font-family:'JetBrains Mono',monospace; font-weight:400; font-size:clamp(9px, 1vw, 13px);
-  letter-spacing:clamp(.05em, .08em, .1em); color:var(--ink-mute); text-transform:uppercase; white-space:nowrap;
+  letter-spacing:clamp(.05em, .08em, .1em); color:var(--ink-mute); white-space:nowrap;
 }
 .wogl-academy-tagline {
   font-family:'Outfit',sans-serif; font-weight:300; font-size:clamp(10px, 1vw, 12px);
@@ -1023,8 +1026,6 @@ body::after {
   </div>
   <a class="wogl-header-login" id="loginBtn" data-tooltip="traveler login — coming soon">Log in</a>
 </header>
-
-<!-- Login disabled — traveler auth coming soon -->
 
 <div class="app" style="padding-top:60px;">
 
@@ -1097,7 +1098,7 @@ var SECTION_DATA = {
   tips: { es: 'Es <em>imposible</em> romper nada aquí. En serio. Cambia cualquier número, borra una línea entera, escribe lo que quieras. Si algo truena, aparece un mensaje rojo — le das <em>Reset</em> y vuelves a empezar. Cero consecuencias. <em>La única manera de aprender es tocando.</em>', en: 'It is <em>impossible</em> to break anything here. Seriously. Change any number, delete a whole line, type whatever you want. If something breaks, a red message shows up — hit <em>Reset</em> and you are back. Zero consequences. <em>The only way to learn is by touching the code.</em>' },
 };
 
-// Sections — academy chapters live today; Life, Fractals, Raymarching, Mandelbulb pending
+// Sections
 var SECTIONS = [
   { num:'00', name: { es:'Start Here', en:'Start Here' } },
   { num:'01', name: { es:'Patterns', en:'Patterns' } },
@@ -1306,8 +1307,8 @@ var SECTION_LESSONS = {
     },
     { num:'06', title:{es:'Tie-dye',en:'Tie-dye'}, desc:{es:'Tie-dye de medianoche. No es Woodstock.',en:'Midnight tie-dye. Not Woodstock.'},
       explain: {
-        es:'<p>Tie-dye es radial: <code>length()</code> crea anillos. Warpear antes del length() los distorsiona en formas fluidas. <code>sin()</code> sobre la distancia crea las bandas de color.</p><p><em>Woodstock, 1969, la playera que nunca lavaste.</em></p><div class="glossary"><span class="glossary-label">length(p)</span>Distancia al origen. Con warp = radial irregular.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia los 3 colores a neón para un resultado más rave.</span></div>',
-        en:'<p>Tie-dye is radial: <code>length()</code> creates rings. Warping before length() distorts them into fluid shapes. <code>sin()</code> over distance creates color bands.</p><div class="glossary"><span class="glossary-label">length(p)</span>Distance to origin. With warp = irregular radial.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change all 3 colors to neon for a more rave result.</span></div>'
+        es:'<p>Tie-dye es radial: <code>length()</code> crea anillos. Warpear antes del length() los distorsiona en formas fluidas. <code>sin()</code> sobre la distancia crea las bandas de color.</p><p><em>Woodstock, 1969, la playera que nunca lavaste.</em></p><div class="glossary"><span class="glossary-label">length(p)</span>Distancia al origen. Con warp = radial irregular.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>blood</code> a <code>vec3(1., 0., .9)</code> (magenta), <code>gold</code> a <code>vec3(0., 1., .7)</code> (cian) y <code>electric</code> a <code>vec3(1., .9, 0.)</code> (amarillo). Te queda rave.</span></div>',
+        en:'<p>Tie-dye is radial: <code>length()</code> creates rings. Warping before length() distorts them into fluid shapes. <code>sin()</code> over distance creates color bands.</p><div class="glossary"><span class="glossary-label">length(p)</span>Distance to origin. With warp = irregular radial.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>blood</code> to <code>vec3(1., 0., .9)</code> (magenta), <code>gold</code> to <code>vec3(0., 1., .7)</code> (cyan), <code>electric</code> to <code>vec3(1., .9, 0.)</code> (yellow). Rave mode.</span></div>'
       },
       code:'void main(){\n  vec2 p = gl_FragCoord.xy / R * 3.0 - 1.5;\n  float warp = fb(p * 2.0);\n  vec2 wp = p + warp * 0.4;\n  float d = length(wp);\n  float rings = sin(d * 10.0) * 0.5 + 0.5;\n  float band = floor(rings * 4.0) / 4.0;\n  vec3 midnight = vec3(0.03, 0.02, 0.1);\n  vec3 blood = vec3(0.5, 0.05, 0.1);\n  vec3 gold = vec3(0.8, 0.65, 0.15);\n  vec3 electric = vec3(0.1, 0.3, 0.9);\n  vec3 col = midnight;\n  col = mix(col, blood, step(0.25, band));\n  col = mix(col, gold, step(0.5, band));\n  col = mix(col, electric, step(0.75, band));\n  col *= 0.85 + 0.15 * rings;\n  col += vec3(.1,.06,.04) * pow(rings, 5.) * 0.3;\n  gl_FragColor = vec4(col, 1.0);\n}'
     },
@@ -1323,8 +1324,8 @@ var SECTION_LESSONS = {
     },
     { num:'08', title:{es:'Marble',en:'Marble'}, desc:{es:'Carrara clásico. Blanco con venas grises.',en:'Classic Carrara. White with grey veins.'},
       explain: {
-        es:'<p><code>sin()</code> de una coordenada + warp = vetas. La coordenada lineal da dirección, el warp las ondula. Tres colores: crema base, gris en vetas anchas, dorado en las más finas.</p><p><em>Mantequilla de tequila.</em></p><div class="glossary"><span class="glossary-label">sin(p.x + warp)</span>Coordenada lineal = dirección. Warp = ondulación. Juntos = mármol.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia p.x por p.y para vetas horizontales, o p.x + p.y para diagonales.</span></div>',
-        en:'<p><code>sin()</code> of a coordinate + warp = veins. Linear coordinate gives direction, warp undulates them. Three colors: cream base, gray in wide veins, gold in finest lines.</p><div class="glossary"><span class="glossary-label">sin(p.x + warp)</span>Linear coordinate = direction. Warp = undulation. Together = marble.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change p.x to p.y for horizontal veins, or p.x + p.y for diagonal.</span></div>'
+        es:'<p><code>sin()</code> de una coordenada + warp = vetas. La coordenada lineal da dirección, el warp las ondula. Tres colores: crema base, gris en vetas anchas, dorado en las más finas.</p><p><em>Mantequilla de tequila.</em></p><div class="glossary"><span class="glossary-label">sin(p.x + warp)</span>Coordenada lineal = dirección. Warp = ondulación. Juntos = mármol.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia <code>p.x</code> por <code>p.y</code> para vetas horizontales, o <code>p.x + p.y</code> para diagonales.</span></div>',
+        en:'<p><code>sin()</code> of a coordinate + warp = veins. Linear coordinate gives direction, warp undulates them. Three colors: cream base, gray in wide veins, gold in finest lines.</p><div class="glossary"><span class="glossary-label">sin(p.x + warp)</span>Linear coordinate = direction. Warp = undulation. Together = marble.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>p.x</code> to <code>p.y</code> for horizontal veins, or <code>p.x + p.y</code> for diagonal.</span></div>'
       },
       code:'void main(){\n  vec2 p = gl_FragCoord.xy / R * 4.0;\n  float w = fb(p * 0.7);\n  float w2 = fb(p * 1.3 + 5.0);\n  float v1 = sin(p.x * 3.0 + w * 4.0 + p.y * 0.4);\n  float vein1 = exp(-abs(v1) * 6.0);\n  float v2 = sin(p.x * 5.5 + w2 * 3.0 - p.y * 0.6);\n  float vein2 = exp(-abs(v2) * 10.0);\n  float v3 = sin(p.y * 9.0 + w * 2.5 + p.x * 1.5);\n  float vein3 = exp(-abs(v3) * 18.0);\n  float surf = n2(p * 25.0) * 0.012;\n  vec3 white = vec3(0.97, 0.965, 0.96);\n  vec3 grey = vec3(0.45, 0.43, 0.48);\n  vec3 col = white + surf;\n  col = mix(col, grey, vein1 * 0.55);\n  col = mix(col, grey, vein2 * 0.3);\n  col = mix(col, grey * 0.7, vein3 * 0.2);\n  gl_FragColor = vec4(col, 1.0);\n}'
     },
@@ -1385,8 +1386,8 @@ var SECTION_LESSONS = {
     },
     { num:'06', title:{es:'Drift',en:'Drift'}, desc:{es:'Diamantes que se deslizan. Diagonal perezosa.',en:'Diamonds that slide. Lazy diagonal.'},
       explain: {
-        es:'<p>Drift es gravedad + viento al mismo tiempo pero a <strong>velocidades diferentes</strong>. X se mueve lento, Y se mueve ligeramente más rápido. El resultado es un desplazamiento diagonal perezoso — el material se desliza como aceite sobre vidrio.</p><p><em>Mancha de aceite en la banqueta.</em></p><div class="glossary"><span class="glossary-label">Velocidades asimétricas</span><code>p.x += T * 0.06</code> y <code>p.y += T * 0.09</code>. Diferente velocidad por eje = diagonal. La asimetría es lo que hace que no se vea mecánico.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Invierte las velocidades: X rápido, Y lento. El drift cambia de dirección. Pon una negativa — drift hacia arriba-izquierda.</span></div>',
-        en:'<p>Drift is gravity + wind at the same time but at <strong>different speeds</strong>. X moves slow, Y moves slightly faster. The result is a lazy diagonal — the material slides like oil on glass.</p><p><em>Oil stain on the sidewalk.</em></p><div class="glossary"><span class="glossary-label">Asymmetric speeds</span><code>p.x += T * 0.06</code> and <code>p.y += T * 0.09</code>. Different speed per axis = diagonal. The asymmetry is what keeps it from looking mechanical.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Flip speeds: X fast, Y slow. Drift changes direction. Make one negative — drift up-left.</span></div>'
+        es:'<p>Drift es gravedad + viento al mismo tiempo pero a <strong>velocidades diferentes</strong>. X se mueve lento, Y se mueve ligeramente más rápido. El resultado es un desplazamiento diagonal perezoso — el material se desliza como aceite sobre vidrio.</p><p><em>Mancha de aceite en la banqueta.</em></p><div class="glossary"><span class="glossary-label">Velocidades asimétricas</span><code>p.x += T * 0.06</code> y <code>p.y += T * 0.09</code>. Diferente velocidad por eje = diagonal. La asimetría es lo que hace que no se vea mecánico.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Invierte las velocidades: intercambia <code>0.06</code> y <code>0.09</code>. El drift cambia de dirección. Pon una negativa — drift hacia arriba-izquierda.</span></div>',
+        en:'<p>Drift is gravity + wind at the same time but at <strong>different speeds</strong>. X moves slow, Y moves slightly faster. The result is a lazy diagonal — the material slides like oil on glass.</p><p><em>Oil stain on the sidewalk.</em></p><div class="glossary"><span class="glossary-label">Asymmetric speeds</span><code>p.x += T * 0.06</code> and <code>p.y += T * 0.09</code>. Different speed per axis = diagonal. The asymmetry is what keeps it from looking mechanical.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Flip speeds: swap <code>0.06</code> and <code>0.09</code>. Drift changes direction. Make one negative — drift up-left.</span></div>'
       },
       code:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  vec3 col = vec3(0.02, 0.05, 0.1);\n  for(int i = 0; i < 5; i++){\n    float fi = float(i);\n    float sx = 0.06+fi*.012;\n    float sy = 0.09+fi*.018;\n    vec2 c = vec2(mod(fi*.7+T*sx,3.)-1.5, mod(fi*1.1+T*sy,3.)-1.5);\n    vec2 q = abs(p-c);\n    float sz = 0.13+fi*.025;\n    float d = q.x+q.y-sz;\n    vec2 qs = abs(p-c+vec2(.05,-.06));\n    col *= smoothstep(-.02,.12, qs.x+qs.y-sz);\n    col += vec3(.05+fi*.18,.75-fi*.1,.5+fi*.08) * smoothstep(.01,-.01,d) * (.55+fi*.12);\n    col += vec3(.03+fi*.08,.35-fi*.05,.25+fi*.04) * exp(-max(d,0.)*5.) * .25;\n  }\n  gl_FragColor = vec4(col, 1.);\n}'
     },
@@ -3541,6 +3542,125 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 })();
+
+/* ░░░ TAB-SCRAMBLE-START — sutil cascade on active tab (every ~4s) ░░░ */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var ALPHA      = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var STAGGER    = 80;    // ms entre letras (cascade)
+  var FADE       = 120;   // ms duración de cada fade
+  var HOLD_RAND  = 220;   // ms mostrando el char random
+  var HOLD_BASE  = 3000;  // ms en estado base entre ciclos
+  var BOOT_DELAY = 1000;  // ms desde load hasta primer ciclo
+  var REWAKE     = 200;   // ms desde visibilitychange→visible hasta reanudar
+
+  var state = null; // { tab, spans, original, cancelled, timer }
+
+  function rand() { return ALPHA[Math.floor(Math.random() * 26)]; }
+
+  function wrap(tab) {
+    var text = tab.textContent;
+    tab.textContent = '';
+    tab.setAttribute('aria-label', text);
+    tab.setAttribute('aria-live', 'off');
+    var spans = [];
+    for (var i = 0; i < text.length; i++) {
+      var span = document.createElement('span');
+      span.className = 'scramble-char';
+      span.textContent = text[i];
+      span.setAttribute('data-original', text[i]);
+      tab.appendChild(span);
+      spans.push(span);
+    }
+    return { spans: spans, original: text };
+  }
+
+  function unwrap(tab, original) {
+    tab.textContent = original;
+    tab.removeAttribute('aria-label');
+    tab.removeAttribute('aria-live');
+  }
+
+  function cycle() {
+    if (!state || state.cancelled) return;
+    var N = state.spans.length;
+
+    state.spans.forEach(function(span, i){
+      var t0 = i * STAGGER;
+      var orig = span.getAttribute('data-original');
+      setTimeout(function(){ if (state && !state.cancelled) span.style.opacity = '0'; }, t0);
+      setTimeout(function(){
+        if (!state || state.cancelled) return;
+        span.textContent = rand();
+        span.style.opacity = '1';
+      }, t0 + FADE);
+      setTimeout(function(){ if (state && !state.cancelled) span.style.opacity = '0'; }, t0 + 2 * FADE + HOLD_RAND);
+      setTimeout(function(){
+        if (!state || state.cancelled) return;
+        span.textContent = orig;
+        span.style.opacity = '1';
+      }, t0 + 3 * FADE + HOLD_RAND);
+    });
+
+    var cycleEnd = (N - 1) * STAGGER + 4 * FADE + HOLD_RAND + 80;
+    state.timer = setTimeout(function(){
+      if (!state || state.cancelled) return;
+      state.timer = setTimeout(cycle, HOLD_BASE);
+    }, cycleEnd);
+  }
+
+  function teardown() {
+    if (!state) return;
+    state.cancelled = true;
+    if (state.timer) clearTimeout(state.timer);
+    unwrap(state.tab, state.original);
+    state = null;
+  }
+
+  function start() {
+    teardown();
+    var tab = document.querySelector('.side-top-tab.active');
+    if (!tab) return;
+    var w = wrap(tab);
+    state = { tab: tab, spans: w.spans, original: w.original, cancelled: false, timer: null };
+    state.timer = setTimeout(cycle, HOLD_BASE);
+  }
+
+  // Watch for active-tab change (LEARN ↔ PRACTICE)
+  var observer = new MutationObserver(function(mutations){
+    for (var i = 0; i < mutations.length; i++) {
+      var m = mutations[i];
+      if (m.attributeName !== 'class') continue;
+      var nowActive = document.querySelector('.side-top-tab.active');
+      if (!state || state.tab !== nowActive) {
+        start();
+        return;
+      }
+    }
+  });
+  document.querySelectorAll('.side-top-tab').forEach(function(tab){
+    observer.observe(tab, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  // Pause on hidden tab
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) {
+      teardown();
+    } else {
+      setTimeout(start, REWAKE);
+    }
+  });
+
+  // Boot
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(start, BOOT_DELAY); });
+  } else {
+    setTimeout(start, BOOT_DELAY);
+  }
+})();
+/* ░░░ TAB-SCRAMBLE-END ░░░ */
+
 </script>
 <!-- ░░░ DEV-AUTORELOAD-START — NEVER COPY TO PRODUCTION OR STAGING ░░░ -->
 <script>
