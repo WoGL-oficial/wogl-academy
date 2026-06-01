@@ -16,8 +16,8 @@
 <!-- ═══════════════════════════════════════
      SEO — primary
      ═══════════════════════════════════════ -->
-<meta name="description" content="Learn GLSL shaders from zero. Real-time WebGL visuals running on your GPU — gradients, waves, circles, patterns — with a few lines of code. No experience needed.">
-<meta name="keywords" content="GLSL, WebGL, shaders, creative coding, generative art, shader tutorial, GPU programming, WoGL, learn shaders, beginner shaders">
+<meta name="description" content="WoGL Academy — interactive GLSL shader lessons from zero. Patterns, noise, domain warp, SDF, light. Real-time WebGL on your GPU. Bilingual EN/ES, free.">
+<meta name="keywords" content="GLSL tutorial, WebGL shaders, learn GLSL, shader tutorial, fragment shader, creative coding, generative art, noise tutorial, SDF tutorial, Voronoi shader, GPU programming, interactive shaders, bilingual shader course, WoGL Academy">
 <meta name="author" content="WoGL — World of GL">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://academy.wogl.io/">
@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="WoGL — World of GL">
 <meta property="og:url" content="https://academy.wogl.io/">
 <meta property="og:title" content="WoGL Academy — Learn GLSL from zero">
-<meta property="og:description" content="Real-time WebGL visuals running on your GPU. Go from one fragment to your first shader in 10 lessons.">
+<meta property="og:description" content="Interactive GLSL shader lessons from zero. Patterns, noise, domain warp, SDF, light. Real-time WebGL on your GPU. Bilingual EN/ES, free.">
 <meta property="og:image" content="https://academy.wogl.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -43,7 +43,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://academy.wogl.io/">
 <meta name="twitter:title" content="WoGL Academy — Learn GLSL from zero">
-<meta name="twitter:description" content="Real-time WebGL visuals running on your GPU. Go from one fragment to your first shader in 10 lessons.">
+<meta name="twitter:description" content="Interactive GLSL shader lessons from zero. Patterns, noise, domain warp, SDF, light. Real-time WebGL on your GPU. Bilingual EN/ES, free.">
 <meta name="twitter:image" content="https://academy.wogl.io/og.png">
 <meta name="twitter:image:alt" content="WoGL Academy — learn GLSL shaders from zero">
 
@@ -77,14 +77,14 @@
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "WoGL Academy — Learn GLSL from zero",
-  "description": "From one fragment to your first shader in 10 lessons. Real-time WebGL visuals running on your GPU, with bilingual explanations.",
+  "description": "Interactive GLSL shader lessons from zero — patterns, noise, domain warp, SDF, light. Real-time WebGL on your GPU. Bilingual EN/ES, free.",
   "url": "https://academy.wogl.io/",
   "image": "https://academy.wogl.io/og.png",
   "inLanguage": ["en", "es"],
   "isAccessibleForFree": true,
   "educationalLevel": "Beginner",
   "learningResourceType": "Course",
-  "teaches": "GLSL, WebGL, fragment shaders, generative art, creative coding",
+  "teaches": "GLSL, WebGL, fragment shaders, patterns, noise, FBM, domain warp, SDF, Voronoi, Chladni, light, generative art, creative coding",
   "provider": {
     "@type": "EducationalOrganization",
     "name": "WoGL Academy",
@@ -96,6 +96,20 @@
     "priceCurrency": "USD",
     "availability": "https://schema.org/InStock"
   }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "WoGL Academy",
+      "item": "https://academy.wogl.io/"
+    }
+  ]
 }
 </script>
 
@@ -172,7 +186,7 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html { background:var(--bg); transition:background .6s ease; }
-body { background:transparent; color:var(--ink); font-family:var(--font-body); font-weight:400; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; transition:color .6s ease; }
+body { background:transparent; color:var(--ink); font-family:var(--font-body); font-weight:300; min-height:100vh; min-height:100dvh; -webkit-font-smoothing:antialiased; transition:color .6s ease; }
 
 /* Background — Animated theme glows */
 body::before {
@@ -357,7 +371,7 @@ body::after {
 .drawer-head {
   display:flex; align-items:center; padding:12px 20px;
   cursor:pointer; gap:10px; transition:all 200ms; user-select:none;
-  border-left:3px solid rgba(212,184,150,0.5);
+  border-left:3px solid rgba(212,184,150,0.85);
   background:linear-gradient(90deg, rgba(212,184,150,0.15), rgba(212,184,150,0.03) 70%, transparent);
 }
 .drawer-head:hover { background:linear-gradient(90deg, rgba(212,184,150,0.10), rgba(212,184,150,0.02) 80%, transparent); }
@@ -370,7 +384,7 @@ body::after {
 
 .drawer-num {
   font-family:var(--font-mono); font-weight:300; font-size:10px;
-  line-height:1; min-width:18px; flex-shrink:0; transition:color 200ms; letter-spacing:0.04em; opacity:0.75;
+  line-height:1; min-width:18px; flex-shrink:0; transition:color 200ms; letter-spacing:0.04em; opacity:1;
 }
 .drawer-name {
   font-family:var(--font-display); font-weight:500; font-size:13px;
@@ -403,15 +417,17 @@ body::after {
   50% { text-shadow: 0 0 16px rgba(232,200,154,0.5), 0 0 32px rgba(232,200,154,0.25); }
 }
 .lesson-index {
-  font-family:var(--font-mono); font-weight:300; font-size:9px; color:var(--ink-faint);
-  min-width:18px; flex-shrink:0; text-align:right; opacity:0.75;
+  font-family:var(--font-mono); font-weight:300; font-size:9px; color:var(--ink-mute);
+  min-width:18px; flex-shrink:0; text-align:right; opacity:1;
+  transition:color 200ms;
 }
-.lesson-item.active .lesson-index { opacity:1; color:var(--accent); }
+.lesson-item:hover .lesson-index { color:var(--lesson-tint, var(--ink)); }
+.lesson-item.active .lesson-index { color:var(--lesson-tint, var(--accent)); }
 .lesson-name {
   font-family:var(--font-body); font-weight:400; font-size:12px;
   color:var(--ink-soft); transition:color 200ms;
 }
-.lesson-item:hover .lesson-name { color:var(--ink-soft); }
+.lesson-item:hover .lesson-name { color:var(--ink); }
 .lesson-check {
   font-family:var(--font-mono); font-size:9px; color:var(--green); margin-left:auto;
 }
@@ -606,13 +622,13 @@ body::after {
   font-size:clamp(20px, 2.5vw, 28px); line-height:1.15; color:var(--ink); letter-spacing:-.01em;
 }
 .welcome-text {
-  font-family:var(--font-body); font-size:clamp(13px, 1.1vw, 15px); line-height:1.65; color:var(--ink-soft); font-weight:400;
+  font-family:var(--font-body); font-size:clamp(13px, 1.1vw, 15px); line-height:1.65; color:var(--ink-soft); font-weight:300;
 }
 .welcome-text em { font-family:var(--font-display); font-weight:500; color:var(--gold); }
 
 .lesson-num-big { font-family:var(--font-display); font-weight:700; font-size:clamp(64px, 5vw, 120px); line-height:1; color:var(--accent); letter-spacing:-.04em; margin-bottom:clamp(4px, 0.5vw, 12px); }
 .lesson-title-big { font-family:var(--font-display); font-weight:400; font-size:clamp(36px, 4vw, 80px); line-height:1; color:var(--ink); letter-spacing:-.02em; margin-bottom:clamp(12px, 1vw, 20px); }
-.lesson-desc-big { font-family:var(--font-body); font-weight:400; font-size:clamp(14px, 1.8vw, 28px); color:var(--ink-soft); margin-bottom:clamp(28px, 2.5vw, 48px); line-height:1.45; max-width:clamp(480px, 62vw, 1100px); }
+.lesson-desc-big { font-family:var(--font-body); font-weight:300; font-size:clamp(14px, 1.8vw, 28px); color:var(--ink-soft); margin-bottom:clamp(28px, 2.5vw, 48px); line-height:1.45; max-width:clamp(480px, 62vw, 1100px); }
 
 /* Tips */
 .tips-banner {
@@ -621,16 +637,16 @@ body::after {
   padding:clamp(14px, 1.5vw, 20px) clamp(16px, 1.8vw, 24px); margin-bottom:clamp(28px, 3vw, 48px); display:flex; gap:clamp(10px, 1.2vw, 18px); align-items:flex-start;
 }
 .tips-icon { font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:var(--copper); text-transform:uppercase; padding:4px 10px; border:none; flex-shrink:0; margin-top:2px; }
-.tips-text { font-family:var(--font-body); font-weight:400; font-size:clamp(13px, 1.2vw, 18px); color:var(--ink-soft); line-height:1.6; }
+.tips-text { font-family:var(--font-body); font-weight:300; font-size:clamp(13px, 1.2vw, 18px); color:var(--ink-soft); line-height:1.6; }
 .tips-text em { color:var(--gold); font-style:normal; font-weight:500; }
 .tips-text code { font-family:var(--font-mono); font-style:normal; font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid var(--line); }
 
 /* Explain */
-.explain { font-family:var(--font-body); font-size:clamp(14px, 1.5vw, 22px); line-height:1.6; color:var(--ink-soft); font-weight:400; margin-bottom:clamp(24px, 2vw, 40px); }
+.explain { font-family:var(--font-body); font-size:clamp(14px, 1.5vw, 22px); line-height:1.6; color:var(--ink-soft); font-weight:300; margin-bottom:clamp(24px, 2vw, 40px); }
 .explain > p, .explain > .statement-hero { max-width:clamp(480px, 62vw, 1100px); }
 .explain p { margin-bottom:1em; }
 .explain p:last-child { margin-bottom:0; }
-.explain strong { color:var(--ink); font-weight:400; }
+.explain strong { color:var(--ink); font-weight:500; }
 .explain em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
 .explain code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 7px; border:1px solid var(--line); }
 
@@ -1004,9 +1020,26 @@ body::after {
   }
 }
 
+/* Visually hidden but accessible to screen readers and crawlers (SEO H1). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 </style>
 </head>
 <body>
+
+<!-- SEO — visible-to-crawlers H1 (sr-only). Forces Google to respect <title>
+     instead of stitching "WOGL Learn - Start here" from sidebar fragments. -->
+<h1 class="sr-only">WoGL Academy — Learn GLSL from zero</h1>
 
 <!-- WoGL Academy Header -->
 <header class="wogl-academy-header">
@@ -2279,12 +2312,12 @@ function buildDrawers() {
     lessons.forEach(function(lesson, lIdx) {
       var shaderCol = extractShaderColor(t(lesson.code));
       var idxEl = el('span', { class:'lesson-index' }, lesson.num || String(lIdx + 1).padStart(2, '0'));
-      if (shaderCol) idxEl.style.color = shaderCol;
       var item = el('div', { class:'lesson-item' + (isOpen && lIdx === currentIdx ? ' active' : ''), 'data-section':sec.num, 'data-lesson':lIdx+'' }, [
         idxEl,
         el('span', { class:'lesson-name' }, t(lesson.title)),
-        el('span', { class:'lesson-check' }, (sec.num === currentSection && visited.has(lIdx)) ? '\u2713' : '')
+        el('span', { class:'lesson-check' }, (sec.num === currentSection && visited.has(lIdx)) ? '✓' : '')
       ]);
+      if (shaderCol) item.style.setProperty('--lesson-tint', shaderCol);
       item.addEventListener('click', function(e) {
         e.stopPropagation();
         if (sec.num !== currentSection) {
