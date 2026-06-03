@@ -113,9 +113,14 @@
 }
 </script>
 
+<!-- ░░░ SECURITY · meta CSP test local · prod headers viven en _headers de Cloudflare ░░░ -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0c0418;
@@ -130,8 +135,8 @@
   --copper: #a860d0;
   --green: rgb(150, 220, 160);
   --line: rgba(180, 80, 255, 0.12);
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --side-w: 320px;
@@ -290,16 +295,37 @@ body::after {
 .mobile-sec-tabs {
   display:none; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none;
   border-bottom:1px solid var(--line); flex-shrink:0;
+  -webkit-overflow-scrolling:touch;
 }
 .mobile-sec-tabs::-webkit-scrollbar { display:none; }
 .mobile-sec-tab {
-  flex:0 0 auto; padding:12px 18px; text-align:center;
-  font-family:var(--font-body); font-size:12px; font-weight:400; color:var(--ink-faint);
-  cursor:pointer; border-bottom:2px solid transparent; transition:all .3s;
+  flex:0 0 auto; min-width:148px;
+  padding:20px 22px 18px;
+  display:flex; flex-direction:column; gap:8px;
+  cursor:pointer; user-select:none;
+  border-right:1px solid var(--line);
+  border-bottom:2px solid transparent;
+  transition:background .25s var(--ease), border-bottom-color .25s var(--ease);
   white-space:nowrap;
 }
-.mobile-sec-tab:hover { color:var(--ink-soft); }
-.mobile-sec-tab.active { color:var(--ink); border-bottom-color:var(--accent); }
+.mobile-sec-tab:last-child { border-right:none; }
+.mobile-sec-tab:hover { background:rgba(232,217,192,0.025); }
+.mobile-sec-tab.active { border-bottom-color:var(--accent); background:linear-gradient(180deg, rgba(232,217,192,0.06), transparent 80%); }
+.mobile-sec-tab-num {
+  font-family:var(--font-mono); font-size:11px; font-weight:400;
+  letter-spacing:0.22em; color:var(--ink-mute);
+}
+.mobile-sec-tab-name {
+  font-family:var(--font-display); font-size:14px; font-weight:500;
+  letter-spacing:0.01em; color:var(--ink-soft);
+  transition:color .25s var(--ease);
+}
+.mobile-sec-tab:hover .mobile-sec-tab-name,
+.mobile-sec-tab.active .mobile-sec-tab-name { color:var(--ink); }
+.mobile-sec-tab-progress {
+  font-family:var(--font-mono); font-size:11px; font-weight:300;
+  letter-spacing:0.12em; color:var(--ink-faint);
+}
 
 @media (max-width:1100px) {
   .app { display:flex; flex-direction:column; }
@@ -662,7 +688,7 @@ body::after {
 
 /* Statement hero — the emotional hook */
 .statement-hero {
-  font-family:var(--font-display); font-weight:500; font-size:clamp(15px, 1.5vw, 22px); line-height:1.45;
+  font-family:var(--font-display); font-weight:600; font-size:clamp(15px, 1.5vw, 22px); line-height:1.45;
   color:var(--gold); margin:clamp(18px, 2vw, 28px) 0; letter-spacing:.01em;
 }
 .glossary code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--gold); padding:2px 6px; border:1px solid rgba(80,140,200,0.12); margin:0 2px; }
@@ -2267,7 +2293,12 @@ function buildMobileSecTabs() {
   if (!c) return;
   c.innerHTML = '';
   SECTIONS.forEach(function(sec) {
-    var tab = el('div', { class:'mobile-sec-tab' + (sec.num === currentSection ? ' active' : '') }, t(sec.name));
+    var lessons = sec.num === '00' ? LESSONS : (SECTION_LESSONS[sec.num] || []);
+    var tab = el('div', { class:'mobile-sec-tab' + (sec.num === currentSection ? ' active' : '') }, [
+      el('div', { class:'mobile-sec-tab-num', style:'color:' + SECTION_ACCENTS[sec.num] }, sec.num),
+      el('div', { class:'mobile-sec-tab-name' }, t(sec.name)),
+      el('div', { class:'mobile-sec-tab-progress' }, '0 / ' + lessons.length)
+    ]);
     tab.addEventListener('click', function() {
       openMobileOverlay(sec.num);
       tab.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
