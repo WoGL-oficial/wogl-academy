@@ -1079,7 +1079,7 @@ body::after {
     <button class="lang-toggle-btn" data-lang="en">EN</button>
     <button class="lang-toggle-btn" data-lang="es">ES</button>
   </div>
-  <a class="wogl-header-login" id="enterMuseumBtn" href="https://museum.wogl.io" style="opacity:1;cursor:pointer;color:var(--gold);border-color:var(--gold);" data-mus-i18n="enterMuseum">Enter the museum</a>
+  <a class="wogl-header-login" id="loginBtn" data-tooltip="traveler login — coming soon">Log in</a>
 </header>
 
 <div class="app" style="padding-top:60px;">
@@ -1138,7 +1138,6 @@ var UI = {
   navNext:          { es: 'Siguiente →', en: 'Next →' },
   celebrateEyebrow: { es: '✓ Sección completada', en: '✓ Section complete' },
   headerTagline:    { es: 'aprende GLSL desde cero', en: 'learn GLSL from zero' },
-  enterMuseum:      { es: 'Entra al museo', en: 'Enter the museum' },
 };
 
 // ============================================================
@@ -1908,9 +1907,9 @@ function switchLanguage(newLang) {
   document.documentElement.lang = lang === 'en' ? 'en' : 'es';
   // Update page title
   document.title = lang === 'en' ? 'WoGL Academy — Learn GLSL from zero' : 'WoGL Academy — Aprende GLSL desde cero';
-  // Update Enter the museum CTA
-  var enterBtn = document.getElementById('enterMuseumBtn');
-  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
+  // Update login tooltip
+  var loginEl = document.getElementById('loginBtn');
+  if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
   // Destroy current renderer before rebuilding
   if (currentRenderer) currentRenderer.destroy();
   // Rebuild everything
@@ -1922,8 +1921,6 @@ function switchLanguage(newLang) {
 function updateSidebarText() {
   var taglineEl = document.getElementById('headerTagline');
   if (taglineEl) taglineEl.textContent = t(UI.headerTagline);
-  var enterBtn = document.getElementById('enterMuseumBtn');
-  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
 }
 
 // Practice data
@@ -2372,13 +2369,8 @@ function buildDrawers() {
 function getActiveLessons() {
   if (currentSection === '00') return LESSONS;
   var secLessons = SECTION_LESSONS[currentSection];
-  if (!secLessons) {
-    console.warn('[academy] no lessons defined for section', currentSection);
-    return [];
-  }
+  if (!secLessons) return [];
   return secLessons.map(function(sl) {
-    if (!sl.explain) console.warn('[academy] lesson missing explain:', currentSection, sl.num);
-    if (!sl.code) console.warn('[academy] lesson missing code:', currentSection, sl.num);
     return {
       num: sl.num,
       title: sl.title,
@@ -3467,9 +3459,9 @@ function initCardTilt() {
 function bootAcademy() {
   // Update page title
   document.title = lang === 'en' ? 'WoGL Academy — Learn GLSL from zero' : 'WoGL Academy — Aprende GLSL desde cero';
-  // Set Enter the museum CTA text for current lang
-  var enterBtn = document.getElementById('enterMuseumBtn');
-  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
+  // Set login tooltip for current lang
+  var loginEl = document.getElementById('loginBtn');
+  if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
   updateLangToggle();
   updateSidebarText();
   buildSidebar();
@@ -3590,17 +3582,19 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 <script>
 (function(){
-  /* Legacy tooltip handler · only binds to #loginBtn if it exists.
-     The current CTA #enterMuseumBtn is a real anchor that shouldn't be hijacked. */
-  var loginBtn = document.getElementById('loginBtn');
-  if(!loginBtn) return;
-  loginBtn.addEventListener('click',function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    loginBtn.classList.toggle('tooltip-open');
+  var loginBtns=document.querySelectorAll('.wogl-header-login');
+  if(!loginBtns.length) return;
+  loginBtns.forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      btn.classList.toggle('tooltip-open');
+    });
   });
   document.addEventListener('click',function(e){
-    if(!loginBtn.contains(e.target)) loginBtn.classList.remove('tooltip-open');
+    loginBtns.forEach(function(btn){
+      if(!btn.contains(e.target)) btn.classList.remove('tooltip-open');
+    });
   });
 })();
 
