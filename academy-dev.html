@@ -1057,7 +1057,7 @@ body::after {
     <button class="lang-toggle-btn" data-lang="en">EN</button>
     <button class="lang-toggle-btn" data-lang="es">ES</button>
   </div>
-  <a class="wogl-header-login" id="loginBtn" data-tooltip="traveler login — coming soon">Log in</a>
+  <a class="wogl-header-login" id="enterMuseumBtn" href="https://museum.wogl.io" style="opacity:1;cursor:pointer;color:var(--gold);border-color:var(--gold);" data-mus-i18n="enterMuseum">Enter the museum</a>
 </header>
 
 <div class="app" style="padding-top:60px;">
@@ -1116,6 +1116,7 @@ var UI = {
   navNext:          { es: 'Siguiente →', en: 'Next →' },
   celebrateEyebrow: { es: '✓ Sección completada', en: '✓ Section complete' },
   headerTagline:    { es: 'aprende GLSL desde cero', en: 'learn GLSL from zero' },
+  enterMuseum:      { es: 'Entra al museo', en: 'Enter the museum' },
 };
 
 // ============================================================
@@ -1885,9 +1886,9 @@ function switchLanguage(newLang) {
   document.documentElement.lang = lang === 'en' ? 'en' : 'es';
   // Update page title
   document.title = lang === 'en' ? 'WoGL Academy — Learn GLSL from zero' : 'WoGL Academy — Aprende GLSL desde cero';
-  // Update login tooltip
-  var loginEl = document.getElementById('loginBtn');
-  if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
+  // Update Enter the museum CTA
+  var enterBtn = document.getElementById('enterMuseumBtn');
+  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
   // Destroy current renderer before rebuilding
   if (currentRenderer) currentRenderer.destroy();
   // Rebuild everything
@@ -1899,6 +1900,8 @@ function switchLanguage(newLang) {
 function updateSidebarText() {
   var taglineEl = document.getElementById('headerTagline');
   if (taglineEl) taglineEl.textContent = t(UI.headerTagline);
+  var enterBtn = document.getElementById('enterMuseumBtn');
+  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
 }
 
 // Practice data
@@ -3437,9 +3440,9 @@ function initCardTilt() {
 function bootAcademy() {
   // Update page title
   document.title = lang === 'en' ? 'WoGL Academy — Learn GLSL from zero' : 'WoGL Academy — Aprende GLSL desde cero';
-  // Set login tooltip for current lang
-  var loginEl = document.getElementById('loginBtn');
-  if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
+  // Set Enter the museum CTA text for current lang
+  var enterBtn = document.getElementById('enterMuseumBtn');
+  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
   updateLangToggle();
   updateSidebarText();
   buildSidebar();
@@ -3560,19 +3563,17 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 <script>
 (function(){
-  var loginBtns=document.querySelectorAll('.wogl-header-login');
-  if(!loginBtns.length) return;
-  loginBtns.forEach(function(btn){
-    btn.addEventListener('click',function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      btn.classList.toggle('tooltip-open');
-    });
+  /* tooltip-open handler bound only to legacy loginBtn id, if it exists.
+     The current CTA #enterMuseumBtn is a real anchor with href and shouldn't be hijacked. */
+  var loginBtn = document.getElementById('loginBtn');
+  if(!loginBtn) return;
+  loginBtn.addEventListener('click',function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    loginBtn.classList.toggle('tooltip-open');
   });
   document.addEventListener('click',function(e){
-    loginBtns.forEach(function(btn){
-      if(!btn.contains(e.target)) btn.classList.remove('tooltip-open');
-    });
+    if(!loginBtn.contains(e.target)) loginBtn.classList.remove('tooltip-open');
   });
 })();
 
