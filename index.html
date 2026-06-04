@@ -6,7 +6,7 @@
    Proprietary. All rights reserved.
    ═══════════════════════════════════════ -->
 <!DOCTYPE html>
-<html lang="en" translate="no">
+<html lang="en" translate="no" data-theme="royal">
 <head>
 <meta charset="UTF-8">
 <meta name="google" content="notranslate">
@@ -131,9 +131,10 @@
   --ink-soft: #c0bcc0;
   --ink-mute: #8a8690;
   --ink-faint: #686470;
-  --gold: #d080ff;
-  --copper: #a860d0;
-  --green: rgb(150, 220, 160);
+  /* Crema dorada FIJA — NO cambia con theme (coating fino tipo museo) */
+  --gold: #e8c89a;
+  --copper: #c8a070;
+  --green: rgb(180, 220, 160);
   --line: rgba(180, 80, 255, 0.12);
   --font-display: 'Outfit', system-ui, sans-serif;
   --font-body: 'Outfit', system-ui, sans-serif;
@@ -149,41 +150,38 @@
   --glow4: rgba(160,60,200,0.05);
 }
 
-/* ===== THEME: NEBULA ELECTRIC (default) ===== */
+/* ===== THEMES — solo bg + accent decorativo cambian. Texto crema queda fijo. ===== */
+/* NEBULA — morado profundo */
 [data-theme="nebula"] {
   --bg: #0c0418; --bg-lift: #140a28; --bg-deep: #060210;
   --bg-side: rgba(10,3,24,0.45);
-  --gold: #d080ff; --copper: #a860d0; --green: rgb(150,220,160);
   --line: rgba(180,80,255,0.12); --accent: #d080ff;
   --header-bg: rgba(12,4,24,0.92);
   --glow1: rgba(140,40,220,0.18); --glow2: rgba(220,60,160,0.08);
   --glow3: rgba(80,40,180,0.12); --glow4: rgba(160,60,200,0.05);
 }
-/* ===== THEME: LAVA GOLD ===== */
+/* LAVA — rojo vino */
 [data-theme="lava"] {
   --bg: #120808; --bg-lift: #1e0e0e; --bg-deep: #0a0404;
   --bg-side: rgba(16,6,6,0.45);
-  --gold: #ffb060; --copper: #c83228; --green: rgb(255,220,140);
   --line: rgba(255,140,60,0.12); --accent: #ffb060;
   --header-bg: rgba(18,8,8,0.92);
   --glow1: rgba(255,100,40,0.12); --glow2: rgba(200,40,80,0.06);
   --glow3: rgba(255,180,80,0.10); --glow4: rgba(220,80,60,0.04);
 }
-/* ===== THEME: ABYSS AURORA ===== */
+/* AURORA — azul abismo */
 [data-theme="aurora"] {
   --bg: #040e12; --bg-lift: #0a1a1e; --bg-deep: #020a0c;
   --bg-side: rgba(3,12,16,0.45);
-  --gold: #40e8c8; --copper: #0a8a70; --green: rgb(180,230,140);
   --line: rgba(40,220,180,0.12); --accent: #40e8c8;
   --header-bg: rgba(4,14,18,0.92);
   --glow1: rgba(20,200,160,0.14); --glow2: rgba(40,100,200,0.06);
   --glow3: rgba(80,220,180,0.08); --glow4: rgba(40,160,200,0.04);
 }
-/* ===== THEME: OBSIDIAN ROYAL ===== */
+/* ROYAL — azul medianoche */
 [data-theme="royal"] {
   --bg: #06080f; --bg-lift: #0e1228; --bg-deep: #030408;
   --bg-side: rgba(5,7,12,0.45);
-  --gold: #809cff; --copper: #3c50dc; --green: rgb(150,220,160);
   --line: rgba(100,140,255,0.12); --accent: #809cff;
   --header-bg: rgba(6,8,15,0.92);
   --glow1: rgba(60,80,220,0.14); --glow2: rgba(100,60,180,0.06);
@@ -650,7 +648,7 @@ body::after {
 }
 .welcome-text em { font-family:var(--font-display); font-weight:500; color:var(--gold); }
 
-.lesson-num-big { font-family:var(--font-display); font-weight:700; font-size:clamp(64px, 5vw, 120px); line-height:1; color:var(--accent); letter-spacing:-.04em; margin-bottom:clamp(4px, 0.5vw, 12px); }
+.lesson-num-big { font-family:var(--font-display); font-weight:700; font-size:clamp(64px, 5vw, 120px); line-height:1; color:var(--gold); letter-spacing:-.04em; margin-bottom:clamp(4px, 0.5vw, 12px); }
 .lesson-title-big { font-family:var(--font-display); font-weight:400; font-size:clamp(36px, 4vw, 80px); line-height:1; color:var(--ink); letter-spacing:-.02em; margin-bottom:clamp(12px, 1vw, 20px); }
 .lesson-desc-big { font-family:var(--font-body); font-weight:300; font-size:clamp(14px, 1.8vw, 28px); color:var(--ink-soft); margin-bottom:clamp(28px, 2.5vw, 48px); line-height:1.45; max-width:clamp(480px, 62vw, 1100px); }
 
@@ -1072,16 +1070,16 @@ body::after {
   <span class="wogl-academy-label">academy</span>
   <span class="wogl-academy-tagline" id="headerTagline">learn GLSL from zero</span>
   <div class="theme-picker" id="themePicker">
-    <div class="theme-pill active" data-theme="nebula"><span class="swatch"></span><span class="pill-name">nebula</span></div>
+    <div class="theme-pill" data-theme="nebula"><span class="swatch"></span><span class="pill-name">nebula</span></div>
     <div class="theme-pill" data-theme="lava"><span class="swatch"></span><span class="pill-name">lava</span></div>
     <div class="theme-pill" data-theme="aurora"><span class="swatch"></span><span class="pill-name">aurora</span></div>
-    <div class="theme-pill" data-theme="royal"><span class="swatch"></span><span class="pill-name">royal</span></div>
+    <div class="theme-pill active" data-theme="royal"><span class="swatch"></span><span class="pill-name">royal</span></div>
   </div>
   <div class="lang-toggle" id="langToggle">
     <button class="lang-toggle-btn" data-lang="en">EN</button>
     <button class="lang-toggle-btn" data-lang="es">ES</button>
   </div>
-  <a class="wogl-header-login" id="loginBtn" data-tooltip="traveler login — coming soon">Log in</a>
+  <a class="wogl-header-login" id="enterMuseumBtn" href="https://museum.wogl.io" style="opacity:1;cursor:pointer;color:var(--gold);border-color:var(--gold);" data-mus-i18n="enterMuseum">Enter the museum</a>
 </header>
 
 <div class="app" style="padding-top:60px;">
@@ -1140,6 +1138,7 @@ var UI = {
   navNext:          { es: 'Siguiente →', en: 'Next →' },
   celebrateEyebrow: { es: '✓ Sección completada', en: '✓ Section complete' },
   headerTagline:    { es: 'aprende GLSL desde cero', en: 'learn GLSL from zero' },
+  enterMuseum:      { es: 'Entra al museo', en: 'Enter the museum' },
 };
 
 // ============================================================
@@ -1909,9 +1908,9 @@ function switchLanguage(newLang) {
   document.documentElement.lang = lang === 'en' ? 'en' : 'es';
   // Update page title
   document.title = lang === 'en' ? 'WoGL Academy — Learn GLSL from zero' : 'WoGL Academy — Aprende GLSL desde cero';
-  // Update login tooltip
-  var loginEl = document.getElementById('loginBtn');
-  if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
+  // Update Enter the museum CTA
+  var enterBtn = document.getElementById('enterMuseumBtn');
+  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
   // Destroy current renderer before rebuilding
   if (currentRenderer) currentRenderer.destroy();
   // Rebuild everything
@@ -1923,6 +1922,8 @@ function switchLanguage(newLang) {
 function updateSidebarText() {
   var taglineEl = document.getElementById('headerTagline');
   if (taglineEl) taglineEl.textContent = t(UI.headerTagline);
+  var enterBtn = document.getElementById('enterMuseumBtn');
+  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
 }
 
 // Practice data
@@ -3466,9 +3467,9 @@ function initCardTilt() {
 function bootAcademy() {
   // Update page title
   document.title = lang === 'en' ? 'WoGL Academy — Learn GLSL from zero' : 'WoGL Academy — Aprende GLSL desde cero';
-  // Set login tooltip for current lang
-  var loginEl = document.getElementById('loginBtn');
-  if (loginEl) loginEl.setAttribute('data-tooltip', lang === 'en' ? 'traveler login \u2014 coming soon' : 'traveler login \u2014 pr\u00f3ximamente');
+  // Set Enter the museum CTA text for current lang
+  var enterBtn = document.getElementById('enterMuseumBtn');
+  if (enterBtn) enterBtn.textContent = t(UI.enterMuseum);
   updateLangToggle();
   updateSidebarText();
   buildSidebar();
@@ -3498,8 +3499,8 @@ document.addEventListener('DOMContentLoaded', function(){
     document.getElementById('mobileOverlay').classList.remove('open');
   });
 
-  // Theme picker
-  var savedTheme = localStorage.getItem('wogl-academy-theme') || 'nebula';
+  // Theme picker — Royal default si no hay preferencia guardada
+  var savedTheme = localStorage.getItem('wogl-academy-theme') || 'royal';
   document.documentElement.setAttribute('data-theme', savedTheme);
   document.querySelectorAll('.theme-pill').forEach(function(pill) {
     pill.classList.toggle('active', pill.getAttribute('data-theme') === savedTheme);
@@ -3589,19 +3590,17 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 <script>
 (function(){
-  var loginBtns=document.querySelectorAll('.wogl-header-login');
-  if(!loginBtns.length) return;
-  loginBtns.forEach(function(btn){
-    btn.addEventListener('click',function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      btn.classList.toggle('tooltip-open');
-    });
+  /* Legacy tooltip handler · only binds to #loginBtn if it exists.
+     The current CTA #enterMuseumBtn is a real anchor that shouldn't be hijacked. */
+  var loginBtn = document.getElementById('loginBtn');
+  if(!loginBtn) return;
+  loginBtn.addEventListener('click',function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    loginBtn.classList.toggle('tooltip-open');
   });
   document.addEventListener('click',function(e){
-    loginBtns.forEach(function(btn){
-      if(!btn.contains(e.target)) btn.classList.remove('tooltip-open');
-    });
+    if(!loginBtn.contains(e.target)) loginBtn.classList.remove('tooltip-open');
   });
 })();
 
