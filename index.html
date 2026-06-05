@@ -997,6 +997,19 @@ body::after {
   font-family:'JetBrains Mono',monospace; font-weight:400; font-size:clamp(9px, 1vw, 13px);
   letter-spacing:clamp(.05em, .08em, .1em); color:var(--ink-mute); white-space:nowrap;
 }
+/* WoGL hub switch · ACADEMY · MUSEUM · current primero */
+.wogl-hub {
+  display:flex; align-items:center; gap:clamp(6px, 1vw, 10px); flex-shrink:0;
+  font-family:'JetBrains Mono',monospace; font-weight:400;
+  font-size:clamp(9px, 1vw, 13px); letter-spacing:clamp(.05em, .08em, .1em);
+}
+.wogl-hub-current { color:var(--ink); white-space:nowrap; }
+.wogl-hub-sep { color:var(--ink-faint); opacity:.5; }
+.wogl-hub-link {
+  color:var(--ink-mute); white-space:nowrap; text-decoration:none;
+  transition:color .2s ease;
+}
+.wogl-hub-link:hover { color:var(--ink); }
 .wogl-academy-tagline {
   font-family:'Outfit',sans-serif; font-weight:300; font-size:clamp(10px, 1vw, 12px);
   letter-spacing:.04em; color:rgba(232,200,154,0.75);
@@ -1067,8 +1080,11 @@ body::after {
 <header class="wogl-academy-header">
   <a href="https://wogl.io" class="wogl-academy-logo">WoGL</a>
   <div class="wogl-academy-divider"></div>
-  <span class="wogl-academy-label">academy</span>
-  <span class="wogl-academy-tagline" id="headerTagline">learn GLSL from zero</span>
+  <nav class="wogl-hub" aria-label="WoGL hub">
+    <span class="wogl-hub-current">ACADEMY</span>
+    <span class="wogl-hub-sep">·</span>
+    <a class="wogl-hub-link" href="https://museum.wogl.io">MUSEUM</a>
+  </nav>
   <div class="theme-picker" id="themePicker">
     <div class="theme-pill" data-theme="nebula"><span class="swatch"></span><span class="pill-name">nebula</span></div>
     <div class="theme-pill" data-theme="lava"><span class="swatch"></span><span class="pill-name">lava</span></div>
