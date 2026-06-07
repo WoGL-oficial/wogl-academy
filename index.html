@@ -750,12 +750,39 @@ body::after {
   text-shadow:0 0 30px rgba(232,200,154,0.25), 0 0 60px rgba(212,165,116,0.12);
 }
 .pulse-block pre {
+  position:relative;
   font-family:var(--font-mono); font-size:clamp(12px, 0.95vw, 15px); line-height:1.6; color:var(--ink);
-  background:var(--bg-deep); border:1px solid rgba(80,140,200,0.12); padding:clamp(12px, 1.2vw, 16px) clamp(14px, 1.4vw, 18px); margin:10px 0;
-  white-space:pre-wrap; word-break:break-word; -webkit-user-select:all; user-select:all; cursor:copy;
+  background:var(--bg-deep); border:1px solid rgba(80,140,200,0.12); padding:clamp(12px, 1.2vw, 16px) clamp(48px, 4.4vw, 60px) clamp(12px, 1.2vw, 16px) clamp(14px, 1.4vw, 18px); margin:10px 0;
+  white-space:pre-wrap; word-break:break-word;
+  -webkit-user-select:text; user-select:text; cursor:text;
 }
 .pulse-block code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:rgba(200,160,255,.85); padding:2px 6px; border:1px solid rgba(80,140,200,0.12); margin:0 2px; }
 .pulse-hint { font-size:clamp(12px, 0.95vw, 15px); color:var(--ink-mute); margin-top:8px; }
+
+/* ════════════════════════════════════════
+   Pulse copy button · circulito CC en cada freebie <pre>
+   Reemplaza el user-select:all que se desclickeaba en iPhone.
+   ════════════════════════════════════════ */
+.pulse-copy {
+  position:absolute; top:8px; right:8px;
+  width:34px; height:34px; border-radius:50%;
+  background:rgba(20,12,32,0.78);
+  border:1px solid rgba(232,200,154,0.32);
+  color:var(--gold);
+  font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:.05em;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  z-index:2;
+  -webkit-user-select:none; user-select:none;
+  transition:border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease), transform .12s var(--ease);
+}
+.pulse-copy:hover { border-color:var(--gold); background:rgba(232,200,154,0.14); }
+.pulse-copy:active { transform:scale(.9); }
+.pulse-copy.copied {
+  color:var(--hit); border-color:var(--hit);
+  background:rgba(94,228,208,0.14);
+  box-shadow:0 0 16px rgba(94,228,208,0.32);
+}
 
 /* Supernova divider — Biolum Line */
 .supernova {
@@ -3904,6 +3931,90 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 /* ░░░ TAB-SCRAMBLE-END ░░░ */
 
+</script>
+<script>
+/* ════════════════════════════════════════
+   Pulse copy button · inject + handler
+   Reemplaza el user-select:all que rompía la UX en iPhone (se desclickeaba).
+   Ahora el <pre> es seleccionable normal + botón CC chiquito copia el código.
+   ════════════════════════════════════════ */
+(function() {
+  function getPreCode(pre) {
+    var clone = pre.cloneNode(true);
+    var btn = clone.querySelector('.pulse-copy');
+    if (btn) btn.remove();
+    return clone.textContent || '';
+  }
+  function injectCopyBtn(pre) {
+    if (pre.querySelector('.pulse-copy')) return;
+    var btn = document.createElement('button');
+    btn.className = 'pulse-copy';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Copy code');
+    btn.setAttribute('title', 'Copy code');
+    btn.textContent = 'CC';
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var code = getPreCode(pre);
+      var done = function() {
+        btn.classList.add('copied');
+        btn.textContent = '✓';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          btn.textContent = 'CC';
+        }, 1500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(done).catch(function() {
+          /* fallback para contextos no-secure o iOS quirks */
+          try {
+            var ta = document.createElement('textarea');
+            ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            done();
+          } catch (_) { /* silent */ }
+        });
+      } else {
+        /* legacy fallback */
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done();
+        } catch (_) { /* silent */ }
+      }
+    });
+    pre.appendChild(btn);
+  }
+  function scanAndInject() {
+    document.querySelectorAll('.pulse-block pre').forEach(injectCopyBtn);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scanAndInject);
+  } else {
+    scanAndInject();
+  }
+  /* Las lessons se rebuiledean al cambiar de lesson/sección · observa el main */
+  var mo = new MutationObserver(function(mutations) {
+    for (var i = 0; i < mutations.length; i++) {
+      var added = mutations[i].addedNodes;
+      for (var j = 0; j < added.length; j++) {
+        if (added[j].nodeType === 1) {
+          if (added[j].matches && added[j].matches('.pulse-block pre')) injectCopyBtn(added[j]);
+          if (added[j].querySelectorAll) {
+            added[j].querySelectorAll('.pulse-block pre').forEach(injectCopyBtn);
+          }
+        }
+      }
+    }
+  });
+  mo.observe(document.body, { childList:true, subtree:true });
+})();
 </script>
 </body>
 </html>
