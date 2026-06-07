@@ -720,20 +720,25 @@ body::after {
 .try-it em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
 
 /* Pulse prompt */
+/* Freebie card · MVP rehazo 06-jun.
+   Glassmorph base (como las cards deployadas del academy) + halo INSET del tier color (sin movimiento, sin box-shadow afuera que se apague al zoom). */
 .pulse-block {
-  background:rgba(80,140,200,.03); border:none;
-  padding:clamp(14px, 1.4vw, 20px) clamp(16px, 1.6vw, 24px); margin-top:clamp(12px, 1.2vw, 18px); margin-bottom:clamp(28px, 3vw, 48px);
-  font-family:var(--font-body); font-size:clamp(13px, 1.2vw, 18px); line-height:1.55; color:var(--ink-soft);
   position:relative;
+  border-radius:14px;
+  background:rgba(10,5,24,0.55);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:clamp(20px, 2vw, 32px) clamp(22px, 2.2vw, 34px);
+  margin-top:clamp(20px, 2vw, 32px); margin-bottom:clamp(28px, 3vw, 48px);
+  font-family:var(--font-body); font-size:clamp(13px, 1.2vw, 18px); line-height:1.55; color:var(--ink-soft);
 }
-/* Freebie card tiers — MVP halo presente, una sola capa envolvente del tier color.
-   Sin spotlight cenital ni sombra de elevación (eso es post-MVP).
-   Trampa #43 · alphas ≥ 0.55. */
-.pulse-block.tier-common    { box-shadow:0 0 24px 0 rgba(200,200,210,0.55); }
-.pulse-block.tier-rare      { box-shadow:0 0 24px 0 rgba(76,142,255,0.60); }
-.pulse-block.tier-epic      { box-shadow:0 0 24px 0 rgba(180,90,255,0.62); }
-.pulse-block.tier-legendary { box-shadow:0 0 24px 0 rgba(255,165,60,0.65); }
-.pulse-block.tier-unique    { box-shadow:0 0 24px 0 rgba(64,232,200,0.60); }
+/* Tier · border + inset halo del color (vive DENTRO de la geometría, cero shadow afuera).
+   Trampa #43 respetada · alphas ≥ 0.55 en los halos color. */
+.pulse-block.tier-common    { border-color:rgba(200,200,210,0.55); box-shadow:inset 0 0 24px rgba(200,200,210,0.18); }
+.pulse-block.tier-rare      { border-color:rgba(76,142,255,0.60);  box-shadow:inset 0 0 28px rgba(76,142,255,0.20); }
+.pulse-block.tier-epic      { border-color:rgba(180,90,255,0.62);  box-shadow:inset 0 0 28px rgba(180,90,255,0.22); }
+.pulse-block.tier-legendary { border-color:rgba(255,165,60,0.65);  box-shadow:inset 0 0 30px rgba(255,165,60,0.24); }
+.pulse-block.tier-unique    { border-color:rgba(64,232,200,0.60);  box-shadow:inset 0 0 28px rgba(64,232,200,0.20); }
 .pulse-label {
   font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:rgba(200,160,255,.85);
   text-transform:uppercase; margin-bottom:6px; display:block;
