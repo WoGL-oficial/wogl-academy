@@ -1192,6 +1192,23 @@ body::after {
   border: 0;
 }
 
+/* ═══════════════════════════════════════════
+   Sandbox + lesson cards redondeados (7-jun)
+   .canvas-wrap ya tiene overflow:hidden, clip limpio del shader.
+   Solo border-radius · NO toca bg/border originales del academy.
+   ═══════════════════════════════════════ */
+.canvas-wrap,
+.editor {
+  border-radius: 8px;
+}
+.glossary,
+.ref-block,
+.try-it,
+.welcome-banner,
+.tips-banner {
+  border-radius: 12px;
+}
+
 </style>
 </head>
 <body>
