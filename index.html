@@ -135,6 +135,7 @@
   --gold: #e8c89a;
   --copper: #c8a070;
   --green: rgb(180, 220, 160);
+  --hit: #5ee4d0;
   --line: rgba(180, 80, 255, 0.12);
   --font-display: 'Outfit', system-ui, sans-serif;
   --font-body: 'Outfit', system-ui, sans-serif;
@@ -257,10 +258,10 @@ body::after {
 }
 .theme-pill .pill-name {
   font-family:var(--font-mono); font-size:8px; letter-spacing:1px;
-  color:rgba(232,217,192,0.3); text-transform:uppercase;
+  color:rgba(232,217,192,0.55); text-transform:uppercase;
   transition:color .3s var(--ease);
 }
-.theme-pill.active .pill-name { color:rgba(232,217,192,0.7); }
+.theme-pill.active .pill-name { color:rgba(232,217,192,0.95); }
 .theme-pill[data-theme="nebula"] .swatch { background:#d080ff; }
 .theme-pill[data-theme="lava"] .swatch { background:#ffb060; }
 .theme-pill[data-theme="aurora"] .swatch { background:#40e8c8; }
@@ -711,11 +712,11 @@ body::after {
   display:flex; gap:clamp(10px, 1.2vw, 18px); align-items:flex-start;
 }
 .try-it-icon {
-  font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:var(--green);
+  font-family:var(--font-mono); font-size:clamp(9px, 0.75vw, 11px); letter-spacing:2px; color:var(--hit);
   text-transform:uppercase; padding:3px 8px; border:none;
   flex-shrink:0; margin-top:2px;
 }
-.try-it code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--green); padding:2px 6px; border:1px solid rgba(80,140,200,0.12); }
+.try-it code { font-family:var(--font-mono); font-size:.88em; background:var(--bg-deep); color:var(--hit); padding:2px 6px; border:1px solid rgba(80,140,200,0.12); }
 .try-it em { font-family:var(--font-display); font-style:normal; font-weight:500; color:var(--gold); }
 
 /* Pulse prompt */
@@ -845,7 +846,7 @@ body::after {
 @media (max-width:1100px) { .sandbox { grid-template-columns:1fr; } }
 .canvas-wrap { background:#000; border:1px solid var(--line); aspect-ratio:1/1; position:relative; overflow:hidden; max-width:100%; max-height:clamp(280px, 25vw, 500px); }
 .canvas-wrap canvas { width:100%; height:100%; display:block; opacity:0.83; }
-.canvas-wrap .badge { position:absolute; bottom:12px; right:14px; font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:rgba(232,217,192,.3); pointer-events:none; }
+.canvas-wrap .badge { position:absolute; bottom:12px; right:14px; font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:rgba(232,217,192,.6); pointer-events:none; }
 .canvas-wrap .err { position:absolute; top:14px; left:14px; right:14px; font-family:var(--font-mono); font-size:11px; color:#ff6b6b; background:rgba(0,0,0,.85); padding:8px 12px; border-left:2px solid #ff6b6b; display:none; max-height:60%; overflow-y:auto; white-space:pre-wrap; }
 .canvas-wrap .err.show { display:block; }
 .editor { display:flex; flex-direction:column; background:var(--bg-deep); border:1px solid var(--line); position:relative; }
@@ -877,7 +878,7 @@ body::after {
 .sh-semi { color:rgba(232,217,192,0.75); }
 .sh-comment { color:rgba(232,217,192,0.75); font-style:italic; }
 .sh-plain { color:rgba(232,217,192,0.75); }
-.sh-hit { color:#5ee4d0; }
+.sh-hit { color:var(--hit); }
 
 /* Buttons */
 .actions { display:flex; gap:10px; flex-wrap:wrap; padding-top:24px; border-top:1px solid transparent; border-image:linear-gradient(90deg, transparent, rgba(160,140,200,0.10) 20%, rgba(180,160,220,0.16) 50%, rgba(160,140,200,0.10) 80%, transparent) 1; }
@@ -1007,9 +1008,9 @@ body::after {
   letter-spacing:clamp(0.06em, 0.1em, 0.12em); color:var(--ink-faint); text-decoration:none;
   padding:clamp(3px, 0.5vw, 6px) clamp(8px, 1.2vw, 16px); border:1px solid var(--line); border-radius:2px;
   transition:all 0.4s var(--ease); text-transform:uppercase; margin-left:auto; white-space:nowrap; flex-shrink:0;
-  opacity:0.35; cursor:default; position:relative;
+  opacity:0.5; cursor:default; position:relative;
 }
-.wogl-header-login:hover { opacity:0.5; }
+.wogl-header-login:hover { opacity:0.65; }
 .wogl-header-login::after {
   content:attr(data-tooltip);
   position:absolute; top:calc(100% + 8px); right:0;
@@ -1208,8 +1209,8 @@ var SECTION_LESSONS = {
     },
     { num:'06', title:{es:'La espiral',en:'The spiral'}, desc:{es:'El vórtice. Figuras cayendo al centro.',en:'The vortex. Shapes falling to center.'},
       explain: {
-        es:'<p>En la lección anterior usaste el <strong>ángulo</strong> para hacer rebanadas. Ahora le sumas la <strong>distancia</strong> al centro — y las rebanadas se tuercen. Se convierten en espiral.</p><p>El truco: donde antes tenías <code>sin(ang * 3.)</code>, ahora tienes <code>sin(ang * 3. + dist * 6.)</code>. La distancia empuja el patrón angular y lo enrolla. Más distancia = más empuje = más giro.</p><p><em>Ángulo + distancia. La curva que no termina.</em></p><div class="glossary"><span class="glossary-label">ang + dist</span>El ángulo te da la dirección. La distancia te da qué tan lejos estás del centro. Cuando los sumas dentro de un <code>sin()</code>, las rayas radiales se curvan. Es el mismo truco que usaste con <code>+ T</code> para rotar — pero ahora en vez del tiempo, es el <em>espacio</em> el que tuerce.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>6.</code> a <code>12.</code> — espiral más apretada. A <code>2.</code> — espiral suelta. Súmale <code>- T</code> al final para que gire. <em>Pista:</em> <code>sin(ang * 3. + dist * 6. - T)</code></span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Freebie</span>Busca <code>// reemplaza esto</code> en el código y cambia esa línea por esta:<pre>col += iri(v * 0.5 + dist * 0.3) * geo * 0.7;</pre><p class="pulse-hint">Pégalo. La espiral cobra todos los colores del espectro.</p></div>',
-        en:'<p>In the last lesson you used the <strong>angle</strong> to make slices. Now you add the <strong>distance</strong> from the center — and the slices twist. They become a spiral.</p><p>Here is the trick: where before you had <code>sin(ang * 3.)</code>, now you have <code>sin(ang * 3. + dist * 6.)</code>. The distance pushes the angular pattern and curls it. More distance = more push = more twist.</p><p><em>Angle + distance. The curve that never ends.</em></p><div class="glossary"><span class="glossary-label">ang + dist</span>The angle gives you the direction. The distance tells you how far from the center. When you add them inside a <code>sin()</code>, the radial stripes curve. It is the same trick you used with <code>+ T</code> to rotate — but now instead of time, it is <em>space</em> doing the twisting.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>6.</code> to <code>12.</code> — tighter spiral. To <code>2.</code> — loose spiral. Add <code>- T</code> at the end to make it spin. <em>Hint:</em> <code>sin(ang * 3. + dist * 6. - T)</code></span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Freebie</span>Find <code>// replace this</code> in the code and swap that line for this:<pre>col += iri(v * 0.5 + dist * 0.3) * geo * 0.7;</pre><p class="pulse-hint">Paste it. The spiral catches every color in the spectrum.</p></div>'
+        es:'<p>En la lección anterior usaste el <strong>ángulo</strong> para hacer rebanadas. Ahora le sumas la <strong>distancia</strong> al centro — y las rebanadas se tuercen. Se convierten en espiral.</p><p>El truco: donde antes tenías <code>sin(ang * 3.)</code>, ahora tienes <code>sin(ang * 3. + dist * 6.)</code>. La distancia empuja el patrón angular y lo enrolla. Más distancia = más empuje = más giro.</p><p><em>Ángulo + distancia. La curva que no termina.</em></p><div class="glossary"><span class="glossary-label">ang + dist</span>El ángulo te da la dirección. La distancia te da qué tan lejos estás del centro. Cuando los sumas dentro de un <code>sin()</code>, las rayas radiales se curvan. Es el mismo truco que usaste con <code>+ T</code> para rotar — pero ahora en vez del tiempo, es el <em>espacio</em> el que tuerce.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Prueba</span><span>Cambia el <code>6.</code> a <code>12.</code> — espiral más apretada. A <code>2.</code> — espiral suelta. Súmale <code>- T</code> al final para que gire. <em>Pista:</em> <code>sin(ang * 3. + dist * 6. - T)</code></span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Freebie</span>Busca <code>// reemplaza esto</code> en el código y cambia esa línea por esta:<pre>col = iri(v * 0.6 + dist * 0.4 + T * 0.1) * (.5 + geo * .5);</pre><p class="pulse-hint">Pégalo. La espiral cobra todos los colores del espectro.</p></div>',
+        en:'<p>In the last lesson you used the <strong>angle</strong> to make slices. Now you add the <strong>distance</strong> from the center — and the slices twist. They become a spiral.</p><p>Here is the trick: where before you had <code>sin(ang * 3.)</code>, now you have <code>sin(ang * 3. + dist * 6.)</code>. The distance pushes the angular pattern and curls it. More distance = more push = more twist.</p><p><em>Angle + distance. The curve that never ends.</em></p><div class="glossary"><span class="glossary-label">ang + dist</span>The angle gives you the direction. The distance tells you how far from the center. When you add them inside a <code>sin()</code>, the radial stripes curve. It is the same trick you used with <code>+ T</code> to rotate — but now instead of time, it is <em>space</em> doing the twisting.</div><div class="supernova"></div><div class="try-it"><span class="try-it-icon">Try</span><span>Change <code>6.</code> to <code>12.</code> — tighter spiral. To <code>2.</code> — loose spiral. Add <code>- T</code> at the end to make it spin. <em>Hint:</em> <code>sin(ang * 3. + dist * 6. - T)</code></span></div><div class="supernova"></div><div class="pulse-block"><span class="pulse-label">Freebie</span>Find <code>// replace this</code> in the code and swap that line for this:<pre>col = iri(v * 0.6 + dist * 0.4 + T * 0.1) * (.5 + geo * .5);</pre><p class="pulse-hint">Paste it. The spiral catches every color in the spectrum.</p></div>'
       },
       code:{
         es:'void main(){\n  vec2 p = (2.*gl_FragCoord.xy - R) / min(R.x, R.y);\n  float ang = atan(p.y, p.x);\n  float dist = length(p);\n  float v = sin(ang * 3. + dist * 6.) * .5 + .5;\n  float geo = step(0.5, v);\n  float edge = smoothstep(.48,.5,v)*(1.-smoothstep(.5,.52,v));\n  float sv = step(0.5, sin(ang*3.+dist*6.+.2)*.5+.5);\n  float shadow = max(geo-sv, 0.) * .4;\n  float depth = exp(-dist * 2.);\n  vec3 a = vec3(0.9, 0.85, 0.95);\n  vec3 b = vec3(0.06, 0.04, 0.12);\n  vec3 col = mix(b, a, geo);\n  col -= vec3(shadow);\n  col += vec3(.8,.7,.95) * edge * .5;\n  col += vec3(0.7, 0.5, 0.95) * depth * .4;\n  // reemplaza esto\n  gl_FragColor = vec4(col, 1.);\n}',
@@ -1546,30 +1547,6 @@ var SECTION_LESSONS = {
   ],
 
 };
-
-// Primals — the absolute basics of reading code.
-var KIT = [
-  { title: { es: 'Las llaves', en: 'Curly braces' },
-    code: '{ }',
-    explain: { es: 'Agrupan código. Todo lo que va adentro se ejecuta junto.', en: 'They group code. Everything inside runs together.' }
-  },
-  { title: { es: 'Los paréntesis', en: 'Parentheses' },
-    code: '( )',
-    explain: { es: 'Llaman una función — le dicen a la máquina "haz esto".', en: 'They call a function — they tell the machine "do this".' }
-  },
-  { title: { es: 'El punto y coma', en: 'The semicolon' },
-    code: ';',
-    explain: { es: 'El punto final de cada instrucción. Sin él, la máquina se pierde.', en: 'The period at the end of each instruction. Without it, the machine gets lost.' }
-  },
-  { title: { es: 'El igual', en: 'The equals sign' },
-    code: '=',
-    explain: { es: 'Asigna un valor. "x = 5" significa: guarda 5 dentro de x.', en: 'Assigns a value. "x = 5" means: store 5 inside x.' }
-  },
-  { title: { es: 'El comentario', en: 'The comment' },
-    code: '// this is a comment',
-    explain: { es: 'La máquina lo ignora. Es una nota para ti o para quien lea tu código.', en: 'The machine ignores it. It is a note for you or whoever reads your code.' }
-  },
-];
 
 // Lesson catalogue (bilingual)
 var LESSONS = [
