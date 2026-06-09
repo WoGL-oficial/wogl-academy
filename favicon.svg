@@ -3,7 +3,8 @@
        WoGL · favicon Aurora
        Background: aurora theme (academy) · azul abismo + accent aqua
        Logo: letra W color OFICIAL gold #e8c89a (inviolable)
-       Glow: gold trademark · NO aurora (regla [[feedback-logo-color-inviolable]])
+       Glow: gold trademark · NO aurora (regla feedback-logo-color-inviolable)
+       Centrado: dominant-baseline="central" + text-anchor="middle" · patrón canónico SVG
        ═══════════════════════════════════════ -->
   <defs>
     <!-- Background radial gradient · aurora deep -->
@@ -13,8 +14,8 @@
       <stop offset="100%" stop-color="#020a0c"/>
     </radialGradient>
     <!-- Aqua glow halo central -->
-    <radialGradient id="haloAqua" cx="50%" cy="40%" r="50%">
-      <stop offset="0%" stop-color="#40e8c8" stop-opacity="0.20"/>
+    <radialGradient id="haloAqua" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#40e8c8" stop-opacity="0.22"/>
       <stop offset="100%" stop-color="#40e8c8" stop-opacity="0"/>
     </radialGradient>
     <!-- Gold glow filter para el W (trademark color) -->
@@ -42,14 +43,15 @@
   <circle cx="169" cy="144" r="1.5" fill="#50dcb4" fill-opacity="0.3"/>
   <circle cx="96" cy="19" r="1.5" fill="#40e8c8" fill-opacity="0.4"/>
 
-  <!-- W gold #e8c89a · color OFICIAL del logo -->
+  <!-- W gold #e8c89a · color OFICIAL del logo · centrado canónico SVG -->
   <text
     x="96"
-    y="118"
+    y="96"
     text-anchor="middle"
+    dominant-baseline="central"
     font-family="Outfit, -apple-system, system-ui, sans-serif"
     font-weight="300"
-    font-size="130"
+    font-size="120"
     fill="#e8c89a"
     filter="url(#goldGlow)">W</text>
 </svg>
