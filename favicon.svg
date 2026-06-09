@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <!-- ═══════════════════════════════════════
+       WoGL · favicon Aurora
+       Background: aurora theme (academy) · azul abismo + accent aqua
+       Logo: letra W color OFICIAL gold #e8c89a (inviolable)
+       Glow: gold trademark · NO aurora (regla [[feedback-logo-color-inviolable]])
+       ═══════════════════════════════════════ -->
+  <defs>
+    <!-- Background radial gradient · aurora deep -->
+    <radialGradient id="bgAurora" cx="50%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#0a1a1e"/>
+      <stop offset="55%" stop-color="#040e12"/>
+      <stop offset="100%" stop-color="#020a0c"/>
+    </radialGradient>
+    <!-- Aqua glow halo central -->
+    <radialGradient id="haloAqua" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#40e8c8" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#40e8c8" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Gold glow filter para el W (trademark color) -->
+    <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur1"/>
+      <feFlood flood-color="#e8c89a" flood-opacity="0.6"/>
+      <feComposite in2="blur1" operator="in"/>
+      <feGaussianBlur stdDeviation="3"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="192" height="192" fill="url(#bgAurora)"/>
+  <!-- Aqua halo -->
+  <rect width="192" height="192" fill="url(#haloAqua)"/>
+
+  <!-- Aurora starfield · 5 puntos teal sutiles -->
+  <circle cx="35" cy="48" r="1.5" fill="#40e8c8" fill-opacity="0.45"/>
+  <circle cx="157" cy="35" r="1.5" fill="#40e8c8" fill-opacity="0.35"/>
+  <circle cx="54" cy="163" r="1.5" fill="#40e8c8" fill-opacity="0.5"/>
+  <circle cx="169" cy="144" r="1.5" fill="#50dcb4" fill-opacity="0.3"/>
+  <circle cx="96" cy="19" r="1.5" fill="#40e8c8" fill-opacity="0.4"/>
+
+  <!-- W gold #e8c89a · color OFICIAL del logo -->
+  <text
+    x="96"
+    y="118"
+    text-anchor="middle"
+    font-family="Outfit, -apple-system, system-ui, sans-serif"
+    font-weight="300"
+    font-size="130"
+    fill="#e8c89a"
+    filter="url(#goldGlow)">W</text>
+</svg>
