@@ -338,6 +338,9 @@ body::after {
   .side .side-top-tabs { border-top:none; }
   .side .drawer-list { display:none; }
   .mobile-sec-tabs { display:flex; }
+  /* Fix: side-lesson-list (Practice panel) tiene flex:1 inline · en mobile el .side es height:auto
+     y flex:1 colapsa a 0px ocultando Remix/Challenge. flex:0 0 auto resuelve. */
+  .side-lesson-list { flex:0 0 auto !important; }
 }
 
 /* Mobile lesson overlay */
@@ -1178,6 +1181,10 @@ body::after {
   .theme-pill .swatch {
     width:12px; height:12px;
   }
+  /* Header wrappea a 2 rows en mobile (~95px). Bajamos sidebar + app padding
+     para que Learn/Practice no queden debajo del theme-row. */
+  .app[style*="padding-top"] { padding-top: 112px !important; }
+  .side { top: 112px !important; }
 }
 
 /* Visually hidden but accessible to screen readers and crawlers (SEO H1). */
@@ -2756,6 +2763,8 @@ function showContext(ctx) {
   if (ctx === 'learn') {
     drawerList.style.display = '';
     practiceList.style.display = 'none';
+    var mstLearn = document.getElementById('mobileSecTabs');
+    if (mstLearn) mstLearn.style.display = '';
     buildDrawers();
     buildMobileSecTabs();
     document.documentElement.style.setProperty('--accent', SECTION_ACCENTS[currentSection]);
