@@ -1539,14 +1539,29 @@ body::after {
 .welcome-banner canvas.welcome-flies.ready { opacity: 1; }
 
 /* Hero treatment · solo Start Here lesson 01 · texto vivo gigante con constelación
-   ✦✧ drifting + líneas dinámicas a vecinos cercanos · mouse repel · canvas2D */
+   ✦✧ drifting + líneas dinámicas a vecinos cercanos · mouse repel · canvas2D
+   CERO card · cero halo box · cero corner dots · cero drop-shadow ·
+   texto literal flotando en el background con constelación detrás */
 .welcome-banner.welcome-hero {
-  padding: clamp(48px, 7vw, 96px) clamp(28px, 4vw, 64px);
+  padding: clamp(48px, 7vw, 96px) clamp(8px, 2vw, 32px);
   min-height: clamp(420px, 56vh, 620px);
   display: flex; flex-direction: column; justify-content: center;
   gap: clamp(18px, 2vw, 28px);
   margin-bottom: clamp(40px, 4vw, 64px);
-  overflow: hidden;
+  overflow: visible;
+  background: transparent !important;
+  filter: none !important;
+}
+/* Mata el halo radial + 4 corner triangles + box-shadow del canon unified */
+.welcome-banner.welcome-hero::before,
+.welcome-banner.welcome-hero::after {
+  display: none !important;
+  content: none !important;
+}
+/* Canvas constelación se extiende afuera del box · vive como background */
+.welcome-banner.welcome-hero canvas.welcome-flies {
+  inset: clamp(-32px, -3vw, -48px) clamp(-24px, -3vw, -48px);
+  width: auto; height: auto;
 }
 .welcome-banner.welcome-hero .welcome-eyebrow {
   font-size: clamp(11px, 1vw, 14px);
