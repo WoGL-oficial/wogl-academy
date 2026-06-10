@@ -4481,10 +4481,18 @@ document.addEventListener('DOMContentLoaded', function(){
     var ctx = canvas.getContext('2d');
     var dpr = Math.min(window.devicePixelRatio || 1, 1.6);
     var stars = [];
+    /* Mobile detection · touch o viewport angosto · baja densidad para evitar lag */
+    var isMobile = ('ontouchstart' in window) || window.innerWidth < 900;
     /* Constellation params · hero card más estrellas + líneas más densas */
     var isHero = card.classList.contains('welcome-hero');
-    var STAR_COUNT = isHero ? 38 : 22;
-    var LINE_DIST  = isHero ? 220 : 140;
+    var STAR_COUNT, LINE_DIST;
+    if (isMobile) {
+      STAR_COUNT = isHero ? 16 : 10;   /* mitad en hero · 10 en banners normales */
+      LINE_DIST  = isHero ? 160 : 100; /* radio de conexión más corto */
+    } else {
+      STAR_COUNT = isHero ? 38 : 22;
+      LINE_DIST  = isHero ? 220 : 140;
+    }
     var mouseX = -9999, mouseY = -9999;
 
     function resize() {
