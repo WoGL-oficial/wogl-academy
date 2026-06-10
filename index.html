@@ -1538,11 +1538,10 @@ body::after {
 }
 .welcome-banner canvas.welcome-flies.ready { opacity: 1; }
 
-/* Hero treatment · solo Start Here lesson 01 · texto vivo gigante con constelación ✦✧
-   Mantiene el card canon (halo respirando + 4 corner triangles + drop-shadow) ·
-   el card ancla la mirada y se ve pro · constelación vive cómoda adentro */
+/* Hero treatment · solo Start Here lesson 01 · texto vivo gigante con constelación
+   ✦✧ drifting + líneas dinámicas a vecinos cercanos · mouse repel · canvas2D */
 .welcome-banner.welcome-hero {
-  padding: clamp(56px, 7vw, 96px) clamp(40px, 4vw, 72px);
+  padding: clamp(48px, 7vw, 96px) clamp(28px, 4vw, 64px);
   min-height: clamp(420px, 56vh, 620px);
   display: flex; flex-direction: column; justify-content: center;
   gap: clamp(18px, 2vw, 28px);
@@ -4467,18 +4466,10 @@ document.addEventListener('DOMContentLoaded', function(){
     var ctx = canvas.getContext('2d');
     var dpr = Math.min(window.devicePixelRatio || 1, 1.6);
     var stars = [];
-    /* Mobile detection · touch o viewport angosto · baja densidad para evitar lag */
-    var isMobile = ('ontouchstart' in window) || window.innerWidth < 900;
     /* Constellation params · hero card más estrellas + líneas más densas */
     var isHero = card.classList.contains('welcome-hero');
-    var STAR_COUNT, LINE_DIST;
-    if (isMobile) {
-      STAR_COUNT = isHero ? 16 : 10;   /* mitad en hero · 10 en banners normales */
-      LINE_DIST  = isHero ? 160 : 100; /* radio de conexión más corto */
-    } else {
-      STAR_COUNT = isHero ? 38 : 22;
-      LINE_DIST  = isHero ? 220 : 140;
-    }
+    var STAR_COUNT = isHero ? 38 : 22;
+    var LINE_DIST  = isHero ? 220 : 140;
     var mouseX = -9999, mouseY = -9999;
 
     function resize() {
