@@ -1210,6 +1210,230 @@ body::after {
   border-radius: 12px;
 }
 
+/* ═══════════════════════════════════════
+   Freebie cards · transparent + triangles + halo + breath
+   Aplicado SOLO a .pulse-block tiers · 9-jun-2026
+   Cada tier respira su color · sin border · 4 triangulitos en corners
+   ═══════════════════════════════════════ */
+
+/* Transparent · cero border · cero inset glow del canon */
+.pulse-block {
+  position: relative;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  isolation: isolate;
+  /* --pulse RGB · cada tier override abajo */
+  --pulse: 200, 200, 210;
+  filter: drop-shadow(0 6px 18px rgba(var(--pulse), 0.10));
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), filter 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.pulse-block:hover {
+  filter: drop-shadow(0 14px 32px rgba(var(--pulse), 0.22));
+  transform: translateY(-2px);
+}
+
+/* Tier color personalities · matchean los rgba del canon */
+.pulse-block.tier-common    { --pulse: 200, 200, 210; border: none; box-shadow: none; }
+.pulse-block.tier-rare      { --pulse: 76, 142, 255;  border: none; box-shadow: none; }
+.pulse-block.tier-epic      { --pulse: 180, 90, 255;  border: none; box-shadow: none; }
+.pulse-block.tier-legendary { --pulse: 255, 165, 60;  border: none; box-shadow: none; }
+.pulse-block.tier-unique    { --pulse: 64, 232, 200;  border: none; box-shadow: none; }
+
+/* Halo radial behind · respirando */
+.pulse-block::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(var(--pulse), 0.08), transparent 72%);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: -2;
+  border-radius: 24px;
+  transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  animation: pulse-halo-breath 6s ease-in-out infinite;
+}
+.pulse-block:hover::before {
+  opacity: 1;
+  transform: scale(1.05);
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(var(--pulse), 0.16), transparent 75%);
+}
+
+/* Constellation pattern · 4 dots asimétricos · feel cósmico per tier */
+.pulse-block::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: rgba(var(--pulse), 0.75);
+  -webkit-mask:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='3.5' fill='black'/></svg>") 14px 14px / 7px 7px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='2.8' fill='black'/></svg>") calc(100% - 30px) 26px / 5px 5px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='2.8' fill='black'/></svg>") 38px calc(100% - 30px) / 5px 5px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='3.5' fill='black'/></svg>") calc(100% - 14px) calc(100% - 14px) / 7px 7px no-repeat;
+  mask:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='3.5' fill='black'/></svg>") 14px 14px / 7px 7px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='2.8' fill='black'/></svg>") calc(100% - 30px) 26px / 5px 5px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='2.8' fill='black'/></svg>") 38px calc(100% - 30px) / 5px 5px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='3.5' fill='black'/></svg>") calc(100% - 14px) calc(100% - 14px) / 7px 7px no-repeat;
+  transition: background-color 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  z-index: 1;
+}
+.pulse-block:hover::after {
+  background-color: rgba(var(--pulse), 1);
+  transform: scale(1.06);
+}
+
+/* Glow halo en los dots Constellation · drop-shadow encima del mask */
+.pulse-block {
+  --pulse-glow: drop-shadow(0 0 6px rgba(var(--pulse), 0.55)) drop-shadow(0 0 12px rgba(var(--pulse), 0.30));
+}
+.pulse-block::after {
+  filter: var(--pulse-glow);
+}
+
+/* Breath stagger · cada tier respira en su tiempo · 5 ritmos */
+.pulse-block.tier-common::before    { animation-delay: 0s;   }
+.pulse-block.tier-rare::before      { animation-delay: 1.2s; }
+.pulse-block.tier-epic::before      { animation-delay: 2.4s; }
+.pulse-block.tier-legendary::before { animation-delay: 3.6s; }
+.pulse-block.tier-unique::before    { animation-delay: 4.8s; }
+
+@keyframes pulse-halo-breath {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50%      { transform: scale(1.04) translateY(-2px); }
+}
+
+/* ═══════════════════════════════════════
+   TRATAMIENTO UNIFICADO · todas las boxes del academy
+   try-it · glossary · ref-block · welcome-banner · tips-banner
+   Transparent + 4 triangulitos en corners + halo + floor shadow
+   ═══════════════════════════════════════ */
+
+.try-it,
+.glossary,
+.ref-block,
+.welcome-banner,
+.tips-banner {
+  position: relative;
+  background: transparent;
+  border: none;
+  border-left: none;
+  box-shadow: none;
+  isolation: isolate;
+  --pulse: 200, 200, 210;
+  filter: drop-shadow(0 4px 14px rgba(var(--pulse), 0.08));
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), filter 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.try-it:hover,
+.glossary:hover,
+.ref-block:hover,
+.welcome-banner:hover,
+.tips-banner:hover {
+  filter: drop-shadow(0 12px 28px rgba(var(--pulse), 0.18));
+  transform: translateY(-1px);
+}
+
+/* Color personality per box type */
+.welcome-banner { --pulse: 232, 200, 154; }  /* gold welcome */
+.tips-banner    { --pulse: 212, 165, 116; }  /* copper tips */
+.glossary       { --pulse: 80, 140, 200;  }  /* blue glossary (matches existing accent) */
+.ref-block      { --pulse: 212, 165, 116; }  /* copper ref */
+.try-it         { --pulse: 94, 228, 208;  }  /* cyan hit · regla try-it cyan */
+
+/* Halo radial behind · respirando · cada uno en su tiempo */
+.try-it::before,
+.glossary::before,
+.ref-block::before,
+.welcome-banner::before,
+.tips-banner::before {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(var(--pulse), 0.06), transparent 72%);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -2;
+  border-radius: 20px;
+  transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  animation: pulse-halo-breath 6s ease-in-out infinite;
+}
+.try-it:hover::before,
+.glossary:hover::before,
+.ref-block:hover::before,
+.welcome-banner:hover::before,
+.tips-banner:hover::before {
+  opacity: 1;
+  transform: scale(1.04);
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(var(--pulse), 0.13), transparent 75%);
+}
+
+/* 4 triangulitos · TL ▲ · TR ▽ · BL ▽ · BR ▲ · color tier vía mask */
+.try-it::after,
+.glossary::after,
+.ref-block::after,
+.welcome-banner::after,
+.tips-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: rgba(var(--pulse), 0.55);
+  -webkit-mask:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><polygon points='5,1 9,9 1,9' fill='black'/></svg>") 12px 12px / 8px 8px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><polygon points='1,1 9,1 5,9' fill='black'/></svg>") calc(100% - 12px) 12px / 8px 8px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><polygon points='1,1 9,1 5,9' fill='black'/></svg>") 12px calc(100% - 12px) / 8px 8px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><polygon points='5,1 9,9 1,9' fill='black'/></svg>") calc(100% - 12px) calc(100% - 12px) / 8px 8px no-repeat;
+  mask:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><polygon points='5,1 9,9 1,9' fill='black'/></svg>") 12px 12px / 8px 8px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><polygon points='1,1 9,1 5,9' fill='black'/></svg>") calc(100% - 12px) 12px / 8px 8px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><polygon points='1,1 9,1 5,9' fill='black'/></svg>") 12px calc(100% - 12px) / 8px 8px no-repeat,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><polygon points='5,1 9,9 1,9' fill='black'/></svg>") calc(100% - 12px) calc(100% - 12px) / 8px 8px no-repeat;
+  transition: background-color 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  z-index: 1;
+}
+.try-it:hover::after,
+.glossary:hover::after,
+.ref-block:hover::after,
+.welcome-banner:hover::after,
+.tips-banner:hover::after {
+  background-color: rgba(var(--pulse), 0.95);
+  transform: scale(1.04);
+}
+
+/* Breath stagger entre tipos de box */
+.welcome-banner::before { animation-delay: 0s;   }
+.tips-banner::before    { animation-delay: 0.8s; }
+.glossary::before       { animation-delay: 1.6s; }
+.ref-block::before      { animation-delay: 2.4s; }
+.try-it::before         { animation-delay: 3.2s; }
+
+/* Welcome card · canvas fireflies behind */
+.welcome-banner > * { position: relative; z-index: 2; }
+.welcome-banner canvas.welcome-flies {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease-out;
+}
+.welcome-banner canvas.welcome-flies.ready { opacity: 1; }
+
+/* Starfield 3D background · adapted from studio · viaja al cambiar lesson */
+body { isolation: isolate; } /* stacking context para que z-index: -1 funcione */
+#wogl-stars-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1.6s ease-out;
+}
+#wogl-stars-bg.ready { opacity: 1; }
+
 </style>
 </head>
 <body>
@@ -4034,5 +4258,289 @@ document.addEventListener('DOMContentLoaded', function(){
   mo.observe(document.body, { childList:true, subtree:true });
 })();
 </script>
+
+<!-- ═══════════════════════════════════════
+     Welcome card · Canvas Fireflies
+     60 partículas drift + flicker · variante B del audit · 9-jun-2026
+     ═══════════════════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+
+  var ENGINES = []; // canvas engines vivos
+
+  function makeEngine(card) {
+    if (card.querySelector('canvas.welcome-flies')) return null; // ya tiene
+    var canvas = document.createElement('canvas');
+    canvas.className = 'welcome-flies';
+    canvas.setAttribute('aria-hidden', 'true');
+    card.insertBefore(canvas, card.firstChild);
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var parts = [];
+
+    function resize() {
+      var r = card.getBoundingClientRect();
+      if (r.width < 8 || r.height < 8) return;
+      canvas.width = Math.round(r.width * dpr);
+      canvas.height = Math.round(r.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!parts.length) {
+        for (var i = 0; i < 60; i++) {
+          parts.push({
+            x: Math.random() * r.width,
+            y: Math.random() * r.height,
+            vx: (Math.random() - 0.5) * 0.28,
+            vy: (Math.random() - 0.5) * 0.28,
+            r: 0.6 + Math.random() * 1.4,
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.5 + Math.random() * 1.5
+          });
+        }
+        requestAnimationFrame(function() { canvas.classList.add('ready'); });
+      } else {
+        parts.forEach(function(p) {
+          if (p.x > r.width)  p.x = r.width  * Math.random();
+          if (p.y > r.height) p.y = r.height * Math.random();
+        });
+      }
+      engine._w = r.width; engine._h = r.height;
+    }
+
+    function frame(t) {
+      if (engine._stopped) return;
+      var w = engine._w, h = engine._h;
+      if (!w || !h) { resize(); requestAnimationFrame(frame); return; }
+      ctx.clearRect(0, 0, w, h);
+      var ts = t * 0.001;
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < -4) p.x = w + 4; else if (p.x > w + 4) p.x = -4;
+        if (p.y < -4) p.y = h + 4; else if (p.y > h + 4) p.y = -4;
+        var blink = (Math.sin(ts * p.speed + p.phase) * 0.5 + 0.5);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(232,200,154,' + (blink * 0.85) + ')';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(232,200,154,' + blink + ')';
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+      requestAnimationFrame(frame);
+    }
+
+    var engine = {
+      canvas: canvas,
+      _stopped: false,
+      resize: resize,
+      stop: function() { engine._stopped = true; if (canvas.parentNode) canvas.parentNode.removeChild(canvas); }
+    };
+    resize();
+    requestAnimationFrame(frame);
+    return engine;
+  }
+
+  function scan() {
+    document.querySelectorAll('.welcome-banner').forEach(function(card) {
+      var existing = ENGINES.find(function(e) { return e.canvas.parentNode === card; });
+      if (existing) return;
+      var eng = makeEngine(card);
+      if (eng) ENGINES.push(eng);
+    });
+  }
+
+  // Initial scan + on resize
+  scan();
+  var resizeTimer = null;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      ENGINES.forEach(function(e) { e.resize(); });
+    }, 120);
+  });
+
+  // Re-scan cuando lessons cambian (academy navigation re-renders)
+  var rescanTimer = null;
+  var rescanObs = new MutationObserver(function() {
+    clearTimeout(rescanTimer);
+    rescanTimer = setTimeout(function() {
+      // Cleanup engines cuyo card ya no está en DOM
+      ENGINES = ENGINES.filter(function(e) {
+        if (!document.body.contains(e.canvas)) { e.stop(); return false; }
+        return true;
+      });
+      scan();
+    }, 150);
+  });
+  rescanObs.observe(document.body, { childList: true, subtree: true });
+
+  // Pause on hidden tab (perf)
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      ENGINES.forEach(function(e) { e._stopped = true; });
+    } else {
+      ENGINES.forEach(function(e) {
+        if (!document.body.contains(e.canvas)) return;
+        var c = e.canvas;
+        var card = c.parentNode;
+        if (card) {
+          c.parentNode.removeChild(c);
+          ENGINES = ENGINES.filter(function(x) { return x !== e; });
+          var ne = makeEngine(card);
+          if (ne) ENGINES.push(ne);
+        }
+      });
+    }
+  });
+
+})();
+</script>
+
+<!-- ═══════════════════════════════════════
+     Starfield 3D background · adapted from studio.wogl.io
+     Auto-drift constant · BURST al cambiar lesson · 9-jun-2026
+     ═══════════════════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var canvas = document.createElement('canvas');
+  canvas.id = 'wogl-stars-bg';
+  canvas.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(canvas);
+  var ctx = canvas.getContext('2d');
+
+  var isMobile = /Mobi|Android/i.test(navigator.userAgent) || 'ontouchstart' in window;
+  var dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 1.5);
+  var PALETTE = [
+    [244,238,225],[232,220,200],[220,212,235],
+    [200,224,224],[240,235,220],[215,225,240]
+  ];
+  var N = isMobile ? 700 : 1200;
+  var stars = [], W = 0, H = 0;
+  for (var i = 0; i < N; i++) {
+    var pal = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+    stars.push({
+      x: (Math.random()-0.5)*3.5, y: (Math.random()-0.5)*3.5, z: Math.random()*7,
+      size: 0.5 + Math.random()*1.2,
+      rotSpeed: (0.5 + Math.random()*3.0) * (Math.random() > 0.5 ? 1 : -1),
+      rotPhase: Math.random() * Math.PI * 2,
+      r: pal[0], g: pal[1], b: pal[2],
+      irisPhase: Math.random() * Math.PI * 2,
+      irisSpeed: 0.08 + Math.random() * 0.15
+    });
+  }
+
+  // CamZ state · base drift + burst impulse layered
+  var camZ = 0;
+  var driftSpeed = 0.035; // unidades por segundo de base drift constante
+  var burstAmount = 0;    // amount extra de Z to consume (cada burst suma 6 aquí)
+  var burstSpeedFactor = 0; // 0-1, modula cuán rápido se consume el burst
+
+  function resize() {
+    W = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+    H = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', resize);
+
+  var lastT = performance.now();
+  var paused = false;
+
+  function frame(t) {
+    if (paused) { requestAnimationFrame(frame); return; }
+    var dt = Math.min((t - lastT) * 0.001, 0.1);
+    lastT = t;
+
+    // Base drift constant + burst decay
+    camZ += driftSpeed * dt;
+    if (burstAmount > 0.001) {
+      var consume = burstAmount * 3 * dt; // ease-out: cuanto más quede, más rápido
+      camZ += consume;
+      burstAmount -= consume;
+    } else {
+      burstAmount = 0;
+    }
+
+    ctx.clearRect(0, 0, W, H);
+    var cx = W * 0.5, cy = H * 0.5, fov = 380, ts = t * 0.001;
+    for (var i = 0; i < N; i++) {
+      var s = stars[i], z = (s.z - camZ) % 5;
+      if (z < 0) z += 5; if (z < 0.1) continue;
+      var invZ = 1 / z;
+      var sx = cx + s.x * fov * invZ;
+      var sy = cy + s.y * fov * invZ;
+      if (sx < -15 || sx > W + 15 || sy < -15 || sy > H + 15) continue;
+      var rotation = ts * s.rotSpeed + s.rotPhase;
+      var facing = Math.cos(rotation);
+      var reflection = facing * facing;
+      var iris = Math.sin(ts * s.irisSpeed + s.irisPhase);
+      var cr = Math.round(Math.min(255, s.r + iris * 15));
+      var cg = Math.round(Math.min(255, s.g + iris * 10));
+      var cb = Math.round(Math.min(255, s.b - iris * 8));
+      var sz = Math.min(s.size * invZ * 0.8, 1.0);
+      var a = reflection * Math.min(invZ * 0.35, 1.0);
+      if (a < 0.02) continue;
+      var coreA = Math.min(a * 2.2, 1);
+      var glowR = sz * 3;
+      if (coreA > 0.1 && glowR > 1) {
+        var grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowR);
+        grd.addColorStop(0, 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (coreA * 0.5) + ')');
+        grd.addColorStop(0.3, 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (coreA * 0.12) + ')');
+        grd.addColorStop(1, 'rgba(' + cr + ',' + cg + ',' + cb + ',0)');
+        ctx.fillStyle = grd;
+        ctx.fillRect(sx - glowR, sy - glowR, glowR * 2, glowR * 2);
+      }
+      ctx.beginPath();
+      ctx.arc(sx, sy, Math.max(sz * 0.5, 0.4), 0, 6.283);
+      ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + coreA + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(function(t) { lastT = t; canvas.classList.add('ready'); frame(t); });
+
+  // Pause/resume on visibility
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) { paused = true; }
+    else { paused = false; lastT = performance.now(); }
+  });
+
+  // Burst API · llama esto al cambiar lesson
+  window.__woglStarsBurst = function() {
+    burstAmount += 6; // suma Z extra que se consumirá rápido con ease-out
+  };
+
+  // Detect lesson change via MutationObserver en .lesson-num-big text
+  function watchLessonChange() {
+    var lastNum = null;
+    function check() {
+      var el = document.querySelector('.lesson-num-big');
+      if (!el) return;
+      var num = el.textContent.trim();
+      if (lastNum !== null && num !== lastNum) {
+        window.__woglStarsBurst();
+      }
+      lastNum = num;
+    }
+    var obs = new MutationObserver(check);
+    obs.observe(document.body, { childList: true, subtree: true, characterData: true });
+    check();
+  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(watchLessonChange, 200);
+  } else {
+    document.addEventListener('DOMContentLoaded', watchLessonChange);
+  }
+
+})();
+</script>
+
 </body>
 </html>
