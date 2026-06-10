@@ -127,7 +127,7 @@
   --bg: #0c0418;
   --bg-lift: #140a28;
   --bg-deep: #060210;
-  --bg-side: rgba(10,3,24,0.45);
+  --bg-side: rgba(10,3,24,0.20);
   --ink: #f2efe8;
   --ink-soft: #c0bcc0;
   --ink-mute: #8a8690;
@@ -145,7 +145,7 @@
   --side-w: 320px;
   --sidebar-slim: 80px;
   --accent: #d080ff;
-  --header-bg: rgba(12,4,24,0.92);
+  --header-bg: rgba(12,4,24,0.55);
   --glow1: rgba(140,40,220,0.18);
   --glow2: rgba(220,60,160,0.08);
   --glow3: rgba(80,40,180,0.12);
@@ -156,36 +156,36 @@
 /* NEBULA — morado profundo */
 [data-theme="nebula"] {
   --bg: #0c0418; --bg-lift: #140a28; --bg-deep: #060210;
-  --bg-side: rgba(10,3,24,0.45);
+  --bg-side: rgba(10,3,24,0.20);
   --line: rgba(180,80,255,0.12); --accent: #d080ff;
-  --header-bg: rgba(12,4,24,0.92);
+  --header-bg: rgba(12,4,24,0.55);
   --glow1: rgba(140,40,220,0.18); --glow2: rgba(220,60,160,0.08);
   --glow3: rgba(80,40,180,0.12); --glow4: rgba(160,60,200,0.05);
 }
 /* LAVA — rojo vino */
 [data-theme="lava"] {
   --bg: #120808; --bg-lift: #1e0e0e; --bg-deep: #0a0404;
-  --bg-side: rgba(16,6,6,0.45);
+  --bg-side: rgba(16,6,6,0.20);
   --line: rgba(255,140,60,0.12); --accent: #ffb060;
-  --header-bg: rgba(18,8,8,0.92);
+  --header-bg: rgba(18,8,8,0.55);
   --glow1: rgba(255,100,40,0.12); --glow2: rgba(200,40,80,0.06);
   --glow3: rgba(255,180,80,0.10); --glow4: rgba(220,80,60,0.04);
 }
 /* AURORA — azul abismo */
 [data-theme="aurora"] {
   --bg: #040e12; --bg-lift: #0a1a1e; --bg-deep: #020a0c;
-  --bg-side: rgba(3,12,16,0.45);
+  --bg-side: rgba(3,12,16,0.20);
   --line: rgba(40,220,180,0.12); --accent: #40e8c8;
-  --header-bg: rgba(4,14,18,0.92);
+  --header-bg: rgba(4,14,18,0.55);
   --glow1: rgba(20,200,160,0.14); --glow2: rgba(40,100,200,0.06);
   --glow3: rgba(80,220,180,0.08); --glow4: rgba(40,160,200,0.04);
 }
 /* ROYAL — azul medianoche */
 [data-theme="royal"] {
   --bg: #06080f; --bg-lift: #0e1228; --bg-deep: #030408;
-  --bg-side: rgba(5,7,12,0.45);
+  --bg-side: rgba(5,7,12,0.20);
   --line: rgba(100,140,255,0.12); --accent: #809cff;
-  --header-bg: rgba(6,8,15,0.92);
+  --header-bg: rgba(6,8,15,0.55);
   --glow1: rgba(60,80,220,0.14); --glow2: rgba(100,60,180,0.06);
   --glow3: rgba(232,200,154,0.08); --glow4: rgba(200,160,100,0.03);
 }
@@ -332,7 +332,7 @@ body::after {
   .side {
     position:sticky; top:60px; z-index:400;
     height:auto; border-right:0; border-bottom:1px solid var(--line);
-    background:rgba(5,4,16,0.95); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    background:rgba(5,4,16,0.45); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
     overflow-y:visible; overflow-x:hidden; width:100% !important;
   }
   .side .side-top-tabs { border-top:none; }
@@ -346,7 +346,7 @@ body::after {
 /* Mobile lesson overlay */
 .mobile-overlay {
   display:none; position:fixed; inset:0; z-index:500;
-  background:rgba(2,1,10,0.90); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  background:rgba(2,1,10,0.55); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
   flex-direction:column; align-items:center; justify-content:center;
   padding:20px;
 }
@@ -1309,6 +1309,36 @@ body::after {
 @keyframes pulse-halo-breath {
   0%, 100% { transform: scale(1) translateY(0); }
   50%      { transform: scale(1.04) translateY(-2px); }
+}
+
+/* ═══════════════════════════════════════
+   Planet glyph en corner del pulse-block · cosmic signature
+   Mapeo por freebie name vía JS (initCardTilt) · color hereda --pulse del tier
+   ═══════════════════════════════════════ */
+.pulse-block .mk-glyph {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  font-family: var(--font-mono);
+  font-size: clamp(32px, 3vw, 44px);
+  line-height: 1;
+  color: rgba(var(--pulse), 0.85);
+  text-shadow:
+    0 0 18px rgba(var(--pulse), 0.65),
+    0 0 36px rgba(var(--pulse), 0.32);
+  pointer-events: none;
+  z-index: 6;
+  transition: color 0.5s var(--ease), text-shadow 0.5s var(--ease), transform 0.6s var(--ease);
+}
+.pulse-block:hover .mk-glyph {
+  color: var(--gold);
+  text-shadow:
+    0 0 24px rgba(232,200,154,0.75),
+    0 0 48px rgba(232,200,154,0.4);
+  transform: rotate(180deg) scale(1.15);
+}
+.pulse-block .pulse-card-name {
+  padding-right: clamp(48px, 5vw, 64px);
 }
 
 /* ═══════════════════════════════════════
@@ -3869,6 +3899,13 @@ function initCardTilt() {
   var targets = document.querySelectorAll(selectors);
   var isMobile = 'ontouchstart' in window;
 
+  /* Planet glyph mapping por freebie name · cosmic signature */
+  var GLYPH_BY_NAME = {
+    'TIME': '☉', 'PULSE': '✦', 'SPECTRUM': '◇',
+    'AUTOPILOT': '♅', 'EYES': '⊕', 'SCALES': '⬡',
+    'ASCENT': '♄', 'SINGULARITY': '⊛'
+  };
+
   targets.forEach(function(card) {
     if (card._tiltBound) return;
     card._tiltBound = true;
@@ -3879,14 +3916,27 @@ function initCardTilt() {
     shine.className = 'tilt-shine';
     card.appendChild(shine);
 
+    /* Pulse-block freebie: inject planet glyph + tilt más dramático (cosmic) */
+    var isPulse = card.classList.contains('pulse-block');
+    var mag = isPulse ? 14 : 6;
+    if (isPulse && !card.querySelector('.mk-glyph')) {
+      var nameEl = card.querySelector('.pulse-card-name');
+      var name = nameEl ? nameEl.textContent.trim().toUpperCase() : '';
+      var glyph = GLYPH_BY_NAME[name] || '✦';
+      var g = document.createElement('span');
+      g.className = 'mk-glyph';
+      g.textContent = glyph;
+      card.appendChild(g);
+    }
+
     if (!isMobile) {
       card.addEventListener('mousemove', function(e) {
         var r = card.getBoundingClientRect();
         var x = (e.clientX - r.left) / r.width - 0.5;
         var y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = 'rotateY(' + (x * 6) + 'deg) rotateX(' + (-y * 6) + 'deg)';
-        card.style.boxShadow = (-x * 6) + 'px ' + (y * 6) + 'px 20px rgba(0,0,0,0.25)';
-        shine.style.background = 'radial-gradient(circle 200px at ' + (e.clientX - r.left) + 'px ' + (e.clientY - r.top) + 'px, rgba(244,241,234,0.07), transparent)';
+        card.style.transform = 'rotateY(' + (x * mag) + 'deg) rotateX(' + (-y * mag) + 'deg)';
+        card.style.boxShadow = (-x * mag * 0.85) + 'px ' + (y * mag * 0.85) + 'px ' + (mag * 3) + 'px rgba(0,0,0,0.25)';
+        shine.style.background = 'radial-gradient(circle 220px at ' + (e.clientX - r.left) + 'px ' + (e.clientY - r.top) + 'px, rgba(244,241,234,0.10), transparent 70%)';
       });
       card.addEventListener('mouseleave', function() {
         card.style.transform = '';
