@@ -4666,17 +4666,61 @@ document.addEventListener('DOMContentLoaded', function(){
   var N = isMobile ? 700 : 1200;
   var stars = [], W = 0, H = 0;
   for (var i = 0; i < N; i++) {
-    var pal = PALETTE[Math.floor(Math.random() * PALETTE.length)];
     stars.push({
       x: (Math.random()-0.5)*3.5, y: (Math.random()-0.5)*3.5, z: Math.random()*7,
       size: 0.5 + Math.random()*1.2,
       rotSpeed: (0.5 + Math.random()*3.0) * (Math.random() > 0.5 ? 1 : -1),
       rotPhase: Math.random() * Math.PI * 2,
-      r: pal[0], g: pal[1], b: pal[2],
+      pi: Math.floor(Math.random() * PALETTE.length),
       irisPhase: Math.random() * Math.PI * 2,
       irisSpeed: 0.08 + Math.random() * 0.15
     });
   }
+
+  /* ░░░ Sprites pre-render · el gradiente se dibuja UNA vez, no 1200×60/seg ░░░
+     Por cada (palette × iris bucket): un sprite glow (gradiente radial baked
+     con stops 0.5/0.12/0 relativos) y un sprite core (disco a alpha 1.0).
+     En el frame loop solo drawImage escalado con globalAlpha = coreA —
+     la matemática de alphas queda idéntica porque ambos stops son lineales
+     en coreA. Cero gradients, cero strings por frame. */
+  var IRIS_BUCKETS = 5;
+  var GLOW_R = 32, CORE_R = 8;
+  var glowSprites = [], coreSprites = [];
+  for (var p = 0; p < PALETTE.length; p++) {
+    glowSprites.push([]); coreSprites.push([]);
+    for (var b = 0; b < IRIS_BUCKETS; b++) {
+      var iris0 = (b / (IRIS_BUCKETS - 1)) * 2 - 1;
+      var cr0 = Math.round(Math.min(255, PALETTE[p][0] + iris0 * 15));
+      var cg0 = Math.round(Math.min(255, PALETTE[p][1] + iris0 * 10));
+      var cb0 = Math.round(Math.min(255, PALETTE[p][2] - iris0 * 8));
+      var gCan = document.createElement('canvas');
+      gCan.width = gCan.height = GLOW_R * 2;
+      var gCtx = gCan.getContext('2d');
+      var grd0 = gCtx.createRadialGradient(GLOW_R, GLOW_R, 0, GLOW_R, GLOW_R, GLOW_R);
+      grd0.addColorStop(0, 'rgba(' + cr0 + ',' + cg0 + ',' + cb0 + ',0.5)');
+      grd0.addColorStop(0.3, 'rgba(' + cr0 + ',' + cg0 + ',' + cb0 + ',0.12)');
+      grd0.addColorStop(1, 'rgba(' + cr0 + ',' + cg0 + ',' + cb0 + ',0)');
+      gCtx.fillStyle = grd0;
+      gCtx.fillRect(0, 0, GLOW_R * 2, GLOW_R * 2);
+      glowSprites[p].push(gCan);
+      var cCan = document.createElement('canvas');
+      cCan.width = cCan.height = CORE_R * 2;
+      var cCtx = cCan.getContext('2d');
+      cCtx.beginPath();
+      cCtx.arc(CORE_R, CORE_R, CORE_R, 0, 6.283);
+      cCtx.fillStyle = 'rgb(' + cr0 + ',' + cg0 + ',' + cb0 + ')';
+      cCtx.fill();
+      coreSprites[p].push(cCan);
+    }
+  }
+
+  /* ░░░ Governor adaptativo · cada device encuentra su N óptimo ░░░
+     Mide frame time promedio cada 60 frames. Si va lento (>19ms) recorta
+     15% de estrellas activas; si sobra holgura (<12.5ms) recupera 5%.
+     Piso 25% de N para que nunca se vea vacío. Histéresis entre los dos
+     umbrales evita oscilación. */
+  var activeN = N, minN = Math.round(N * 0.25);
+  var govAcc = 0, govFrames = 0;
 
   // CamZ state · base drift + burst impulse layered
   var camZ = 0;
@@ -4715,7 +4759,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
     ctx.clearRect(0, 0, W, H);
     var cx = W * 0.5, cy = H * 0.5, fov = 380, ts = t * 0.001;
-    for (var i = 0; i < N; i++) {
+    var bucketScale = (IRIS_BUCKETS - 1) * 0.5;
+    for (var i = 0; i < activeN; i++) {
       var s = stars[i], z = (s.z - camZ) % 5;
       if (z < 0) z += 5; if (z < 0.1) continue;
       var invZ = 1 / z;
@@ -4726,26 +4771,31 @@ document.addEventListener('DOMContentLoaded', function(){
       var facing = Math.cos(rotation);
       var reflection = facing * facing;
       var iris = Math.sin(ts * s.irisSpeed + s.irisPhase);
-      var cr = Math.round(Math.min(255, s.r + iris * 15));
-      var cg = Math.round(Math.min(255, s.g + iris * 10));
-      var cb = Math.round(Math.min(255, s.b - iris * 8));
+      var bucket = ((iris + 1) * bucketScale + 0.5) | 0;
       var sz = Math.min(s.size * invZ * 0.8, 1.0);
       var a = reflection * Math.min(invZ * 0.35, 1.0);
       if (a < 0.02) continue;
       var coreA = Math.min(a * 2.2, 1);
       var glowR = sz * 3;
+      ctx.globalAlpha = coreA;
       if (coreA > 0.1 && glowR > 1) {
-        var grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowR);
-        grd.addColorStop(0, 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (coreA * 0.5) + ')');
-        grd.addColorStop(0.3, 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (coreA * 0.12) + ')');
-        grd.addColorStop(1, 'rgba(' + cr + ',' + cg + ',' + cb + ',0)');
-        ctx.fillStyle = grd;
-        ctx.fillRect(sx - glowR, sy - glowR, glowR * 2, glowR * 2);
+        ctx.drawImage(glowSprites[s.pi][bucket], sx - glowR, sy - glowR, glowR * 2, glowR * 2);
       }
-      ctx.beginPath();
-      ctx.arc(sx, sy, Math.max(sz * 0.5, 0.4), 0, 6.283);
-      ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + coreA + ')';
-      ctx.fill();
+      var coreR = Math.max(sz * 0.5, 0.4);
+      ctx.drawImage(coreSprites[s.pi][bucket], sx - coreR, sy - coreR, coreR * 2, coreR * 2);
+    }
+    ctx.globalAlpha = 1;
+
+    // Governor · evalúa cada 60 frames con el dt real medido
+    govAcc += dt; govFrames++;
+    if (govFrames >= 60) {
+      var avg = govAcc / govFrames;
+      if (avg > 0.019 && activeN > minN) {
+        activeN = Math.max(minN, (activeN * 0.85) | 0);
+      } else if (avg < 0.0125 && activeN < N) {
+        activeN = Math.min(N, activeN + Math.ceil(N * 0.05));
+      }
+      govAcc = 0; govFrames = 0;
     }
     requestAnimationFrame(frame);
   }
