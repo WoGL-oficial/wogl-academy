@@ -743,7 +743,7 @@ body::after {
   font-family:var(--font-body); font-size:clamp(13px, 1.2vw, 18px); line-height:1.55; color:var(--ink-soft);
 }
 /* Tier · border + inset halo del color (vive DENTRO de la geometría, cero shadow afuera).
-   Trampa #43 respetada · alphas ≥ 0.55 en los halos color. */
+   alphas ≥ 0.55 en los halos color. */
 .pulse-block.tier-common    { border-color:rgba(200,200,210,0.55); box-shadow:inset 0 0 24px rgba(200,200,210,0.18); }
 .pulse-block.tier-rare      { border-color:rgba(76,142,255,0.60);  box-shadow:inset 0 0 28px rgba(76,142,255,0.20); }
 .pulse-block.tier-epic      { border-color:rgba(180,90,255,0.62);  box-shadow:inset 0 0 28px rgba(180,90,255,0.22); }
@@ -1122,7 +1122,7 @@ body::after {
 .nav-arrow.next { text-align:right; }
 
 /* P05 · Sparkle stars · ✦ orbitando NEXT STEP pill cuando está unlocked
-   (academy-pulse-festejativo iteration · 9-jun) */
+   */
 .btn.primary { position:relative; isolation:isolate; }
 .btn.primary .sparkle-stars {
   position:absolute; inset:-12px; pointer-events:none; z-index:1;
@@ -1262,7 +1262,7 @@ body::after {
 }
 
 /* ═══════════════════════════════════════════
-   Sandbox + lesson cards redondeados (7-jun)
+   Sandbox + lesson cards redondeados
    .canvas-wrap ya tiene overflow:hidden, clip limpio del shader.
    Solo border-radius · NO toca bg/border originales del academy.
    ═══════════════════════════════════════ */
@@ -1280,7 +1280,7 @@ body::after {
 
 /* ═══════════════════════════════════════
    Freebie cards · transparent + triangles + halo + breath
-   Aplicado SOLO a .pulse-block tiers · 9-jun-2026
+   Aplicado SOLO a .pulse-block tiers
    Cada tier respira su color · sin border · 4 triangulitos en corners
    ═══════════════════════════════════════ */
 
@@ -1294,7 +1294,7 @@ body::after {
   /* --pulse RGB · cada tier override abajo */
   --pulse: 200, 200, 210;
   filter: drop-shadow(0 6px 18px rgba(var(--pulse), 0.10));
-  /* transition transform RÁPIDA (0.15s) para tilt suave sin jitter · idéntico cards-cosmic
+  /* transition transform RÁPIDA (0.15s) para tilt suave sin jitter · 
      filter queda en 0.4s porque es un hover effect lento (lift) no mousemove */
   transition: transform 0.15s ease-out, filter 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
   transform-style: preserve-3d;
@@ -1581,7 +1581,7 @@ body::after {
   font-family: 'Fraunces', Georgia, serif; font-weight: 400;
 }
 
-/* Starfield 3D background · adapted from studio · viaja al cambiar lesson */
+/* Starfield 3D background · viaja al cambiar lesson */
 body { isolation: isolate; } /* stacking context para que z-index: -1 funcione */
 #wogl-stars-bg {
   position: fixed;
@@ -4055,7 +4055,7 @@ function initCardTilt() {
     }
 
     if (!isMobile) {
-      /* Tilt math IDÉNTICA al cards-cosmic audit: rotateY(x*16) rotateX(-y*16)
+      /* Tilt math: rotateY(x*16) rotateX(-y*16)
          con perspective en el parent (.explain). Box-shadow contrario al tilt. */
       card.addEventListener('mousemove', function(e) {
         var r = card.getBoundingClientRect();
@@ -4449,7 +4449,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <!-- ═══════════════════════════════════════
      Welcome card · Canvas Fireflies
-     60 partículas drift + flicker · variante B del audit · 9-jun-2026
+     60 partículas drift + flicker
      ═══════════════════════════════════════ -->
 <script>
 (function(){
@@ -4643,8 +4643,8 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 <!-- ═══════════════════════════════════════
-     Starfield 3D background · adapted from studio.wogl.io
-     Auto-drift constant · BURST al cambiar lesson · 9-jun-2026
+     Starfield 3D background
+     Auto-drift constant · BURST al cambiar lesson
      ═══════════════════════════════════════ -->
 <script>
 (function(){
